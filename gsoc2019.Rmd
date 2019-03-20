@@ -17,11 +17,20 @@ Australian smart meters report large quantities of measurements on energy usage 
 It is common to see aggregates of usage across households, total kwh used each half hour by state, for example, because energy companies need to understand maximum loads that they will have to plan ahead to accommodate. But studying overall energy use hides the distributions of usage at finer scales, and making it more difficult to find solutions to improve energy efficiency.
 
 To illustrate further, if the energy companies are more cognizant of the energy usage of their customers, they might use the excess energy in times of off-peak demand for few households to charge solar batteries or reward households for using their energy mindfully in case of peak demand. Customers, for example, can view the distribution of their usage in peak demand periods compared to households with similar demographics and and save some dollars on their electricity bill. 
+ 
+
+Exploratory Data Analysis (EDA) through visualization and creating useful summaries at finer or coarser temporal scales can help with the analysis of probability distribution of smart meter data. Infact, analysis of any temporal data that needs to be analyzed at several temporal resolutions can benefit from this approach.
+
+
+This project would provide a mechanism to operate on time in an automated way, to deconstruct it in many different ways. It would help explore the data across different circular granularity/ calendar categorisations like hour of the day and day of the month that accommodate for periodicities in time. 
 
 
 # Related work
 
+- Lubridate is an R package that makes it easier to work with dates and times and also has functions for creating calendar categorisations like hour of the day, day of the week, minutes of the hour. But it mostly creates calendar categorisations that are one step up. The framework proposed will allow creating calendar categorisations that are more than one step ahead, for example,  hour of the week or one step up that are not present in lubridate package like week of the month.
 
+
+- 
 
 
 # Details of your coding project
@@ -31,7 +40,7 @@ The entire package should be ready to use with
 
 # Expected impact
 
-The package would faciliate a tidy workflow for exploring probability distributions of variables defined on temporal granularties. This will use as inputs tsibble objects which complement the tidyverse concept to temporal data.
+The package would faciliate a tidy workflow for exploring probability distributions of variables defined on temporal granularties. This will use as inputs tsibble objects which complement the tibble and extend the tidyverse concept to temporal data.
 
 # Mentors
 
