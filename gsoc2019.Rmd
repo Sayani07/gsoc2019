@@ -54,6 +54,7 @@ The package would facilitate a tidy workflow for exploring probability distribut
 # Mentors
 
 - Dianne Cook <dicook@monash.edu> 
+- Antony Unwin 
   
   
 MENTORS: write several tests that potential students can do to demonstrate their capabilities for this particular project. Ask some hard questions that will give you insight about how the students write code to solve problems. You’ll see that the harder the questions that you ask, the easier it will be for you to choose between the students that apply for your project! Please modify the suggestions below to make them specific for your project.
