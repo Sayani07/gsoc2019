@@ -1,0 +1,44 @@
+---
+title: "Gsoc2019"
+author: "Sayani Gupta"
+date: "3/20/2019"
+output: html_document
+---
+
+  ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+
+Australian smart meters report large quantities of measurements on energy usage every half an hour for every households. Households are distributed geographically and they can differ with respect to demographic properties such as lifestyle or liveability choices like usage and existence of solar panels, central heating or air conditioning. Also some households might consist of night owls, while other might have morning larks. Some might work from home most days in a week and have uniform energy usage through out the week, while others have very little usage in the weekdays and high usage only on weekends. Some households might be travellers who are always out on any extended/ public holidays and school breaks.
+
+
+It is common to see aggregates of usage across households, total kwh used each half hour by state, for example, because energy companies need to understand maximum loads that they will have to plan ahead to accommodate. But studying overall energy use hides the distributions of usage at finer scales, and making it more difficult to find solutions to improve energy efficiency.
+
+To illustrate further, if the energy companies are more cognizant of the energy usage of their customers, they might use the excess energy in times of off-peak demand for few households to charge solar batteries or reward households for using their energy mindfully in case of peak demand. Customers, for example, can view the distribution of their usage in peak demand periods compared to households with similar demographics and and save some dollars on their electricity bill. 
+
+
+# Related work
+
+
+
+
+# Details of your coding project
+
+The entire package should be ready to use with 
+
+
+# Expected impact
+
+The package would faciliate a tidy workflow for exploring probability distributions of variables defined on temporal granularties. This will use as inputs tsibble objects which complement the tidyverse concept to temporal data.
+
+# Mentors
+
+- Dianne Cook <dicook@monash.edu> 
+  
+  
+  
+  
+  
+  
