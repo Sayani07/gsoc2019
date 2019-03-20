@@ -37,8 +37,15 @@ If we define time variables that facilitate exploration as harmonies and those t
 
 # Details of your coding project
 
-The entire package should be ready to use with 
+1. Develop an R package
+  - with functions to create circular time granularities that are multiple step up in time
+  - with functions to create list of visualizations of harmonies given a circular time granularity 
+  - providing advice using suitable summary statistics on whether probability distributions should be plotted
 
+2. Getting familiar with shiny UI development and creating a dashboard that enables all these functionalities
+
+3. Experiment with probability visualization techniques that are not yet in the tidyverse framework and building new geom class for them. 
+4. Complete set of features to be well documented
 
 # Expected impact
 
@@ -49,7 +56,13 @@ The package would facilitate a tidy workflow for exploring probability distribut
 - Dianne Cook <dicook@monash.edu> 
   
   
-  
+MENTORS: write several tests that potential students can do to demonstrate their capabilities for this particular project. Ask some hard questions that will give you insight about how the students write code to solve problems. You’ll see that the harder the questions that you ask, the easier it will be for you to choose between the students that apply for your project! Please modify the suggestions below to make them specific for your project.
+
+Easy: something that any useR should be able to do, e.g. download some existing package listed in the Related Work, and run it on some example data.
+
+Medium: something a bit more complicated. You can encourage students to write a script or some functions that show their R coding abilities.
+
+Hard: Can the student write a package with Rd files, tests, and vigettes? If your package interfaces with non-R code, can the student write in that other language?
   
   
   
