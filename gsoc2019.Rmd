@@ -1,5 +1,5 @@
 ---
-title: "Gsoc2019"
+title: "gsoc2019"
 author: "Sayani Gupta"
 date: "3/20/2019"
 output: html_document
@@ -11,27 +11,29 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Background
 
-Australian smart meters report large quantities of measurements on energy usage every half an hour for every households. Households are distributed geographically and they can differ with respect to demographic properties such as lifestyle or livability choices like usage and existence of solar panels, central heating or air conditioning. Also some households might consist of night owls, while other might have morning larks. Some might work from home most days in a week and have uniform energy usage through out the week, while others have very little usage in the weekdays and high usage only on weekends. Some households might be travelers who are always out on any extended/ public holidays and school breaks.
+<!-- Australian smart meters report large quantities of measurements on energy usage every half an hour for every households. Households are distributed geographically and they can differ with respect to demographic properties such as lifestyle or livability choices like usage and existence of solar panels, central heating or air conditioning. Also some households might consist of night owls, while other might have morning larks. Some might work from home most days in a week and have uniform energy usage through out the week, while others have very little usage in the weekdays and high usage only on weekends. Some households might be travelers who are always out on any extended/ public holidays and school breaks. -->
 
 
-It is common to see aggregates of usage across households, total kwh used each half hour by state, for example, because energy companies need to understand maximum loads that they will have to plan ahead to accommodate. But studying overall energy use hides the distributions of usage at finer scales, and making it more difficult to find solutions to improve energy efficiency.
+<!-- It is common to see aggregates of usage across households, total kwh used each half hour by state, for example, because energy companies need to understand maximum loads that they will have to plan ahead to accommodate. But studying overall energy use hides the distributions of usage at finer scales, and making it more difficult to find solutions to improve energy efficiency. -->
 
-To illustrate further, if the energy companies are more cognizant of the energy usage of their customers, they might use the excess energy in times of off-peak demand for few households to charge solar batteries or reward households for using their energy mindfully in case of peak demand. Customers, for example, can view the distribution of their usage in peak demand periods compared to households with similar demographics and and save some dollars on their electricity bill. 
- 
-
-Exploratory Data Analysis (EDA) through visualization and creating useful summaries at finer or coarser temporal scales can help with the analysis of probability distribution of smart meter data. In fact,  analysis of any temporal data that needs to be examined at several temporal resolutions can benefit from this approach.
+<!-- To illustrate further, if the energy companies are more cognizant of the energy usage of their customers, they might use the excess energy in times of off-peak demand for few households to charge solar batteries or reward households for using their energy mindfully in case of peak demand. Customers, for example, can view the distribution of their usage in peak demand periods compared to households with similar demographics and and save some dollars on their electricity bill.  -->
 
 
-This project would provide a mechanism to operate on time in an automated way, to deconstruct it in many different ways. Deconstruction that capture calendar effects like hour of the day or day of the month and accommodate for periodicities in time are defined as circular granularities/ calendar categorizations. 
+Exploratory Data Analysis (EDA) through visualization and creating useful summaries at finer or coarser temporal scales can help with the analysis of probability distribution of publicly available Australian smart meter data. In fact, analysis of any temporal data that needs to be examined at several temporal resolutions can benefit from this approach.
+
+The idea is to provide a mechanism to operate on time in an automated way, to deconstruct it in many different ways. Deconstructions of time that respect the linear progression of time like days, weeks and months are defined as linear time granularities and those that accommodate for periodicities in time like hour of the day or day of the month are defined as circular granularities/ calendar categorizations. This project would provide the platform to efficiently explore data across exhaustive sets of circular granularities in 2D space.
 
 
 # Related work
 
-- Lubridate is an R package that makes it easier to work with dates and times and also has functions for creating calendar categorizations like hour of the day, day of the week, minutes of the hour. But it mostly creates calendar categorizations that are one step up. The framework proposed will allow creating calendar categorizations that are more than one step ahead, for example,  hour of the week or one step up that are not present in lubridate package like week of the month.
+- *_lubridate_* is an R package that makes it easier to work with time and also has functions for creating calendar categorizations like hour of the day, day of the week, minutes of the hour. But it mostly creates calendar categorizations that are one step up. The framework proposed will allow creating calendar categorizations that are more than one step ahead, for example,  hour of the week or one step up that are not present in lubridate package like week of the month.
 
+- Calendar based graphics in the package *_sugrrants_* help explore data across linear time granularities in a calendar format, whereas this package would help explore circular time granularities.
 
-- 
+- *_ggplot2_* facilitates the process of mapping different variables to a 2D frame through grammar of graphics. But it does not tell us which all variables to plot together to promote exploration of data.
+If we define time variables that facilitate exploration as harmonies and those that do not as clashes, the proposed framework would provide the list of harmonies given a time variable.
 
+- This will use as inputs *_tsibble_* objects which complement the tibble and extend the tidyverse concept to temporal data.
 
 # Details of your coding project
 
@@ -40,7 +42,7 @@ The entire package should be ready to use with
 
 # Expected impact
 
-The package would facilitate a tidy workflow for exploring probability distributions of variables defined on temporal granularties. This will use as inputs tsibble objects which complement the tibble and extend the tidyverse concept to temporal data.
+The package would facilitate a tidy workflow for exploring probability distributions of variables defined on temporal granularties. Being able to derive useful summaries and exhaustive visual graphics for deriving multiple perspectives of data will promote efficient exploration of data.
 
 # Mentors
 
