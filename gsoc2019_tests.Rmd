@@ -41,16 +41,16 @@ qld_elec %>%
   geom_boxplot() + 
   ylab("Demand in MW") +
   xlab("Months") +
-  scale_x_discrete(breaks=seq(1,12,1)) +             theme(legend.position = "bottom",strip.text = element_text(size = 7, margin = margin())) + ggtitle("Boxplot of the demand for QLD")
+  scale_x_discrete(breaks=seq(1,12,1)) +             theme(legend.position = "bottom",strip.text = element_text(size = 7, margin = margin())) + ggtitle("Boxplot of demand for QLD")
 
 # Ridge Plot
 
 qld_elec %>% 
-  filter(year %in% c(2012, 2013, 2014))%>% 
+  filter(year(Time) %in% c(2012, 2013, 2014))%>% 
   ggplot(aes(x = Demand,y=as.factor(data_month),group=data_month)) +   geom_density_ridges2() +
   xlab("Demand in MW") +
   ylab("Months")+ 
-  scale_x_continuous(breaks = seq(2000,10000,3000)) +     theme(legend.position = "bottom",strip.text = element_text(size = 7, margin = margin())) + ggtitle("(e) Ridge plot")
+  theme(legend.position = "bottom",strip.text = element_text(size = 7, margin = margin())) + ggtitle("Ridge plot of demand for QLD")
 
 
 VIC%>% filter(year %in% c(2012, 2013, 2014),Indx_Wk_Month %in% c(1,2,4))%>% ggplot(aes(as.factor(Indx_Day_Month),OperationalLessIndustrial)) + geom_violin(alpha = 0.03)+ facet_wrap(~Indx_Wk_Month,nrow=3) + ylab("") + xlab("Days of the Month") + theme(legend.position = "bottom",strip.text = element_text(size = 7, margin = margin())) + scale_x_discrete(breaks=seq(0,31,5))+ scale_y_continuous(breaks = seq(2000,9000,2000))+ ggtitle("(d) Violin plot")
