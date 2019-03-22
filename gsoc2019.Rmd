@@ -19,9 +19,11 @@ knitr::opts_chunk$set(echo = TRUE)
 <!-- To illustrate further, if the energy companies are more cognizant of the energy usage of their customers, they might use the excess energy in times of off-peak demand for few households to charge solar batteries or reward households for using their energy mindfully in case of peak demand. Customers, for example, can view the distribution of their usage in peak demand periods compared to households with similar demographics and and save some dollars on their electricity bill.  -->
 
 
-Exploratory Data Analysis (EDA) through visualization and creating useful summaries at finer or coarser temporal scales can help with the analysis of probability distribution of publicly available Australian smart meter data. In fact, analysis of any temporal data that needs to be examined at several temporal resolutions can benefit from this approach.
+Considerable data is accumulated by sensors today. An example is data measuring energy usage on a fine scale using smart meters. Smart meters are installed on many households in many countries now. Providing tools to explore this type of data is an important activity. Because of the large volume of data, using probability distributions for display is a potentially useful approach. Probability distributions are induced by various aggregations of the data, by temporal components, by spatial region, by type of household. 
 
-The idea is to provide a mechanism to operate on time in an automated way, to deconstruct it in many different ways. Deconstructions of time that respect the linear progression of time like days, weeks and months are defined as linear time granularities and those that accommodate for periodicities in time like hour of the day or day of the month are defined as circular granularities/ calendar categorizations. This project would provide the platform to efficiently explore data across exhaustive sets of circular granularities in 2D space.
+The idea for this package is to provide a methods to operate on time in an automated way, to deconstruct it in many different ways. Deconstructions of time that respect the linear progression of time like days, weeks and months are defined as linear time granularities and those that accommodate for periodicities in time like hour of the day or day of the month are defined as circular granularities or calendar categorizations. This package will provide the methods to exhaustively construct granularities, and provide automatic checks on the feasibility of a particular granularity. 
+
+The package will provide these tenchiques into the tidy workflow, so that probability distributions can be examined in the range of graphics available in the ggplot2 package.
 
 
 # Related work
