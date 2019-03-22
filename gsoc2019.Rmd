@@ -23,7 +23,7 @@ Considerable data is accumulated by sensors today. An example is data measuring 
 
 The idea for this package is to provide a methods to operate on time in an automated way, to deconstruct it in many different ways. Deconstructions of time that respect the linear progression of time like days, weeks and months are defined as linear time granularities and those that accommodate for periodicities in time like hour of the day or day of the month are defined as circular granularities or calendar categorizations. This package will provide the methods to exhaustively construct granularities, and provide automatic checks on the feasibility of a particular granularity. 
 
-The package will provide these tenchiques into the tidy workflow, so that probability distributions can be examined in the range of graphics available in the ggplot2 package.
+The package will provide these techniques into the tidy workflow, so that probability distributions can be examined in the range of graphics available in the ggplot2 package.
 
 
 # Related work
@@ -42,7 +42,7 @@ If we define time variables that facilitate exploration as harmonies and those t
 1. Develop an R package with functions to
   - create circular time granularities that are multiple step up in time
   - categorize pairs of granularities as either a harmony or clashes
-  - produce appropriate data structures to visualise with the grammar of graphics
+  - produce appropriate data structures to visualize with the grammar of graphics
 
 2. Develop a shiny UI to enable user to explore computing circular granularity construction
 
@@ -60,13 +60,12 @@ The package would facilitate a tidy workflow for exploring probability distribut
 - Antony Unwin 
   
   
-MENTORS: write several tests that potential students can do to demonstrate their capabilities for this particular project. Ask some hard questions that will give you insight about how the students write code to solve problems. You’ll see that the harder the questions that you ask, the easier it will be for you to choose between the students that apply for your project! Please modify the suggestions below to make them specific for your project.
+# Tests
 
-Easy: something that any useR should be able to do, e.g. download some existing package listed in the Related Work, and run it on some example data.
+Easy: Explore the data aus_elec (Half-hourly electricity demand for five Australian states) from the package tsibbledata and create five different probability distribution plots for each month. For example, boxplot which shows median, quartile boundaries, hinges, whiskers and outliers is one of the ways to display distribution of data. 
 
-Medium: something a bit more complicated. You can encourage students to write a script or some functions that show their R coding abilities.
+Medium: Write a summary which includes pros and cons of each of the different probability distribution plots that you have chosen. 
 
-Hard: Can the student write a package with Rd files, tests, and vigettes? If your package interfaces with non-R code, can the student write in that other language?
-  
+Hard: Create a R code to populate two additional numeric vectors in your data denoting hour-of-week and week-of-month. 
   
   
