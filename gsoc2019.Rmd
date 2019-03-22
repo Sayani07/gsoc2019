@@ -39,19 +39,20 @@ If we define time variables that facilitate exploration as harmonies and those t
 
 # Details of your coding project
 
-1. Develop an R package
-  - with functions to create circular time granularities that are multiple step up in time
-  - with functions to create list of visualizations of harmonies given a circular time granularity 
-  - providing advice using suitable summary statistics on whether probability distributions should be plotted
+1. Develop an R package with functions to
+  - create circular time granularities that are multiple step up in time
+  - categorize pairs of granularities as either a harmony or clashes
+  - produce appropriate data structures to visualise with the grammar of graphics
 
-2. Getting familiar with shiny UI development and creating a dashboard that enables all these functionalities
+2. Develop a shiny UI to enable user to explore computing circular granularity construction
 
-3. Experiment with probability visualization techniques that are not yet in the tidyverse framework and building new geom class for them. 
-4. Complete set of features to be well documented
+3. Provide examples of probability visualization of smart meter data collected on Australian households
+
+4. Document the R package functionality in a vignette
 
 # Expected impact
 
-The package would facilitate a tidy workflow for exploring probability distributions of variables defined on temporal granularties. Being able to derive useful summaries and exhaustive visual graphics for deriving multiple perspectives of data will promote efficient exploration of data.
+The package would facilitate a tidy workflow for exploring probability distributions of variables for circular granularities on data collected by sensors. Providing users with new tools for exploring sensor data, and comparing different types of probability distribution visualizations. Promote exploratory analysis of temporal context data.
 
 # Mentors
 
