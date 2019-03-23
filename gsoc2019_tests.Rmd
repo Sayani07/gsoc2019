@@ -116,7 +116,45 @@ However, it does not indicate that the number of observations used to compute me
 
 *Ridge Plot* - 
 
-Ridge plots are density plots all aligned to the same horizontal scale and presented with a slight overlap. 
+Ridge plots are density plots all aligned to the same horizontal scale and presented with a slight overlap. Hence the x-axis represents the electricity demand whereas the y-axis denotes month. A clear advantage over boxplots is that these plots allow us to see multimodality in the distribution. In \autoref{}, we can see that distribution of almost all months have multiple modes.
+
+Ridge plots can be obscuring when there is overlap of distribution for two or more categories of the y-axis.
+
+*Violin Plot* - The shape of the violin represents the density estimate of the variable. The more data points in a specific range, the larger the violin is for that range. This plot also indicates multi-modality in most months and gives more information than median and quartiles.
+
+However, density in violin plots are estimated through kernel density estimation and thus makes a lot of assumption on the underlying distribution of the data.
+
+*Decile Plot* - No distributional assumptions are made about the data since emperical deciles are plotted. It avoids much clutter and just enable us to focus on specific probabilities.
+
+*Letter Value plot* - This is an extension of box plot which emphasizes on showing the tail of the distribution.
 
 
+*Hard* :
+
+Create a R code to populate two additional numeric vectors in your data denoting hour-of-week and week-of-month. 
+  
+```{r hard, echo=FALSE}
+hour_week = function(data)
+{
+t_index <- data[[as_string(index(data))]]
+day_week <- wday(t_index)
+hour_week_indx <- hour(t_index) + 24*(day_week-1)
+hour_week_indx
+}
+
+first_day_of_month_wday <- function(dx) {
+  day(dx) <- 1
+  wday(dx)
+}
+
+week_month = function(data)
+{
+t_index <- data[[as_string(index(data))]]
+ceiling((day(t_index) + first_day_of_month_wday(t_index) - 1) / 7)
+}
+# 
+# aus_elec %>% mutate(hour-of-week = hour_week(aus), week-of-month = week_month())  
+
+hour_week(aus_elec)
+```
 
