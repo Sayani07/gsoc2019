@@ -136,7 +136,6 @@ Create a R code to populate two additional numeric vectors in your data denoting
 ```{r hard, echo=FALSE}
 hour_week = function(t_index)
 {
-# t_index <- data[[as_string(index(data))]]
 day_week <- lubridate::wday(t_index)
 hour_week_indx <- lubridate::hour(t_index) + 24*(day_week-1)
 hour_week_indx
@@ -149,11 +148,8 @@ first_day_of_month_wday <- function(dx) {
 
 week_month = function(t_index)
 {
-#t_index <- data[[as_string(index(data))]]
 ceiling((lubridate::day(t_index) + first_day_of_month_wday(t_index) - 1) / 7)
 }
-# 
-# aus_elec %>% mutate(hour-of-week = hour_week(aus), week-of-month = week_month())  
 
 aus_elec_rev <- aus_elec %>% mutate(h_w = hour_week(Time), w_m = week_month(Time))
 
