@@ -20,6 +20,7 @@ library(purrr)
 ```
 
 
+
 _*Easy*_:
 
 Explore the data aus_elec (Half-hourly electricity demand for five Australian states) from the package tsibbledata and create five different probability distribution plots for each month. For example, boxplot which shows median, quartile boundaries, hinges, whiskers and outliers is one of the ways to display distribution of data. 
@@ -45,32 +46,35 @@ qld_elec <- aus_elec %>%
 
 # Boxplot
 
-qld_elec %>% ggplot(aes(as.factor(data_month),Demand))+
-geom_boxplot() + 
-ylab("Demand in MW") +
-xlab("Months") +
-scale_x_discrete(breaks=seq(1,12,1)) +
-theme(legend.position = "bottom",strip.text = element_text(size = 7, margin = margin())) + ggtitle("Boxplot of demand for QLD")
+qld_elec %>% 
+  ggplot(aes(as.factor(data_month),Demand)) +
+  geom_boxplot() + 
+  scale_x_discrete(breaks=seq(1,12,1))  +
+  ylab("Demand in MW") +
+  xlab("Months") + 
+  ggtitle("Boxplot of demand for QLD")
 
 # Ridge Plot
 
 qld_elec %>% 
-  ggplot(aes(x = Demand,y=as.factor(data_month),group=data_month)) +   geom_density_ridges2() +
+  ggplot(aes(x = Demand,y=as.factor(data_month),group=data_month))+   geom_density_ridges2() +
   xlab("Demand in MW") +
-  ylab("Months")+ 
-  theme(legend.position = "bottom",strip.text = element_text(size = 7, margin = margin())) + ggtitle("Ridge plot of demand for QLD")
+  ylab("Months") + 
+  ggtitle("Ridge plot of demand for QLD")
 
 # Violin Plot 
 
-qld_elec %>% ggplot(aes(as.factor(data_month), Demand)) + geom_violin(alpha = 0.03) + ylab("Demand in MW") +
-xlab("Months")  +
-theme(legend.position = "bottom", strip.text = element_text(size = 7, margin = margin())) +
-ggtitle("Violin plot of demand for QLD")
+qld_elec %>% 
+  ggplot(aes(as.factor(data_month), Demand)) +
+  geom_violin(alpha = 0.03) +
+  ylab("Demand in MW") +
+  xlab("Months")  +
+  ggtitle("Violin plot of demand for QLD")
 
 # Decile Plot
 
 qld_decile <- qld_elec %>% 
-  dplyr::group_by(data_month) %>%
+  group_by(data_month) %>%
   do({x <- .$Demand
   map_dfr(.x = seq(0.1,0.9,0.1),
           .f = ~ tibble(Quantile = .x,
@@ -79,10 +83,21 @@ qld_decile <- qld_elec %>%
   
 
 p1 <- qld_decile %>% 
-  ggplot(aes(x=data_month,y=Value,col=as.factor(Quantile))) +    geom_line() + ggtitle("Decile plot of demand for QLD") + ylab("Demand in MW") +
-  xlab("Months")
+  ggplot(aes(x=data_month,y=Value,col=as.factor(Quantile))) +        geom_line() +
+  ylab("Demand in MW") +
+  xlab("Months") +
+  ggtitle("Decile plot of demand for QLD") 
 
 p1
 
+
+# Letter value plot
+
+ggplot(qld_elec, aes(as.factor(data_month), Demand)) + 
+  geom_lv(aes(fill=..LV..),outlier.colour = "red",outlier.shape =    1, k=9) + 
+  scale_fill_brewer() + 
+  ylab("Demand in MW") +
+  xlab("Months") +
+  ggtitle("Letter value plot of demand for QLD") 
 ```
 
