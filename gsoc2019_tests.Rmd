@@ -134,11 +134,11 @@ However, density in violin plots are estimated through kernel density estimation
 Create a R code to populate two additional numeric vectors in your data denoting hour-of-week and week-of-month. 
   
 ```{r hard, echo=FALSE}
-hour_week = function(data)
+hour_week = function(t_index)
 {
-t_index <- data[[as_string(index(data))]]
-day_week <- wday(t_index)
-hour_week_indx <- hour(t_index) + 24*(day_week-1)
+# t_index <- data[[as_string(index(data))]]
+day_week <- lubridate::wday(t_index)
+hour_week_indx <- lubridate::hour(t_index) + 24*(day_week-1)
 hour_week_indx
 }
 
@@ -147,14 +147,16 @@ first_day_of_month_wday <- function(dx) {
   wday(dx)
 }
 
-week_month = function(data)
+week_month = function(t_index)
 {
-t_index <- data[[as_string(index(data))]]
-ceiling((day(t_index) + first_day_of_month_wday(t_index) - 1) / 7)
+#t_index <- data[[as_string(index(data))]]
+ceiling((lubridate::day(t_index) + first_day_of_month_wday(t_index) - 1) / 7)
 }
 # 
 # aus_elec %>% mutate(hour-of-week = hour_week(aus), week-of-month = week_month())  
 
-hour_week(aus_elec)
+aus_elec_rev <- aus_elec %>% mutate(h_w = hour_week(Time), w_m = week_month(Time))
+
+aus_elec_rev
 ```
 
