@@ -132,7 +132,9 @@ The density in violin plots are estimated through kernel density estimation and 
 
 Decile plots do not let us see the shape, skewness or nature of the tail of the distribution clearly.
 
-*Letter Value plot* - Letter value plots convey detailed information about tails of the distribution and outliers are unexpected observations rather than extreme observations. M, F, E, D and C represents 50%, 25%, 12.5%, 6.25% and 3.13% of the tail area respectively.
+*Letter Value plot* - Letter value plots convey detailed information about tails of the distribution and outliers are unexpected observations rather than extreme observations. M, F, E, D and C represents 50%, 25%, 12.5%, 6.25% and 3.13% of the tail area respectively. It shows only actual data values and no smoothed summaries.
+
+However, the letter values are shown till the depths where the letter values are reliable estimates of their corresponding quantiles. These might lead to a lot of letter values being shown and leading to overload of infoermation in one plot. For example, the number of letter values computed are 10 in our example making it difficult to analyse all values carefully.
 
 
 
