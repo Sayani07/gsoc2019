@@ -38,11 +38,11 @@ aus_elec %>%  distinct(State)
 aus_elec %>%
           .$Time %>% range()
 
-# Picking atate Queensland from May 2012 to Dec 2014
+# Picking state New South Wales from May 2012 to Dec 2014
 
 nsw_elec <- aus_elec %>%
             filter(State =="New South Wales") %>%
-            filter(ymd_hms(Time) > "2012-05-01 19:00:00 UTC") %>%  
+            filter(ymd_hms(Time) >= "2012-05-01 19:00:00 UTC") %>%  
             mutate(data_month = lubridate::month(Time))
 
 # Boxplot
@@ -68,6 +68,7 @@ nsw_elec %>%
 nsw_elec %>% 
   ggplot(aes(as.factor(data_month), Demand)) +
   geom_violin(alpha = 0.03) +
+  geom_boxplot(width = 0.15) +
   ylab("Demand in MW") +
   xlab("Months")  +
   ggtitle("Violin plot of demand for NSW")
@@ -84,7 +85,9 @@ nsw_decile <- nsw_elec %>%
   
 
 p1 <- nsw_decile %>% 
-  ggplot(aes(x=data_month,y=Value,col=as.factor(Quantile))) +        geom_line() +
+  ggplot(aes(x=data_month,y=Value,col=as.factor(Quantile))) + 
+  geom_line() +
+  scale_x_continuous(breaks=seq(1,12,1)) + 
   ylab("Demand in MW") +
   xlab("Months") +
   ggtitle("Decile plot of demand for NSW") 
@@ -111,7 +114,7 @@ Write a summary which includes pros and cons of each of the different probabilit
 
 Standard boxplots display a compact distributional summary with median, quartiles, hinges, whiskers and extreme outliers. These are helpful to get an idea of the distribution at a glance. for example, it can be seen from \autoref{} that median demand is maximum for June and July and then falls considerably in September and October. Also, the variation is very high in summer months (from November to January or February). 
 
-However, it does not indicate that the number of observations used to compute median or other summary statistics are different for different months. The time horizon considered for the analysis is from May, 2012 to Dec, 2014. Hence the number of observations for the period May-December are higher compared to the period Jan - Apr. Furthermore, we do not have an idea if the ditribution for each month is multimodal.
+However, it does not indicate that the number of observations used to compute median or other summary statistics are different for different months. The time horizon considered for the analysis is from May, 2012 to Dec, 2014. Hence the number of observations for the period May-December are higher compared to the period Jan - Apr. Furthermore, we do not have an idea if the distribution for each month is multimodal.
 
 
 *Ridge Plot* - 
@@ -120,20 +123,24 @@ Ridge plots are density plots all aligned to the same horizontal scale and prese
 
 Ridge plots can be obscuring when there is overlap of distribution for two or more categories of the y-axis.
 
-*Violin Plot* - The shape of the violin represents the density estimate of the variable. The more data points in a specific range, the larger the violin is for that range. This plot also indicates multi-modality in most months and gives more information than median and quartiles.
+*Violin Plot* - Violin plots adds the information available from local density estimates to summary statistics provided by box plots. The shape of the violin represents the density estimate of the variable. The more data points in a specific range, the larger the violin is for that range. Adding two density plots gives a symmetric plot which makes it easier to see the
+magnitude of the density and compare across categories. This plot also indicates multi-modality in most months and gives more information about tails of the distribution. For example, the month January has a longer right tail, but June and July which has higher median demand look uni-modal.
 
-However, density in violin plots are estimated through kernel density estimation and thus makes a lot of assumption on the underlying distribution of the data.
+The density in violin plots are estimated through kernel density estimation and thus makes assumptions when selecting kernel or bandwidth.
 
-*Decile Plot* - No distributional assumptions are made about the data since emperical deciles are plotted. It avoids much clutter and just enable us to focus on specific probabilities.
+*Decile Plot* - No distributional assumptions are made about the data since empirical deciles are plotted. It avoids much clutter and just enable us to focus on specific probabilities.
 
-*Letter Value plot* - This is an extension of box plot which emphasizes on showing the tail of the distribution.
+Decile plots do not let us see the shape, skewness or nature of the tail of the distribution clearly.
+
+*Letter Value plot* - Letter value plots convey detailed information about tails of the distribution and outliers are unexpected observations rather than extreme observations. M, F, E, D and C represents 50%, 25%, 12.5%, 6.25% and 3.13% of the tail area respectively.
+
 
 
 *Hard* :
 
 Create a R code to populate two additional numeric vectors in your data denoting hour-of-week and week-of-month. 
   
-```{r hard, echo=FALSE}
+```{r hard, echo=TRUE}
 hour_week = function(t_index)
 {
 day_week <- lubridate::wday(t_index)
@@ -141,9 +148,11 @@ hour_week_indx <- lubridate::hour(t_index) + 24*(day_week-1)
 hour_week_indx
 }
 
-first_day_of_month_wday <- function(dx) {
-  day(dx) <- 1
-  wday(dx)
+first_day_of_month_wday <- function(dy) {
+m = month(dy)
+y = year(dy)
+first_day_month = paste0(y,"-",m,"-","01")
+wday(first_day_month)
 }
 
 week_month = function(t_index)
@@ -153,6 +162,10 @@ ceiling((lubridate::day(t_index) + first_day_of_month_wday(t_index) - 1) / 7)
 
 aus_elec_rev <- aus_elec %>% mutate(h_w = hour_week(Time), w_m = week_month(Time))
 
+
 aus_elec_rev
 ```
+
+
+
 
