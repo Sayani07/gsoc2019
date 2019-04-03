@@ -1,0 +1,73 @@
+---
+title: "Proposal"
+author: "Sayani Gupta"
+date: "04/04/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Table of Contents**
+
+**Basic Information**
+-----------------------
+
+Name: Sayani Gupta
+
+University: Monash University, Melbourne
+
+Github: @Sayani07
+
+Email: gupta.sayani@gmail.com
+
+Phone: (+61) 423889998
+
+Postal Address: 2/612 Blackburn Road, Glen Waverly, Victoria 3150
+
+Timezone: AEST (UTC + 10:00)
+
+Project gravitas
+---------------
+
+
+Abstract
+--------
+
+Package gravitas aims to provide methods to operate on time in an automated way, to deconstruct it in many different ways. Deconstructions of time that respect the linear progression of time like days, weeks and months are defined as linear time granularities and those that accommodate for periodicities in time like hour of the day or day of the month are defined as circular granularities or calendar categorizations. 
+
+This package will consist of three modules. 
+
+The module BUILD will provide the methods to exhaustively construct any granularities. For example, if the data is available at a half hourly scale, this module would create functions to compute time indices that can be constructed in combination with half-hour of the day, like half-hour of the week that can seemlessly work in a tidy workflow setup. Additionally, it would provide functions to create granulartities in combination with all scales that are one or multiple levels above half-hour, for example, hour, day, week and so on.
+
+The module COMPATIBLE will provide automatic checks on the feasibility of plotting or drawing inference from two granularities together.
+
+
+
+
+Project Nephos aims at simplifying the process of moving samples from local storage to cloud for Universities by automating, almost, all the steps involved. It will be consisting of three independent modules; recording module, processing module, and uploading module.
+
+The recording module will be responsible for managing the addition of channel lists, set up of recording jobs and saving the recorded streams. The processing module will parse saved samples, associate tags, extract subtitles and convert the video files to MP4 to reduce the file size. The uploading module will upload the processed stream files, and also share sample with other universities if required.
+Nephos will be developed, using Python and few other open source projects, to accomplish all the above mentioned tasks with cent-percent reliability and zero failures (unless wrong data is input, which will get logged). Testing and logging will be an integral part of Nephos development and running cycle, respectively.
+
+Background
+----------
+
+
+
+Motivation
+----------
+
+
+
+Project gravitas
+--------------
+
+
+Why do I want to work on gravitas?
+------------------------------
+
+### Why Nephos?
+
+
