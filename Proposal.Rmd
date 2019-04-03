@@ -37,9 +37,11 @@ Abstract
 
 Package gravitas aims to provide methods to operate on time in an automated way, to deconstruct it in many different ways. Deconstructions of time that respect the linear progression of time like days, weeks and months are defined as linear time granularities and those that accommodate for periodicities in time like hour of the day or day of the month are defined as circular granularities or calendar categorizations. 
 
-This package will consist of three modules. 
+This package will consist of three modules: 
 
-The module BUILD will provide the methods to exhaustively construct any granularities. For example, if the data is available at a half hourly scale, this module would create functions to compute time indices that can be constructed in combination with half-hour of the day, like half-hour of the week that can seemlessly work in a tidy workflow setup. Additionally, it would provide functions to create granulartities in combination with all scales that are one or multiple levels above half-hour, for example, hour, day, week and so on.
+The module BUILD will provide the methods to exhaustively construct any granularities. For example, if the data is available at a half hourly scale, this module would create functions to compute time indices that can be constructed in combination with half-hour like half-hour of the day or half-hour of the week. Additionally, it should also be able to provide functions to create granulartities in combination with temporal scales that are one or multiple levels above half-hour, for example, hour, day, week or month. 
+
+
 
 The module COMPATIBLE will provide automatic checks on the feasibility of plotting or drawing inference from two granularities together.
 
