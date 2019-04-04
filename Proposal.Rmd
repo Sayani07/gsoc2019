@@ -1,7 +1,6 @@
 ---
-title: "Proposal"
-author: "Sayani Gupta"
-date: "04/04/2019"
+title: "gravitas: exploring probability distributions for bivariate temporal granularities"
+
 output: html_document
 ---
 
@@ -10,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-**Basic Information**
+**Student information**
 -----------------------
 
 Name: Sayani Gupta
@@ -19,11 +18,11 @@ University: Monash University,  Australia
 
 Email: gupta.sayani@gmail.com
 
+Student Email : Sayani.gupta@monash.edu
+
 Github: https://github.com/Sayani07
 
 Twitter: https://twitter.com/SayaniGupta07
-
-Phone: (+61) 423889998
 
 Timezone: AEST (UTC + 11:00)
 
@@ -143,7 +142,7 @@ Build functions for module **POINTERS**. Conduct unit test to check robustness o
 -   #### 2 Weeks (14 July - 26 July)
 
 Develop shiny UI to guide an user to navigate through the three modules of the R package.
--   
+
 ### Phase 5: Phase 2 Evaluations
 
 This period will be used to write a detailed report on the work done in Coding Period 2 and also a buffer to create user documentation for the shiny app. Final report will be uploaded at the project's wiki page after feedback from mentors.
@@ -184,7 +183,7 @@ All comments from mentors to be included in the final report stitching all the i
 
 - Final report detailing all work done in GSoC period.
 
-Additional Information Regarding Timeline
+Additional information regarding timeline
 -----------------------------------------
 
 -   The above timeline is tentative and gives a rough idea of my planned project work. I’ve no major commitments during summer (winter in Australia) and hence, will be able to dedicate 40 hours to 50 hours a week. During the last month of the project, my university will reopen and I’ll be able to dedicate around 30 hours a week. I plan to complete major chunk of the work before university reopens.
