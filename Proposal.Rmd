@@ -46,7 +46,11 @@ Considerable data is accumulated by sensors today. An example is data measuring 
 Project gravitas
 ----------------
 
-This package will consist of three modules: 
+Broadly, project gravitas will consist of three parts:
+
+- 
+
+1. Develop an R package consisting of the following three modules: 
 
 The module **BUILD** will provide the methods to exhaustively construct any granularities. For example, if the data is available at a half hourly scale, this module would create functions to compute time indices that can be constructed in combination with half-hour like half-hour of the day or half-hour of the week. Additionally, it should also be able to provide functions to create granulartities in combination with temporal scales that are one or multiple levels above half-hour like hour, day, week or month. The idea here is to able to provide exahustive set of granularities to figure out periodicities, patterns or anomalies across different granularities that are not obvious and hence aid the process of looking at data from multiple perspectives.
 
@@ -54,12 +58,11 @@ The module **COMPATIBLE** will provide automatic checks on the feasibility of pl
 
 The module **POINTERS** will provide appropriate data structures to visualize with the grammar of graphics for harmonies. Moreover, it will provide suggestions on the nature of harmonies, which may include number of observations per combination of categories for these harmonies or variation in number of observations across combinations of harmonies. These suggestions will serve as a guide to users who are looking to explore distributions of variables across these harmonies.
 
-Develop a shiny UI to enable user to walk through all these modules seamlessly.
+2. Develop a shiny UI to enable user to explore computing circular granularity construction
 
-Provide examples of probability visualization of smart meter data collected on Australian households
+3. Provide examples of probability visualization of smart meter data collected on Australian households
 
-Document the R package functionality in a vignettes
-
+4. Document the R package functionality in a vignette
 
 
 
@@ -177,6 +180,8 @@ Provide examples of probability visualization of smart meter data collected on A
 
 
 ### Phase 7: Final Evaluation
+
+All comments from mentors to be included in the final report stitching all the independent parts together and to be uploaded.
 
 
 Additional Information Regarding Timeline
