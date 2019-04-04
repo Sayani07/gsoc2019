@@ -16,17 +16,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Name: Sayani Gupta
 
-University: Monash University, Melbourne
-
-Github: @Sayani07
+University: Monash University,  Australia
 
 Email: gupta.sayani@gmail.com
+
+Github: https://github.com/Sayani07
+
+Twitter: https://twitter.com/SayaniGupta07
 
 Phone: (+61) 423889998
 
 Postal Address: 2/612 Blackburn Road, Glen Waverly, Victoria 3150
 
-Timezone: AEST (UTC + 10:00)
+Timezone: AEST (UTC + 11:00)
 
 Project gravitas
 ---------------
@@ -34,16 +36,32 @@ Project gravitas
 
 Abstract
 --------
-
 Package gravitas aims to provide methods to operate on time in an automated way, to deconstruct it in many different ways. Deconstructions of time that respect the linear progression of time like days, weeks and months are defined as linear time granularities and those that accommodate for periodicities in time like hour of the day or day of the month are defined as circular granularities or calendar categorizations. 
+
+The package will provide these techniques into the tidy workflow, so that probability distributions can be examined in the range of graphics available in the ggplot2 package.
+
+
+Background
+---------
+
+Considerable data is accumulated by sensors today. An example is data measuring energy usage on a fine scale using smart meters. Smart meters are installed on many households in many countries now. Providing tools to explore this type of data is an important activity. Because of the large volume of data, using probability distributions for display is a potentially useful approach. Probability distributions are induced by various aggregations of the data, by temporal components, by spatial region, by type of household.
+
+
 
 This package will consist of three modules: 
 
-The module BUILD will provide the methods to exhaustively construct any granularities. For example, if the data is available at a half hourly scale, this module would create functions to compute time indices that can be constructed in combination with half-hour like half-hour of the day or half-hour of the week. Additionally, it should also be able to provide functions to create granulartities in combination with temporal scales that are one or multiple levels above half-hour, for example, hour, day, week or month. 
+The module **BUILD** will provide the methods to exhaustively construct any granularities. For example, if the data is available at a half hourly scale, this module would create functions to compute time indices that can be constructed in combination with half-hour like half-hour of the day or half-hour of the week. Additionally, it should also be able to provide functions to create granulartities in combination with temporal scales that are one or multiple levels above half-hour like hour, day, week or month. The idea here is to able to provide exahustive set of granularities to figure out periodicities, patterns or anomalies across different granularities that are not obvious and hence aid the process of looking at data from multiple perspectives.
 
+The module **COMPATIBLE** will provide automatic checks on the feasibility of plotting or drawing inference from two granularities together.The idea is to categorize pairs of granularities as either a harmony or clashes, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. 
 
+The module **POINTERS** will provide appropriate data structures to visualize with the grammar of graphics for harmonies. Moreover, it will provide suggestions on the nature of harmonies, which may include number of observations per combination of categories for these harmonies or variation in number of observations across combinations of harmonies. These suggestions will serve as a guide to users who are looking to explore distributions of variables across these harmonies.
 
-The module COMPATIBLE will provide automatic checks on the feasibility of plotting or drawing inference from two granularities together.
+Develop a shiny UI to enable user to walk through all these modules seamlessly.
+
+Provide examples of probability visualization of smart meter data collected on Australian households
+
+Document the R package functionality in a vignette
+
 
 
 
