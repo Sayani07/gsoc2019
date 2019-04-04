@@ -43,7 +43,6 @@ Motivation
 
 Considerable data is accumulated by sensors today. An example is data measuring energy usage on a fine scale using smart meters. Smart meters are installed on many households in many countries now. Providing tools to explore this type of data is an important activity. Because of the large volume of data, using probability distributions for display is a potentially useful approach. Probability distributions are induced by various aggregations of the data, by temporal components, by spatial region, by type of household.
 
-
 Project gravitas
 ----------------
 
@@ -59,9 +58,21 @@ Develop a shiny UI to enable user to walk through all these modules seamlessly.
 
 Provide examples of probability visualization of smart meter data collected on Australian households
 
-Document the R package functionality in a vignette
+Document the R package functionality in a vignettes
 
-**Proposed Deliverables (during GSoC)**
+
+
+
+Related work
+---------
+
+- *_lubridate_* is an R package that makes it easier to work with time and also has functions for creating calendar categorizations like hour of the day, day of the week, minutes of the hour. But it mostly creates calendar categorizations that are one step up. The proposed R package will allow creating calendar categorizations that are more than one step ahead, for example,  hour of the week or one step up that are not present in lubridate package like week of the month.
+
+- Calendar based graphics in the package *_sugrrants_* help explore data across linear time granularities in a calendar format, whereas this package would help explore circular time granularities.
+
+- *_ggplot2_* facilitates the process of mapping different variables to a 2D frame through grammar of graphics. But it does not tell us which all variables to plot together to promote exploration of data. The proposed package would provide the list of harmonies given a time variable.
+
+- This will use as inputs *_tsibble_* objects which complement the tibble and extend the tidyverse concept to temporal data.
 
 
 Brief Timeline
@@ -89,94 +100,82 @@ Brief Timeline
 Detailed Project Timeline
 -------------------------
 
-### Phase 0 \[Pre-GSoC Period\]
+### Phase 0: Pre-GSoC Period
 
 -   #### 3 Weeks (11 Apr - 6 May)
 
-I’ve been spending time at understanding the codebase and solving issues concerning major issues. During this period, I’ll try to solve more tasks and also focus on solving some of the GSoC qualification tasks.
-Along with that, I’ll carry on my experiments and demos with various technologies being used to gain a deeper understanding of the same.
-
--   #### 1 Week (7 May - 26 May)
-
-End semester exams begin at my institute, and I will not be contributing actively during this period. Nonetheless, I’ll be actively following the progress and participate in conversations over slack.
-
-Reference: [*Institute’s annual calendar*](http://www.iitkgp.ac.in/files/acad_cal1718.pdf)
-
-### Phase 1 \[Community Bonding Period\]
-
--   #### 2 Weeks (27 May - 23 June)
-
-During the community bonding, the main focus will be to frame a roadmap for the project with the guidance of the mentor (along with improving bonding, which is what the period is for). This period will also be used to study the already present work on Nephos and to figure a concrete plan to integrate that into the planned ideas and *tvstreamrecord*.
-The integration of various parts of the project into one another will be framed, and a source code directory layout will be prepared to keep the flow smooth in later stages of the development.
-
-All the development related setup will also be done during this period.
-***NOTE:*** Once into the coding period I will be following the order; the recording module, the processing module and the uploading module, in the development process. Though the modules are independent, it’ll be useful to follow the order above since, in Nephos, each module requires the output of the previous.
-
-### Phase 2 \[Coding Period 1\]
-
--   #### 3 Weeks (29 June -22 July)
-
-I’ll be merging parts of codes from tvrecordstream and already present work on Project Nephos. Since tvrecordstream is a fully functional standalone recorder, it’ll be kept as the base and elements from Nephos will be modified to work with it (more details will be shared after in-depth study of both the involved works).
-
--   #### 1 Week (27 July - 18 August)
-
-During this week, I’ll be writing tests for recording modules. These tests will also be employed in continuous integration. This period will also be used as a buffer to complete documentation and fix bugs in the program.
-
-19 August - 26 August: 
 
 
-### Phase 3 \[GSoC Phase 1 Evaluations\]
+### Phase 1: Community Bonding Period
 
-This period will be used to write a detailed report on the work done in Coding Period 1. All the work done will be uploaded and documentation will be created/uploaded to CCExtractor’s wiki.
+-   #### 2 Weeks (7 May - 26 May)
 
-#### Deliverables
+During the community bonding, the main focus will be to frame a roadmap for the project with the guidance of the mentor and improving bonding with the community. The integration of various parts of the project into one another will be framed and all the development related setup will also be done during this period. The modules are independent but each module would require the output of the previous one. Hence, it is important to be able to map out the 
+tasks and development plan for each of the modules at this stage.
 
--   Recording monitor capable of accepting channel data (through CLI), executing scheduled jobs and saving the stream.
+### Phase 2 : Coding Period 1
 
--   Full documentation regarding usage and code.
+-   #### 3 Weeks (27 May - 16 June)
 
--   Tests for the recording module.
+ Build functions for module **BUILD** and **COMPATIBLE**. Conduct unit test to check robustness of functions and include documentation for these two modules. Include real world example data sets to demostrate how the functions in each modules.
 
-### Phase 4 \[Coding Period 2\]
+-   #### 1 Week (17 June - 23 June)
 
--   #### 2 Weeks (16 June - 1 July)
+This period will be used as a buffer to complete documentation, fix bugs in the program and making the code more efficient.
 
-Work on processing module will begin; the main task during this period will be the collaboration between all the tools being used and the implementation of parsing the file\_list to avoid a collision. The linkage between the recording module and the processing module will be an integral part of the work.
 
-Work on uploading module will also begin by the end of this period, though no documentation, tests or working will be presented.
+### Phase 3 : GSoC Phase 1 Evaluations
 
--   #### 1 Week (2 July - 9 July)
+This period will be used to write a detailed report on the work done in Coding Period 1. Final report will be uploaded at the project's wiki page after feeback from mentors.
 
-Writing tests, documentation and other work, same as the last week of the coding period 2. Here, the tests will also be written for the combined functioning of the two modules completed until this phase.
+### Deliverables
 
-### Phase 5 \[Phase 2 Evaluations\]
+- Write functions for modules **BUILD** and **COMPATIBLE**
 
-A detailed report on the working of the processing module and both the modules together.
+- Full documentation regarding usage and code.
 
-#### Deliverables
+- Tests for modules **BUILD** and **COMPATIBLE**
 
--   Processed sample output files which includes subtitles, MP4 converted sample ,and associated tags.
 
--   Full documentation of the processing module and combined working of both the modules finished till now.
+### Phase 4: Coding Period 2
 
--   Tests for both modules, individually as well as functioning together.
+-   #### 2 Weeks (29 June - 13 July)
 
-### Phase 6 \[Coding Period 3\]
+Build functions for module **POINTERS**. Conduct unit test to check robustness of functions and include documentation. Include real world example data sets to demonstrate utility of functions developed in this module.
 
--   #### 3 Weeks (14 July - 7 August)
+-   #### 2 Weeks (14 July - 26 July)
 
-Work on Uploading module, which is the creation of Nephos abstract base class, a CLI for editing share-list and implementation of it in using Google Drive API, will be continued during this period. This will also require substantial testing of uploading/sharing functionalities and creation of tests for the same will start in this period only.
-Integration of Nephos into Red Hen will be done during the last week of this period. The work to be done is unclear at the moment and will be decided after access to Red Hen is granted during GSoC period.
+Develop shiny UI to guide an user to navigate through the three modules of the R package.
+-   
+### Phase 5: Phase 2 Evaluations
 
--   #### 1 Week (8 August - 14 August)
 
-I’ll work on Travis CI automatic PyPI deployment, the creation of tests and writing the final documentation for the module as well as the entire project. As with the last week of every coding period, bug fixes and other minor changes will also be done along with the creation of Developer’s documentation to help integrate other cloud services.
-This time will also be utilized to finish any pending works in the project, complete all documentation, write Wikis (if needed) and submit mentor evaluation.
+This period will be used to write a detailed report on the work done in Coding Period 2 and also a buffer to create user documentation for the shiny app. Final report will be uploaded at the project's wiki page after feeback from mentors.
 
-### Phase 7 \[Final Evaluation\]
+### Deliverables
 
-All documentation, modules, and tests will be uploaded and CI will be integrated into the project Github page.
-***All the deliverables promised for GSoC will be provided by this stage.***
+- Write functions for module **POINTER** and consuct unit tests.
+
+- Full documentation regarding usage and code.
+
+- shiny UI for creating a menu driven front end of gravitas.
+- 
+
+### Phase 6: Coding Period 3
+
+-   #### 1 Week (29 June - 13 July)
+
+Build functions for module **POINTERS**. Conduct unit test to check robustness of functions and include documentation. Include real world example data sets to demonstrate utility of functions developed in this module.
+
+-   #### 2 Weeks (14 July - 26 July)
+
+Develop shiny UI to guide an user to navigate through the three modules of the R package.
+
+-   #### 2 Weeks (14 July - 26 July)
+
+
+### Phase 7: Final Evaluation
+
 
 Additional Information Regarding Timeline
 -----------------------------------------
@@ -185,11 +184,9 @@ Additional Information Regarding Timeline
 
 -   Each week, time will be divided amongst planning, learning and coding, testing features and documentation. I plan to work on the documentation at the end of each week to minimize bugs in later stages and also establish the utility for all functions (developed that week) using small data sets from real world application.
 
-- Fortnightly blogs will be maintained at [*https://medium.com/@thealphadollar*](https://medium.com/@thealphadollar) that will include highlights of the development process, hurdles that I came across and methods to overcome them.Also, some good practices that I learnt while looking at codes from other R community developers who are working in similar  
+- I will publish blogs at the end of each coding phase that will include highlights of the development process, hurdles that I came across and how I overcame them. Also, I would document some good practices that I learnt while looking at codes from developers of R community who are working in similar fields.
 
--   One of the reasons I’ve been active in CCExtractor is due to the immensely helpful community and I’ll try to keep myself continuously updated with other developments going on. I’ll be available for communication at all times decided by my mentor and discuss new ideas and methods throughout the project.
-
--   I’m very enthusiastic about working on CCExtractor’s main code as well and will be taking up issues (outside my GSoC project) as and when time permits.
+- I’ll be setting up weekly meetings with my mentors where I update them on where I am on the project with the documentation that I plan to work on at the end of each week. 
 
 
 
