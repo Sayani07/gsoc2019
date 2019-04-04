@@ -44,19 +44,19 @@ Project gravitas
 
 Project gravitas will consist of three parts:
 
-1. Develop an R package consisting of the following three modules: 
+1. **R Package**: Develop an R package consisting of the following three modules: 
 
 The module **BUILD** will provide the methods to exhaustively construct any granularities. For example, if the data is available at a half hourly scale, this module would create functions to compute time indices that can be constructed in combination with half-hour like half-hour of the day or half-hour of the week. Additionally, it should also be able to provide functions to create granulartities in combination with temporal scales that are one or multiple levels above half-hour like hour, day, week or month. The idea here is to able to provide exhaustive set of granularities to figure out periodicities, patterns or anomalies across different granularities that are not obvious and hence aid the process of looking at data from multiple perspectives.
 
-The module **COMPATIBLE** will provide automatic checks on the feasibility of plotting or drawing inference from two granularities together.The idea is to categorize pairs of granularities as either a harmony or clashes, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. 
+The module **COMPATIBLE** will provide automatic checks on the feasibility of plotting or drawing inference from two granularities together. The idea is to categorize pairs of granularities as either a harmony or clashes, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. 
 
 The module **POINTERS** will provide appropriate data structures to visualize with the grammar of graphics for harmonies. Moreover, it will provide suggestions on the nature of harmonies, which may include number of observations per combination of categories for these harmonies or variation in number of observations across combinations of harmonies. These suggestions will serve as a guide to users who are looking to explore distributions of variables across these harmonies.
 
-2. Shiny UI: Develop an user interface using RShiny to enable user to walk through different modules of the package
+2. **Shiny UI**: Develop an user interface using RShiny to enable user to walk through different modules of the package
 
-3. Application: Provide examples of probability visualization of smart meter data collected on Australian households
+3. **Application**: Provide examples of probability visualization of smart meter data collected on Australian households
 
-4. Vignette: Document the R package functionality in a vignette
+4. **Vignette**: Document the R package functionality in a vignette
 
 
 
@@ -168,7 +168,7 @@ Provide examples of probability visualization of smart meter data collected on A
 
 -   #### ~ 1 Week (14 August - 18 August)
 
-Work on improving the shiny UI that is developed in phase 2 coding. Also document ideas that were discussed after community bonding period and could not implemented due to the time limitations. These can then form a part of future extension of this work.
+Work on improving the shiny UI that is developed in phase 2 coding. Also document ideas that were discussed after community bonding period and could not be implemented due to time limitations. These can then form the basis of future extension of this work.
 
 
 ### Phase 7: Final Evaluation
@@ -191,7 +191,7 @@ Additional Information Regarding Timeline
 
 -   Each week, time will be divided amongst planning, learning and coding, testing features and documentation. I plan to work on the documentation at the end of each week to minimize bugs in later stages and also establish the utility for all functions (developed that week) using small data sets from real world application.
 
-- I will publish blogs at the end of each coding phase that will include highlights of the development process, hurdles that I came across and how I overcame them. Also, I would document some good practices that I learnt while looking at codes from developers of R community who are working in similar fields.
+- I'll publish blogs at the end of each coding phase that will include highlights of the development process, hurdles that I came across and how I overcame them. Also, I would document some good practices that I learnt while looking at codes from developers of R community who are working in similar fields.
 
 - I’ll be setting up weekly meetings with my mentors where I update them on where I am on the project with the documentation that I plan to work on at the end of each week. 
 
