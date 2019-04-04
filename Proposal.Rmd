@@ -64,7 +64,10 @@ Document the R package functionality in a vignette
 **Proposed Deliverables (during GSoC)**
 
 
-- (Phase 0) Till 6 May: Pre-GSoC Period
+Brief Timeline
+--------------
+
+- (Phase 0) 11 Apr - 6 May: Pre-GSoC Period
 
 - (Phase 1) 7 May - 26 May: Community Bonding Period
 
@@ -83,29 +86,110 @@ Document the R package functionality in a vignette
 - (Phase 8) 26 August - 2 September: Final evaluation
 
 
+Detailed Project Timeline
+-------------------------
+
+### Phase 0 \[Pre-GSoC Period\]
+
+-   #### 3 Weeks (11 Apr - 6 May)
+
+I’ve been spending time at understanding the codebase and solving issues concerning major issues. During this period, I’ll try to solve more tasks and also focus on solving some of the GSoC qualification tasks.
+Along with that, I’ll carry on my experiments and demos with various technologies being used to gain a deeper understanding of the same.
+
+-   #### 1 Week (7 May - 26 May)
+
+End semester exams begin at my institute, and I will not be contributing actively during this period. Nonetheless, I’ll be actively following the progress and participate in conversations over slack.
+
+Reference: [*Institute’s annual calendar*](http://www.iitkgp.ac.in/files/acad_cal1718.pdf)
+
+### Phase 1 \[Community Bonding Period\]
+
+-   #### 2 Weeks (27 May - 23 June)
+
+During the community bonding, the main focus will be to frame a roadmap for the project with the guidance of the mentor (along with improving bonding, which is what the period is for). This period will also be used to study the already present work on Nephos and to figure a concrete plan to integrate that into the planned ideas and *tvstreamrecord*.
+The integration of various parts of the project into one another will be framed, and a source code directory layout will be prepared to keep the flow smooth in later stages of the development.
+
+All the development related setup will also be done during this period.
+***NOTE:*** Once into the coding period I will be following the order; the recording module, the processing module and the uploading module, in the development process. Though the modules are independent, it’ll be useful to follow the order above since, in Nephos, each module requires the output of the previous.
+
+### Phase 2 \[Coding Period 1\]
+
+-   #### 3 Weeks (29 June -22 July)
+
+I’ll be merging parts of codes from tvrecordstream and already present work on Project Nephos. Since tvrecordstream is a fully functional standalone recorder, it’ll be kept as the base and elements from Nephos will be modified to work with it (more details will be shared after in-depth study of both the involved works).
+
+-   #### 1 Week (27 July - 18 August)
+
+During this week, I’ll be writing tests for recording modules. These tests will also be employed in continuous integration. This period will also be used as a buffer to complete documentation and fix bugs in the program.
+
+19 August - 26 August: 
 
 
+### Phase 3 \[GSoC Phase 1 Evaluations\]
 
-The recording module will be responsible for managing the addition of channel lists, set up of recording jobs and saving the recorded streams. The processing module will parse saved samples, associate tags, extract subtitles and convert the video files to MP4 to reduce the file size. The uploading module will upload the processed stream files, and also share sample with other universities if required.
-Nephos will be developed, using Python and few other open source projects, to accomplish all the above mentioned tasks with cent-percent reliability and zero failures (unless wrong data is input, which will get logged). Testing and logging will be an integral part of Nephos development and running cycle, respectively.
+This period will be used to write a detailed report on the work done in Coding Period 1. All the work done will be uploaded and documentation will be created/uploaded to CCExtractor’s wiki.
 
-Background
-----------
+#### Deliverables
 
+-   Recording monitor capable of accepting channel data (through CLI), executing scheduled jobs and saving the stream.
 
+-   Full documentation regarding usage and code.
 
-Motivation
-----------
+-   Tests for the recording module.
 
+### Phase 4 \[Coding Period 2\]
 
+-   #### 2 Weeks (16 June - 1 July)
 
-Project gravitas
---------------
+Work on processing module will begin; the main task during this period will be the collaboration between all the tools being used and the implementation of parsing the file\_list to avoid a collision. The linkage between the recording module and the processing module will be an integral part of the work.
 
+Work on uploading module will also begin by the end of this period, though no documentation, tests or working will be presented.
 
-Why do I want to work on gravitas?
-------------------------------
+-   #### 1 Week (2 July - 9 July)
 
-### Why Nephos?
+Writing tests, documentation and other work, same as the last week of the coding period 2. Here, the tests will also be written for the combined functioning of the two modules completed until this phase.
+
+### Phase 5 \[Phase 2 Evaluations\]
+
+A detailed report on the working of the processing module and both the modules together.
+
+#### Deliverables
+
+-   Processed sample output files which includes subtitles, MP4 converted sample ,and associated tags.
+
+-   Full documentation of the processing module and combined working of both the modules finished till now.
+
+-   Tests for both modules, individually as well as functioning together.
+
+### Phase 6 \[Coding Period 3\]
+
+-   #### 3 Weeks (14 July - 7 August)
+
+Work on Uploading module, which is the creation of Nephos abstract base class, a CLI for editing share-list and implementation of it in using Google Drive API, will be continued during this period. This will also require substantial testing of uploading/sharing functionalities and creation of tests for the same will start in this period only.
+Integration of Nephos into Red Hen will be done during the last week of this period. The work to be done is unclear at the moment and will be decided after access to Red Hen is granted during GSoC period.
+
+-   #### 1 Week (8 August - 14 August)
+
+I’ll work on Travis CI automatic PyPI deployment, the creation of tests and writing the final documentation for the module as well as the entire project. As with the last week of every coding period, bug fixes and other minor changes will also be done along with the creation of Developer’s documentation to help integrate other cloud services.
+This time will also be utilized to finish any pending works in the project, complete all documentation, write Wikis (if needed) and submit mentor evaluation.
+
+### Phase 7 \[Final Evaluation\]
+
+All documentation, modules, and tests will be uploaded and CI will be integrated into the project Github page.
+***All the deliverables promised for GSoC will be provided by this stage.***
+
+Additional Information Regarding Timeline
+-----------------------------------------
+
+-   The above timeline is tentative and gives a rough idea of my planned project work. I’ve no major commitments during summer (winter in Australia) and hence, will be able to dedicate 40 hours to 50 hours a week. During the last month of the project, my university will reopen and I’ll be able to dedicate around 30 hours a week. I plan to complete major chunk of the work before university reopens.
+
+-   Each week, time will be divided amongst planning, learning and coding, testing features and documentation. I plan to work on the documentation at the end of each week to minimize bugs in later stages and also establish the utility for all functions (developed that week) using small data sets from real world application.
+
+- Fortnightly blogs will be maintained at [*https://medium.com/@thealphadollar*](https://medium.com/@thealphadollar) that will include highlights of the development process, hurdles that I came across and methods to overcome them.Also, some good practices that I learnt while looking at codes from other R community developers who are working in similar  
+
+-   One of the reasons I’ve been active in CCExtractor is due to the immensely helpful community and I’ll try to keep myself continuously updated with other developments going on. I’ll be available for communication at all times decided by my mentor and discuss new ideas and methods throughout the project.
+
+-   I’m very enthusiastic about working on CCExtractor’s main code as well and will be taking up issues (outside my GSoC project) as and when time permits.
+
 
 
