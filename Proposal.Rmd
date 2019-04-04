@@ -113,8 +113,9 @@ Detailed Project Timeline
 
 -   #### 2 Weeks (7 May - 26 May)
 
-During the community bonding, the main focus will be to frame a roadmap for the project with the guidance of the mentor and improving bonding with the community. The integration of various parts of the project into one another will be framed and all the development related setup will also be done during this period. The modules are independent but each module would require the output of the previous one. Hence, it is important to be able to map out the 
-tasks and development plan for each of the modules at this stage.
+During the community bonding, the main focus will be to frame a roadmap for the project with the guidance of the mentor and improving bonding with the community. 
+
+Each module of the package would require the output from the previous one. Hence, it is important to brainstorm and map out the set of functions to be developed for each module. This will facilitate the integration of various parts of the project into one another. I will ensure all the ideas developed at this stage are implemented by the end of the GSoC period. The proposal needs to be revised at this stage to add more details on the planned activities of each of the modules. 
 
 ### Phase 2 : Coding Period 1
 
