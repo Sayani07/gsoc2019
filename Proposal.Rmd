@@ -157,26 +157,25 @@ This period will be used to write a detailed report on the work done in Coding P
 
 ### Deliverables
 
-- Write functions for module **POINTER** and consuct unit tests.
+- Write functions for module **POINTER** and consuct unit tests
 
-- Full documentation regarding usage and code.
+- Full documentation regarding usage and code
 
-- shiny UI for creating a menu driven front end of gravitas.
-- 
+- shiny UI for creating a menu driven front end of gravitas
 
 ### Phase 6: Coding Period 3
 
--   #### ~ 1 Week (27 July - 1 August)
+-   #### ~ 2 Weeks (27 July - 6 August)
 
-Build functions for module **POINTERS**. Conduct unit test to check robustness of functions and include documentation. Include real world example data sets to demonstrate utility of functions developed in this module.
+Document the R package functionality in a vignette
 
--   #### ~ 2 Weeks (2 August - 12 August)
+-   #### ~ 1 Weeks (7 August - 13 August)
 
-Document the R package functionality in a vignette. 
+Provide examples of probability visualization of smart meter data collected on Australian households 
 
--   #### ~ 1 Week (13 August - 18 August)
+-   #### ~ 1 Week (14 August - 18 August)
 
-Provide examples of probability visualization of smart meter data collected on Australian households
+Work on improving the shiny UI that is developed in phase 2 coding. Also document ideas that were discussed after community bonding period and could not implemented due to the time limitations. These can then form a part of future extension of this work.
 
 
 ### Phase 7: Final Evaluation
