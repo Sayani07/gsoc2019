@@ -30,9 +30,6 @@ Postal Address: 2/612 Blackburn Road, Glen Waverly, Victoria 3150
 
 Timezone: AEST (UTC + 11:00)
 
-Project gravitas
----------------
-
 
 Abstract
 --------
@@ -41,12 +38,14 @@ Package gravitas aims to provide methods to operate on time in an automated way,
 The package will provide these techniques into the tidy workflow, so that probability distributions can be examined in the range of graphics available in the ggplot2 package.
 
 
-Background
----------
+Motivation
+----------
 
 Considerable data is accumulated by sensors today. An example is data measuring energy usage on a fine scale using smart meters. Smart meters are installed on many households in many countries now. Providing tools to explore this type of data is an important activity. Because of the large volume of data, using probability distributions for display is a potentially useful approach. Probability distributions are induced by various aggregations of the data, by temporal components, by spatial region, by type of household.
 
 
+Project gravitas
+----------------
 
 This package will consist of three modules: 
 
@@ -62,11 +61,30 @@ Provide examples of probability visualization of smart meter data collected on A
 
 Document the R package functionality in a vignette
 
+**Proposed Deliverables (during GSoC)**
+
+
+- (Phase 0) Till 6 May: Pre-GSoC Period
+
+- (Phase 1) 7 May - 26 May: Community Bonding Period
+
+- (Phase 2) 27 May - 23 June: Coding Period 1
+
+- (Phase 3) 24 June - 28 June: Phase 1 Evaluations
+
+- (Phase 4) 29 June -22 July: Coding Period 2
+
+- (Phase 5) 23 July - 26 July: Phase 2 Evaluations
+
+- (Phase 6) 27 July - 18 August: Coding Period 3
+
+- (Phase 7) 19 August - 26 August: Final week of submitting finished product
+
+- (Phase 8) 26 August - 2 September: Final evaluation
 
 
 
 
-Project Nephos aims at simplifying the process of moving samples from local storage to cloud for Universities by automating, almost, all the steps involved. It will be consisting of three independent modules; recording module, processing module, and uploading module.
 
 The recording module will be responsible for managing the addition of channel lists, set up of recording jobs and saving the recorded streams. The processing module will parse saved samples, associate tags, extract subtitles and convert the video files to MP4 to reduce the file size. The uploading module will upload the processed stream files, and also share sample with other universities if required.
 Nephos will be developed, using Python and few other open source projects, to accomplish all the above mentioned tasks with cent-percent reliability and zero failures (unless wrong data is input, which will get logged). Testing and logging will be an integral part of Nephos development and running cycle, respectively.
