@@ -1,7 +1,8 @@
 ---
-title: "gravitas: exploring probability distributions for bivariate temporal granularities"
-
-output: html_document
+title: 'gravitas: exploring probability distributions for bivariate temporal granularities'
+output:
+  html_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -45,7 +46,22 @@ Project gravitas will consist of three parts:
 
 1. **R Package**: Develop an R package consisting of the following three modules: 
 
-The module **BUILD** will provide the methods to exhaustively construct any granularities. For example, if the data is available at a half hourly scale, this module would create functions to compute time indices that can be constructed in combination with half-hour like half-hour of the day or half-hour of the week. Additionally, it should also be able to provide functions to create granulartities in combination with temporal scales that are one or multiple levels above half-hour like hour, day, week or month. The idea here is to able to provide exhaustive set of granularities to figure out periodicities, patterns or anomalies across different granularities that are not obvious and hence aid the process of looking at data from multiple perspectives.
+- The module **BUILD** will provide the methods to exhaustively construct any granularities. Some of the functions that will be created as part of this module are as follows:
+
+| Function                  	| Description                                                                         	|    Arg 1    	| Arg 2 	|
+|---------------------------	|-------------------------------------------------------------------------------------	|:----------------:	|-----------:	|
+| ghour (.data, .grantype)  	| define granularities in combination with hour, e.g. hour of the week                	| a tsibble object 	|       week 	|
+| gqhour (.data, .grantype) 	| define granularities in combination with quarter hour, e.g. quarter hour of the day 	| a tsibble object 	|        day 	|
+| gweek (.data, .grantype)  	| define granularities in combination with week,  e.g. week of the month              	| a tsibble object 	|      month 	|
+
+Since the data fed is a tsibble, it will automatically feed the available time index in the function. These functions will be able to create granularities in combination with any time index that are one or multiple level higher than the available time index in the given tsibble.
+
+
+
+
+
+
+would create functions to compute time indices that can be constructed in combination with half-hour like half-hour of the day or half-hour of the week. Additionally, it should also be able to provide functions to create granulartities in combination with temporal scales that are one or multiple levels above half-hour like hour, day, week or month. The idea here is to able to provide exhaustive set of granularities to figure out periodicities, patterns or anomalies across different granularities that are not obvious and hence aid the process of looking at data from multiple perspectives.
 
 The module **COMPATIBLE** will provide automatic checks on the feasibility of plotting or drawing inference from two granularities together. The idea is to categorize pairs of granularities as either a harmony or clashes, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. 
 
