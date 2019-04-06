@@ -54,19 +54,35 @@ Project gravitas will consist of three parts:
 | gqhour (.data, .grantype) 	| define granularities in combination with quarter hour, e.g. quarter hour of the day 	| a tsibble object 	|        day 	|
 | gweek (.data, .grantype)  	| define granularities in combination with week,  e.g. week of the month              	| a tsibble object 	|      month 	|
 
+
 Since the data fed is a tsibble, the function will pick up the time index (temporal resolution) and create granularities in combination with any time index that are one or multiple levels higher in resolution than the  time index in the given tsibble.
 
-Additionally, it should also be able to provide functions to create granulartities in combination with temporal scales that are one or multiple levels above half-hour like hour, day, week or month. 
+Additionally, it should also provide a function to create granularities combining two temporal scales without automatically picking it up from the tsibble object. However, the data fed still needs to be a tsibble so that time indices are preserved as an essential data component. 
+
+**Function name**: build_gran
+
+**Description**: compute granularities given two time indices different from the the default time index in tsibble
+
+**Usage**: build_gran(.data,gran1, gran2, label = FALSE )
+
+**Arguments**: 
+
+.data  - A tsibble 
+
+gran1, gran2 - One of "qhour", "hhour", "hour" "day", "week", "month", "quarter", "semester", "year". gran1 should be a lower temporal resolution than gran2
+
+label - TRUE will display the expected granularity as a character and FALSE will display the month.
+
+**Value**: A numeric or character vector of the same length as the data
 
 
-| Function                         	| Description                                                                                                                           	|       Arg 1      	| Arg 2 	|
-|----------------------------------	|---------------------------------------------------------------------------------------------------------------------------------------	|:----------------:	|------:	|
-| derive_ghour (.data, .grantype1) 	| define granularities in combination with hour, e.g. hour of the week, when tsibble index is half hour or quarter hour                 	| a tsibble object 	|  week 	|
-| derive_gweek (.data, .grantype1) 	| define granularities in combination with week, e.g. week of the month, when tsibble index can be day, hour, half hour or quarter hour 	| a tsibble object 	| month 	|
+
 
 The idea in this module is to provide exhaustive set of granularities at our disposal so that we can use them in later modules to figure out periodicities, patterns or anomalies. 
 
 The module **COMPATIBLE** will provide automatic checks on the feasibility of plotting or drawing inference from two granularities together. The idea is to categorize pairs of granularities as either a harmony or clashes, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. 
+
+
 
 The module **POINTERS** will provide appropriate data structures to visualize with the grammar of graphics for harmonies. Moreover, it will provide suggestions on the nature of harmonies, which may include number of observations per combination of categories for these harmonies or variation in number of observations across combinations of harmonies. These suggestions will serve as a guide to users who are looking to explore distributions of variables across these harmonies.
 
