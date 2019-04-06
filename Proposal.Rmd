@@ -48,7 +48,7 @@ Project gravitas will consist of three parts:
 
 - The module **BUILD** will provide the methods to exhaustively construct any granularities. Some of the functions that will be created as part of this module are as follows:
 
-| Function                  	| Description                                                                         	|    Arg 1    	| Arg 2 	|
+| Function name                  	| Description                                                                         	|    Arg 1    	| Arg 2 	|
 |---------------------------	|-------------------------------------------------------------------------------------	|:----------------:	|-----------:	|
 | ghour (.data, .grantype)  	| define granularities in combination with hour, e.g. hour of the week                	| a tsibble object 	|       week 	|
 | gqhour (.data, .grantype) 	| define granularities in combination with quarter hour, e.g. quarter hour of the day 	| a tsibble object 	|        day 	|
@@ -78,7 +78,7 @@ label - TRUE will display the expected granularity as a character and FALSE will
 
 The idea in this module is to provide exhaustive set of granularities at our disposal so that we can use them in later modules to figure out periodicities, patterns or anomalies in the data. 
 
-The module **COMPATIBLE** will provide checks on the feasibility of plotting or drawing inference from two granularities together. The idea is to categorize pairs of granularities as either a harmony or clash, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. 
+The module **COMPATIBLE** will provide checks on the feasibility of plotting or drawing inference from two granularities together. The idea is to categorize pairs of granularities as either a harmony or clash, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. This module will provide appropriate data structures to visualize with the grammar of graphics for harmonies.
 
 
 **Function name**: compatible
@@ -91,14 +91,10 @@ The module **COMPATIBLE** will provide checks on the feasibility of plotting or 
 
 .data  - A tsibble 
 
-build1, build2  - granularities computed in module BUILD through functions like gqhour, ghhour,ghour, gweek, gmonth, gquarter, gsemester, gyear. gqhour and ghour imply granularities that are obtained in combination with quarter of an hour and hour respectively. Can be numeric vector or functions.
+build1, build2  - granularities computed in module BUILD through functions like gqhour, ghhour, ghour, gweek, gmonth, gquarter, gsemester, gyear. gqhour and ghour imply granularities that are obtained in combination with quarter of an hour and hour respectively. Can be numeric vector or functions.
 
-label - TRUE will display the expected granularity as a character and FALSE will display the month.
+**Value**:  a data structure specifying number of observations per combination of the two builds, variation in the number of observations across combinations and declare them as "harmony" or "clash". These suggestions will serve as a guide to users who are looking to explore distributions of variables across different harmonies.
 
-**Value**:  a table specifying number of observations per combination of the two builds. 
-
-
-The module **POINTERS** will provide appropriate data structures to visualize with the grammar of graphics for harmonies. Moreover, it will provide suggestions on the nature of harmonies, which may include number of observations per combination of categories for these harmonies or variation in number of observations across combinations of harmonies. These suggestions will serve as a guide to users who are looking to explore distributions of variables across these harmonies.
 
 2. **Shiny UI**: Develop an user interface using RShiny to enable user to walk through different modules of the package
 
