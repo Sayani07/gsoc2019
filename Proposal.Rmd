@@ -54,27 +54,25 @@ Project gravitas will consist of three parts:
 | gqhour (.data, .grantype) 	| define granularities in combination with quarter hour, e.g. quarter hour of the day 	| a tsibble object 	|        day 	|
 | gweek (.data, .grantype)  	| define granularities in combination with week,  e.g. week of the month              	| a tsibble object 	|      month 	|
 
+The data fed is a tsibble so that time indices are preserved as an essential data component. The function will create granularities in combination with any time index that are one or multiple levels higher in resolution than the  time index in the given tsibble.
 
-Since the data fed is a tsibble, the function will pick up the time index (temporal resolution) and create granularities in combination with any time index that are one or multiple levels higher in resolution than the  time index in the given tsibble.
-
-Additionally, it should also provide a function to create granularities combining two temporal scales without automatically picking it up from the tsibble object. However, the data fed still needs to be a tsibble so that time indices are preserved as an essential data component. 
+Additionally, a function will be created to compute granularities in combination with temporal scales that are one or multiple level higher than the time index in the given tsibble object.
 
 **Function name**: build_gran
 
-**Description**: compute granularities given two time indices different from the the default time index in tsibble
+**Description**: compute granularities in combination with temporal scales that are one or multiple level above the time index in given tsibble object
 
-**Usage**: build_gran(.data,gran1, gran2, label = FALSE )
+**Usage**: build_gran(.data, gran = c("hour", "day")) # will create all granularities with hour and day.
 
 **Arguments**: 
 
 .data  - A tsibble 
 
-gran1, gran2 - One of "qhour", "hhour", "hour" "day", "week", "month", "quarter", "semester", "year". gran1 should be a lower temporal resolution than gran2
+ gran  - A vector indicating time indices that are at least one level above the given time index
 
-label - TRUE will display the expected granularity as a character and FALSE will display the month.
+ label - TRUE will display the expected granularity as a character and FALSE will display a number.
 
-**Value**: A numeric or character vector of the same length as the data
-
+**Value**: Numeric or character vectors of the same length as the data
 
 The idea in this module is to provide exhaustive set of granularities at our disposal so that we can use them in later modules to figure out periodicities, patterns or anomalies in the data. 
 
