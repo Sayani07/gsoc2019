@@ -210,3 +210,30 @@ Work on improving the shiny UI features that is developed in phase 2 coding. Als
 ### Phase 7: Final Evaluation
 
 All comments from mentors to be included in the final report stitching all the independent parts together and to be uploaded.
+
+
+### Deliverables - 3
+
+- R package vignette
+
+- Application on smart meter data
+
+- Final report detailing all work done in GSoC period.
+
+Additional information regarding timeline
+-----------------------------------------
+
+-   The above timeline is tentative and gives a rough idea of my planned project work. I’ve no major commitments during summer (winter in Australia) and hence, will be able to dedicate 40 hours to 50 hours a week. During the last month of the project, my university will reopen and I’ll be able to dedicate around 30 hours a week. I plan to complete major chunk of the work before university reopens.
+
+-   Each week, time will be divided amongst planning, learning and coding, testing features and documentation. I plan to work on the documentation at the end of each week to minimize bugs in later stages and also establish the utility for all functions (developed that week) using small data sets from real world application.
+
+- I'll publish blogs at the end of each coding phase that will include highlights of the development process, hurdles that I came across and how I overcame them. Also, I would document some good practices that I learnt while looking at codes from developers of R community who are working in similar fields.
+
+- I’ll be setting up weekly meetings with my mentors where I update them on where I am on the project with the documentation that I plan to work on at the end of each week. 
+
+
+## Mentors
+
+- Dianne Cook <dicook@monash.edu>
+- Antony Unwin
+
