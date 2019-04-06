@@ -56,7 +56,7 @@ Project gravitas will consist of four parts:
 
 The data fed is a tsibble so that time indices are preserved as an essential data component. The function will create granularities in combination with any time index that are one or multiple levels higher in resolution than the  time index in the given tsibble.
 
-Additionally, a function will be created to compute granularities in combination with temporal scales that are one or multiple level higher than the time index in the given tsibble object.
+Additionally, a function will be created to compute exhaustive set of granularities with temporal scales that are one or multiple level above the time index in the given tsibble object.
 
 **Function name**: build_gran
 
@@ -74,7 +74,7 @@ Additionally, a function will be created to compute granularities in combination
 
 **Value**: Numeric or character vectors of the same length as the data
 
-The idea in this module is to provide exhaustive set of granularities at our disposal so that we can use them in later modules to figure out periodicities, patterns or anomalies in the data. 
+The idea in this module is to provide exhaustive set of granularities at our disposal so that we can use them in later module to figure out periodicities, patterns or anomalies in the data. 
 
 The module **COMPATIBLE** will provide checks on the feasibility of plotting or drawing inference from two granularities together. The function will categorize pairs of granularities as either a harmony or clash, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. This module will provide appropriate data structures to visualize with the grammar of graphics for harmonies.
 
@@ -156,7 +156,7 @@ Each module of the package would require the output from the previous one. Hence
 
 -   #### 3 Weeks (27 May - 16 June)
 
-Build functions for module **BUILD** and **COMPATIBLE**. Conduct unit tests to check robustness of functions and include documentation for module **BUILD**. Include real world example data sets to demonstrate the utility of each of the functions functions in that module.
+Create functions for module **BUILD** and **COMPATIBLE**. Conduct unit tests to check robustness of functions and include documentation for module **BUILD**. Include real world example data sets to demonstrate the utility of each of the functions functions in that module.
 
 -   #### 1 Week (17 June - 23 June)
 
@@ -167,7 +167,7 @@ This period will be used as a buffer to complete documentation, fix bugs in the 
 
 This period will be used to write a detailed report on the work done in Coding Period 1. Final report will be uploaded at the project's wiki page after feedback from mentors.
 
-### Deliverables
+### Deliverables - 1
 
 - Write functions for modules **BUILD** and **COMPATIBLE**
 
@@ -190,7 +190,7 @@ Develop shiny UI to guide an user to navigate through the modules of the R packa
 
 This period will be used to write a detailed report on the work done in Coding Period 2 and also a buffer to create user documentation for the shiny app. Final report will be uploaded at the project's wiki page after feedback from mentors.
 
-### Deliverables
+### Deliverables - 2
 
 - Tests for module **COMPATIBLE**
 - Full documentation regarding usage and code of **COMPATIBLE**
@@ -217,7 +217,7 @@ Work on improving the shiny UI features that is developed in phase 2 coding. Als
 All comments from mentors to be included in the final report stitching all the independent parts together and to be uploaded.
 
 
-### Deliverables
+### Deliverables - 3
 
 - R package vignette
 

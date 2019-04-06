@@ -1,16 +1,12 @@
 ---
+title: 'gravitas: exploring probability distributions for bivariate temporal granularities'
 output:
   html_document: default
-  pdf_document: default
   word_document: default
 ---
 
-gravitas: exploring probability distributions for bivariate temporal granularities
-----------------------------------------------------------------------------------
-
-
-Student information
--------------------
+**Student information**
+-----------------------
 
 Name: Sayani Gupta
 
@@ -41,15 +37,56 @@ Considerable data is accumulated by sensors today. An example is data measuring 
 Project gravitas
 ----------------
 
-Project gravitas will consist of three parts:
+Project gravitas will consist of four parts:
 
-1. **R Package**: Develop an R package consisting of the following three modules: 
+1. **R Package**: Develop an R package consisting of the following two modules: 
 
-The module **BUILD** will provide the methods to exhaustively construct any granularities. For example, if the data is available at a half hourly scale, this module would create functions to compute time indices that can be constructed in combination with half-hour like half-hour of the day or half-hour of the week. Additionally, it should also be able to provide functions to create granulartities in combination with temporal scales that are one or multiple levels above half-hour like hour, day, week or month. The idea here is to able to provide exhaustive set of granularities to figure out periodicities, patterns or anomalies across different granularities that are not obvious and hence aid the process of looking at data from multiple perspectives.
+- The module **BUILD** will provide the methods to exhaustively construct any granularities. Some of the functions that will be created as part of this module are as follows:
 
-The module **COMPATIBLE** will provide automatic checks on the feasibility of plotting or drawing inference from two granularities together. The idea is to categorize pairs of granularities as either a harmony or clashes, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. 
+| Function name                  	| Description                                                                         	|    Arg 1    	| Arg 2 	|
+|---------------------------	|-------------------------------------------------------------------------------------	|:----------------:	|-----------:	|
+| ghour (.data, .grantype)  	| define granularities in combination with hour, e.g. hour of the week                	| a tsibble object 	|       week 	|
+| gqhour (.data, .grantype) 	| define granularities in combination with quarter hour, e.g. quarter hour of the day 	| a tsibble object 	|        day 	|
+| gweek (.data, .grantype)  	| define granularities in combination with week,  e.g. week of the month              	| a tsibble object 	|      month 	|
 
-The module **POINTERS** will provide appropriate data structures to visualize with the grammar of graphics for harmonies. Moreover, it will provide suggestions on the nature of harmonies, which may include number of observations per combination of categories for these harmonies or variation in number of observations across combinations of harmonies. These suggestions will serve as a guide to users who are looking to explore distributions of variables across these harmonies.
+The data fed is a tsibble so that time indices are preserved as an essential data component. The function will create granularities in combination with any time index that are one or multiple levels higher in resolution than the  time index in the given tsibble.
+
+Additionally, a function will be created to compute exhaustive set of granularities with temporal scales that are one or multiple level above the time index in the given tsibble object.
+
+**Function name**: build_gran
+
+**Description**: compute granularities in combination with temporal scales that are one or multiple level above the time index in given tsibble object
+
+**Usage**: build_gran(.data, gran = c("hour", "day")) # will create all granularities with hour and day.
+
+**Arguments**: 
+
+.data  - A tsibble 
+
+ gran  - A vector indicating time indices that are at least one level above the given time index
+
+ label - TRUE will display the expected granularity as a character and FALSE will display a number.
+
+**Value**: Numeric or character vectors of the same length as the data
+
+The idea in this module is to provide exhaustive set of granularities at our disposal so that we can use them in later module to figure out periodicities, patterns or anomalies in the data. 
+
+The module **COMPATIBLE** will provide checks on the feasibility of plotting or drawing inference from two granularities together. The function will categorize pairs of granularities as either a harmony or clash, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. This module will provide appropriate data structures to visualize with the grammar of graphics for harmonies.
+
+
+**Function name**: compatible
+
+**Description**: provide checks on the feasibility of plotting or drawing inference from bivariate temporal granularities
+
+**Usage**: compatible(.data, build1, build2)
+
+**Arguments**: 
+
+.data  - A tsibble 
+
+build1, build2  - granularities computed in module BUILD through functions like gqhour, ghhour, ghour, gweek, gmonth, gquarter, gsemester, gyear. gqhour and ghour imply granularities that are obtained in combination with quarter of an hour and hour respectively. Can be numeric vector or functions.
+
+**Value**:  a data structure specifying number of observations per combination of the two builds, variation in the number of observations across combinations and declare them as "harmony" or "clash". These suggestions will serve as a guide to users who are looking to explore distributions of variables across different harmonies.
 
 2. **Shiny UI**: Develop an user interface using RShiny to enable user to walk through different modules of the package
 
@@ -96,12 +133,13 @@ Brief Timeline
 Detailed Project Timeline
 -------------------------
 
-### Phase 0 [Pre-GSoC Period]
+### Phase 0: Pre-GSoC Period
 
 -   #### 3 Weeks (11 Apr - 6 May)
 
+I want to spend this period thinking about other functions (beyond the ones conceptualized at this stage) that can be included in each modules. This will be done by extending the idea beyond smart meters and reasoning what other features might me useful in those applications. Some small datasets will be created from data publicly available on the web. This will later help me establish the utility of each of the functions in the coding phase.
 
-### Phase 1 [Community Bonding Period]
+### Phase 1: Community Bonding Period
 
 -   #### 2 Weeks (7 May - 26 May)
 
@@ -109,55 +147,52 @@ During the community bonding, the main focus will be to frame a road map for the
 
 Each module of the package would require the output from the previous one. Hence, it is important to brainstorm and map out the set of functions to be developed for each module. This will facilitate the integration of various parts of the project into one another. I will ensure all the ideas developed at this stage are implemented by the end of the GSoC period. The proposal needs to be revised at this stage to add more details on the planned activities of each of the modules. 
 
-### Phase 2 [Coding Period 1]
+### Phase 2 : Coding Period 1
 
 -   #### 3 Weeks (27 May - 16 June)
 
-Build functions for module **BUILD** and **COMPATIBLE**. Conduct unit tests to check robustness of functions and include documentation for these two modules. Include real world example data sets to demonstrate the utility of each of the functions functions in each module.
+Create functions for module **BUILD** and **COMPATIBLE**. Conduct unit tests to check robustness of functions and include documentation for module **BUILD**. Include real world example data sets to demonstrate the utility of each of the functions functions in that module.
 
 -   #### 1 Week (17 June - 23 June)
 
 This period will be used as a buffer to complete documentation, fix bugs in the program and making the code more efficient.
 
 
-### Phase 3 [GSoC Phase 1 Evaluations]
+### Phase 3 : GSoC Phase 1 Evaluations
 
 This period will be used to write a detailed report on the work done in Coding Period 1. Final report will be uploaded at the project's wiki page after feedback from mentors.
 
-### Deliverables
+### Deliverables - 1
 
 - Write functions for modules **BUILD** and **COMPATIBLE**
 
-- Full documentation regarding usage and code.
+- Full documentation regarding usage and code of **BUILD**
 
-- Tests for modules **BUILD** and **COMPATIBLE**
-
-
-
-### Phase 4 [Coding Period 2]
-
--   #### 2 Weeks (29 June - 13 July)
-
-Build functions for module **POINTERS**. Conduct unit test to check robustness of functions and include documentation. Include real world example data sets to demonstrate utility of functions developed in this module.
-
--   #### 2 Weeks (14 July - 26 July)
-
-Develop shiny UI to guide an user to navigate through the three modules of the R package.
+- Tests for module **BUILD** 
 
 
-### Phase 5 [Phase 2 Evaluations]
+### Phase 4: Coding Period 2
+
+-   #### 1.5 Weeks (29 June - 7 July)
+
+Conduct tests and work on documentation of **COMPATIBLE**
+
+-   #### 2.5 Weeks (8 July - 26 July)
+
+Develop shiny UI to guide an user to navigate through the modules of the R package.
+
+### Phase 5: Phase 2 Evaluations
 
 This period will be used to write a detailed report on the work done in Coding Period 2 and also a buffer to create user documentation for the shiny app. Final report will be uploaded at the project's wiki page after feedback from mentors.
 
-### Deliverables
+### Deliverables - 2
 
-- Write functions for module **POINTER** and construct unit tests
-
-- Full documentation regarding usage and code
-
+- Tests for module **COMPATIBLE**
+- Full documentation regarding usage and code of **COMPATIBLE**
 - shiny UI for creating a menu driven front end of gravitas
+- documentation of the features of shiny UI
 
-### Phase 6 [Coding Period 3]
+### Phase 6: Coding Period 3
 
 -   #### ~ 2 Weeks (27 July - 6 August)
 
@@ -169,39 +204,9 @@ Provide examples of probability visualization of smart meter data collected on A
 
 -   #### ~ 1 Week (14 August - 18 August)
 
-Work on improving the shiny UI that is developed in phase 2 coding. Also document ideas that were discussed after community bonding period and could not be implemented due to time limitations. These can then form the basis of future extension of this work.
+Work on improving the shiny UI features that is developed in phase 2 coding. Also document ideas that were discussed after community bonding period and could not be implemented due to time limitations. These can then form the basis of future extension of this work.
 
 
-### Phase 7 [Final week of submitting finished product]
-
-
-### Deliverables
-
-- R package vignette
-
-- Application on smart meter data
-
-- Final report detailing all work done in GSoC period.
-
-
-### Phase 8 [Final Evaluation]
+### Phase 7: Final Evaluation
 
 All comments from mentors to be included in the final report stitching all the independent parts together and to be uploaded.
-
-Additional information regarding timeline
------------------------------------------
-
--   The above timeline is tentative and gives a rough idea of my planned project work. I’ve no major commitments during summer (winter in Australia) and hence, will be able to dedicate 40 hours to 50 hours a week. During the last month of the project, my university will reopen and I’ll be able to dedicate around 30 hours a week. I plan to complete major chunk of the work before university reopens.
-
--   Each week, time will be divided amongst planning, learning and coding, testing features and documentation. I plan to work on the documentation at the end of each week to minimize bugs in later stages and also establish the utility for all functions (developed that week) using small data sets from real world application.
-
-- I'll publish blogs at the end of each coding phase that will include highlights of the development process, hurdles that I came across and how I overcame them. Also, I would document some good practices that I learnt while looking at codes from developers of R community who are working in similar fields.
-
-- I’ll be setting up weekly meetings with my mentors where I update them on where I am on the project with the documentation that I plan to work on at the end of each week. 
-
-
-## Mentors
-
-- Dianne Cook <dicook@monash.edu>
-- Antony Unwin
-
