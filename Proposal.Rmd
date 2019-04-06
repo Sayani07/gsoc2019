@@ -153,25 +153,28 @@ Detailed Project Timeline
 | Phase 7 	| Final Week of submitting product 	| (19 August - 26 August)          	| All comments from mentors to be included in the final report stitching all the independent parts together and to be uploaded.                                                                                                                                                                                                                                                                                                                                                                                                                                                   	|
 | Phase 8 	| Final evaluation                 	| (27 August - 2 September)        	| All comments from mentors to be included in the final report stitching all the independent parts together and to be uploaded.                                                                                                                                                                                                                                                                                                                                                                                                                                                   	|
 
-### Deliverables - 1
+### Deliverables - 1 (Phase 1 Evaluations)
 
 - Write functions for modules **BUILD** and **COMPATIBLE**
 
-- Full documentation regarding usage and code of **BUILD**
+- Tests for module **BUILD** and making it more efficient
 
-- Tests for module **BUILD** 
+- Detailed report on work done during Coding period 1
 
 
-### Deliverables - 2
+### Deliverables - 2 (Phase 2 Evaluations)
 
-- Tests for module **COMPATIBLE**
-- Full documentation regarding usage and code of **COMPATIBLE**
+- Tests for module **COMPATIBLE** and making it more efficient
+
 - shiny UI for creating a menu driven front end of gravitas
+
 - documentation of the features of shiny UI
 
+- Detailed report from  Phase 1 to be amended with work done in this phase
 
 
-### Deliverables - 3
+
+### Deliverables - 3 (Final Evaluations)
 
 - R package vignette
 
