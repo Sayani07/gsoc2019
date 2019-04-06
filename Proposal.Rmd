@@ -31,7 +31,7 @@ Timezone: AEST (UTC + 11:00)
 Abstract
 --------
 
-Project gravitas aims to provide methods to operate on time in an automated way, to deconstruct it in many different ways. Deconstructions of time that respect the linear progression of time like days, weeks and months are defined as linear time granularities and those that accommodate for periodicities in time like hour of the day or day of the month are defined as circular granularities or calendar categorizations. Often visualizing data across these circular granularities are a way to go when we want to explore periodicities, pattern or anomalies of the data. Also, because of the large volume of data in recent days, using probability distributions for display is a potentially useful approach.The project will provide these techniques into the tidy workflow, so that probability distributions can be examined in the range of graphics available in the ggplot2 package.
+Project gravitas aims to provide methods to operate on time in an automated way, to deconstruct it in many different ways. Deconstructions of time that respect the linear progression of time like days, weeks and months are defined as linear time granularities and those that accommodate for periodicities in time like hour of the day or day of the month are defined as circular granularities or calendar categorizations. Often visualizing data across these circular granularities are a way to go when we want to explore periodicities, pattern or anomalies in the data. Also, because of the large volume of data in recent days, using probability distributions for display is a potentially useful approach.The project will provide these techniques into the tidy workflow, so that probability distributions can be examined in the range of graphics available in the ggplot2 package.
 
 
 Motivation
@@ -44,9 +44,17 @@ Project gravitas
 
 Project gravitas will consist of four parts:
 
-1. **R Package**: Develop an R package consisting of the following two modules: 
+1. **R Package**: Develop an R package consisting of modules **BUILD** and **COMPATIBLE**
 
-- The module **BUILD** will provide the methods to exhaustively construct any granularities. Some of the functions that will be created as part of this module are as follows:
+2. **Shiny UI**: Develop an user interface using RShiny to enable user to walk through different modules of the package
+
+3. **Application**: Provide examples of probability visualization of smart meter data collected on Australian households
+
+4. **Vignette**: Document the R package functionality in a vignette  
+
+#### Module BUILD
+
+The module **BUILD** will provide the methods to exhaustively construct any granularities. Some of the functions that will be created as part of this module are as follows:
 
 | Function name                  	| Description                                                                         	|    Arg 1    	| Arg 2 	|
 |---------------------------	|-------------------------------------------------------------------------------------	|:----------------:	|-----------:	|
@@ -74,7 +82,12 @@ Additionally, a function will be created to compute exhaustive set of granularit
 
 **Value**: Numeric or character vectors of the same length as the data
 
-The idea in this module is to provide exhaustive set of granularities at our disposal so that we can use them in later module to figure out periodicities, patterns or anomalies in the data. 
+The idea in this module is to have exhaustive set of granularities at our disposal so that we can use them in later module to figure out periodicities, patterns or anomalies in the data.   
+
+
+
+#### Module COMPATIBLE
+
 
 The module **COMPATIBLE** will provide checks on the feasibility of plotting or drawing inference from two granularities together. The function will categorize pairs of granularities as either a harmony or clash, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. This module will provide appropriate data structures to visualize with the grammar of graphics for harmonies.
 
@@ -93,11 +106,6 @@ build1, build2  - granularities computed in module BUILD through functions like 
 
 **Value**:  a data structure specifying number of observations per combination of the two builds, variation in the number of observations across combinations and declare them as "harmony" or "clash". These suggestions will serve as a guide to users who are looking to explore distributions of variables across different harmonies.
 
-2. **Shiny UI**: Develop an user interface using RShiny to enable user to walk through different modules of the package
-
-3. **Application**: Provide examples of probability visualization of smart meter data collected on Australian households
-
-4. **Vignette**: Document the R package functionality in a vignette
 
 
 
