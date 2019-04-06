@@ -54,8 +54,7 @@ Project gravitas will consist of three parts:
 | gqhour (.data, .grantype) 	| define granularities in combination with quarter hour, e.g. quarter hour of the day 	| a tsibble object 	|        day 	|
 | gweek (.data, .grantype)  	| define granularities in combination with week,  e.g. week of the month              	| a tsibble object 	|      month 	|
 
-Since the data fed is a tsibble, it will automatically feed the available time index in the function. These functions will be able to create granularities in combination with any time index that are one or multiple level higher in resolution than the available time index in the given tsibble.
-
+Since the data fed is a tsibble, the function will pick up the time index (temporal resolution) and create granularities in combination with any time index that are one or multiple levels higher in resolution than the  time index in the given tsibble.
 
 Additionally, it should also be able to provide functions to create granulartities in combination with temporal scales that are one or multiple levels above half-hour like hour, day, week or month. 
 
