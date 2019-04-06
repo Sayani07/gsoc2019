@@ -76,12 +76,26 @@ label - TRUE will display the expected granularity as a character and FALSE will
 **Value**: A numeric or character vector of the same length as the data
 
 
+The idea in this module is to provide exhaustive set of granularities at our disposal so that we can use them in later modules to figure out periodicities, patterns or anomalies in the data. 
+
+The module **COMPATIBLE** will provide checks on the feasibility of plotting or drawing inference from two granularities together. The idea is to categorize pairs of granularities as either a harmony or clash, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. 
 
 
-The idea in this module is to provide exhaustive set of granularities at our disposal so that we can use them in later modules to figure out periodicities, patterns or anomalies. 
+**Function name**: compatible
 
-The module **COMPATIBLE** will provide automatic checks on the feasibility of plotting or drawing inference from two granularities together. The idea is to categorize pairs of granularities as either a harmony or clashes, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. 
+**Description**: provide checks on the feasibility of plotting or drawing inference from bivariate temporal granularities
 
+**Usage**: compatible(.data, build1, build2)
+
+**Arguments**: 
+
+.data  - A tsibble 
+
+build1, build2  - granularities computed in module BUILD through functions like gqhour, ghhour,ghour, gweek, gmonth, gquarter, gsemester, gyear. gqhour and ghour imply granularities that are obtained in combination with quarter of an hour and hour respectively. Can be numeric vector or functions.
+
+label - TRUE will display the expected granularity as a character and FALSE will display the month.
+
+**Value**:  a table specifying number of observations per combination of the two builds. 
 
 
 The module **POINTERS** will provide appropriate data structures to visualize with the grammar of graphics for harmonies. Moreover, it will provide suggestions on the nature of harmonies, which may include number of observations per combination of categories for these harmonies or variation in number of observations across combinations of harmonies. These suggestions will serve as a guide to users who are looking to explore distributions of variables across these harmonies.
