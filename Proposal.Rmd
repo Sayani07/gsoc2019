@@ -42,9 +42,9 @@ Considerable data is accumulated by sensors today. An example is data measuring 
 Project gravitas
 ----------------
 
-Project gravitas will consist of three parts:
+Project gravitas will consist of four parts:
 
-1. **R Package**: Develop an R package consisting of the following three modules: 
+1. **R Package**: Develop an R package consisting of the following two modules: 
 
 - The module **BUILD** will provide the methods to exhaustively construct any granularities. Some of the functions that will be created as part of this module are as follows:
 
@@ -76,7 +76,7 @@ Additionally, a function will be created to compute granularities in combination
 
 The idea in this module is to provide exhaustive set of granularities at our disposal so that we can use them in later modules to figure out periodicities, patterns or anomalies in the data. 
 
-The module **COMPATIBLE** will provide checks on the feasibility of plotting or drawing inference from two granularities together. The idea is to categorize pairs of granularities as either a harmony or clash, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. This module will provide appropriate data structures to visualize with the grammar of graphics for harmonies.
+The module **COMPATIBLE** will provide checks on the feasibility of plotting or drawing inference from two granularities together. The function will categorize pairs of granularities as either a harmony or clash, where harmonies are pairs of circular granularities that aid exploratory data analysis. Clashes are pairs that are incompatible with each other for exploratory analysis. This module will provide appropriate data structures to visualize with the grammar of graphics for harmonies.
 
 
 **Function name**: compatible
@@ -92,7 +92,6 @@ The module **COMPATIBLE** will provide checks on the feasibility of plotting or 
 build1, build2  - granularities computed in module BUILD through functions like gqhour, ghhour, ghour, gweek, gmonth, gquarter, gsemester, gyear. gqhour and ghour imply granularities that are obtained in combination with quarter of an hour and hour respectively. Can be numeric vector or functions.
 
 **Value**:  a data structure specifying number of observations per combination of the two builds, variation in the number of observations across combinations and declare them as "harmony" or "clash". These suggestions will serve as a guide to users who are looking to explore distributions of variables across different harmonies.
-
 
 2. **Shiny UI**: Develop an user interface using RShiny to enable user to walk through different modules of the package
 
@@ -143,6 +142,7 @@ Detailed Project Timeline
 
 -   #### 3 Weeks (11 Apr - 6 May)
 
+I want to spend this period thinking about other functions (beyond the ones conceptualized at this stage) that can be included in each modules. This will be done by extending the idea beyond smart meters and reasoning what other features might me useful in those applications. Some small datasets will be created from data publicly available on the web. This will later help me establish the utility of each of the functions in the coding phase.
 
 ### Phase 1: Community Bonding Period
 
@@ -156,7 +156,7 @@ Each module of the package would require the output from the previous one. Hence
 
 -   #### 3 Weeks (27 May - 16 June)
 
-Build functions for module **BUILD** and **COMPATIBLE**. Conduct unit tests to check robustness of functions and include documentation for these two modules. Include real world example data sets to demonstrate the utility of each of the functions functions in each module.
+Build functions for module **BUILD** and **COMPATIBLE**. Conduct unit tests to check robustness of functions and include documentation for module **BUILD**. Include real world example data sets to demonstrate the utility of each of the functions functions in that module.
 
 -   #### 1 Week (17 June - 23 June)
 
@@ -171,20 +171,20 @@ This period will be used to write a detailed report on the work done in Coding P
 
 - Write functions for modules **BUILD** and **COMPATIBLE**
 
-- Full documentation regarding usage and code.
+- Full documentation regarding usage and code of **BUILD**
 
-- Tests for modules **BUILD** and **COMPATIBLE**
+- Tests for module **BUILD** 
 
 
 ### Phase 4: Coding Period 2
 
--   #### 2 Weeks (29 June - 13 July)
+-   #### 1.5 Weeks (29 June - 7 July)
 
-Build functions for module **POINTERS**. Conduct unit test to check robustness of functions and include documentation. Include real world example data sets to demonstrate utility of functions developed in this module.
+Conduct tests and work on documentation of **COMPATIBLE**
 
--   #### 2 Weeks (14 July - 26 July)
+-   #### 2.5 Weeks (8 July - 26 July)
 
-Develop shiny UI to guide an user to navigate through the three modules of the R package.
+Develop shiny UI to guide an user to navigate through the modules of the R package.
 
 ### Phase 5: Phase 2 Evaluations
 
@@ -192,11 +192,10 @@ This period will be used to write a detailed report on the work done in Coding P
 
 ### Deliverables
 
-- Write functions for module **POINTER** and construct unit tests
-
-- Full documentation regarding usage and code
-
+- Tests for module **COMPATIBLE**
+- Full documentation regarding usage and code of **COMPATIBLE**
 - shiny UI for creating a menu driven front end of gravitas
+- documentation of the features of shiny UI
 
 ### Phase 6: Coding Period 3
 
@@ -210,7 +209,7 @@ Provide examples of probability visualization of smart meter data collected on A
 
 -   #### ~ 1 Week (14 August - 18 August)
 
-Work on improving the shiny UI that is developed in phase 2 coding. Also document ideas that were discussed after community bonding period and could not be implemented due to time limitations. These can then form the basis of future extension of this work.
+Work on improving the shiny UI features that is developed in phase 2 coding. Also document ideas that were discussed after community bonding period and could not be implemented due to time limitations. These can then form the basis of future extension of this work.
 
 
 ### Phase 7: Final Evaluation
