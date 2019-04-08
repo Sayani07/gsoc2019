@@ -2,7 +2,10 @@
 title: 'gravitas: exploring probability distributions for bivariate temporal granularities'
 output:
   html_document: default
+  pdf_document: default
 ---
+
+
 
 **Student information**
 -----------------------
@@ -22,6 +25,7 @@ Twitter: https://twitter.com/SayaniGupta07
 Timezone: AEST (UTC + 11:00)
 
 
+
 Abstract
 --------
 
@@ -31,7 +35,9 @@ Project gravitas aims to provide methods to operate on time in an automated way,
 Motivation
 ----------
 
-Considerable data is accumulated by sensors today. An example is data measuring energy usage on a fine scale using smart meters. Smart meters are installed on many households in many countries now. Providing tools to explore this type of data is an important activity. Probability distributions are induced by various aggregations of the data, by temporal components, by spatial region or by type of household. Visualizing the probability distribution of different households across different circular granularities will help energy retailers find similar households or understand consumer behaviour better and consequently increase efficiency in planning ahead.
+Considerable data is accumulated by sensors today. An example is data measuring energy usage on a fine scale using smart meters. Smart meters are installed on many households in many countries now. Providing tools to explore this type of data is an important activity. Probability distributions are induced by various aggregations of the data, by temporal components, by spatial region or by type of household. Visualizing the probability distribution of different households across different circular granularities will help energy retailers find similar households or understand consumer behavior better and consequently increase efficiency in planning ahead.
+
+
 
 Project gravitas
 ----------------
@@ -46,6 +52,7 @@ Project gravitas will consist of four parts:
 
 4. **Vignette**: Document the R package functionality in a vignette  
 
+
 #### Module BUILD
 
 The module **BUILD** will provide the methods to exhaustively construct any granularities. Some of the functions that will be created as part of this module are as follows:
@@ -58,26 +65,7 @@ The module **BUILD** will provide the methods to exhaustively construct any gran
 
 The data fed is a tsibble so that time indices are preserved as an essential data component. The function will create granularities in combination with any time index that are one or multiple levels higher in resolution than the  time index in the given tsibble.
 
-Additionally, a function will be created to compute exhaustive set of granularities with temporal scales that are one or multiple level above the time index in the given tsibble object.
-
-**Function name**: build_gran
-
-**Description**: compute granularities in combination with temporal scales that are one or multiple level above the time index in given tsibble object
-
-**Usage**: build_gran(.data, gran = c("hour", "day")) # will create all granularities with hour and day.
-
-**Arguments**: 
-
-.data  - A tsibble 
-
- gran  - A vector indicating time indices that are at least one level above the given time index
-
- label - TRUE will display the expected granularity as a character and FALSE will display a number.
-
-**Value**: Numeric or character vectors of the same length as the data
-
 The idea in this module is to have exhaustive set of granularities at our disposal so that we can use them in later module to figure out periodicities, patterns or anomalies in the data.   
-
 
 
 #### Module COMPATIBLE
@@ -118,71 +106,44 @@ Related work
 Brief Timeline
 --------------
 
-- (Phase 0) 11 Apr - 6 May: Pre-GSoC Period
+- Phase 0 | Pre-GSoC Period | 11 Apr - 6 May:  Literature reading, compiling application and test data 
 
-- (Phase 1) 7 May - 26 May: Community Bonding Period
+- Phase 1 | Community Bonding Period | 7 May: 26 May:  Development related setup and brainstorming ideas
 
-- (Phase 2) 27 May - 23 June: Coding Period 1
+- Phase 2 | Coding Period 1 | 27 May - 23 June: Complete R package with CRAN tests
 
-- (Phase 3) 24 June - 28 June: Phase 1 Evaluations
+- Phase 3 | Phase 1 Evaluations |  24 June - 28 June: Communicate with social media community for inputs and code review
 
-- (Phase 4) 29 June -22 July: Coding Period 2
+- Phase 4 | Coding Period 2 |  29 June -22 July: Incorporate suggestions from community and build Shiny UI for the package
 
-- (Phase 5) 23 July - 26 July: Phase 2 Evaluations
+- Phase 5 | Phase 2 Evaluations | 23 July - 26 July: Communicate with social media community for inputs and features review and create user documentation of shiny UI
 
-- (Phase 6) 27 July - 18 August: Coding Period 3
+- Phase 6 | Coding Period 3 | 27 July - 18 August: R package vignette, application on Australian smart meter data and improving features based on suggestions from community
 
-- (Phase 7) 19 August - 26 August: Final week of submitting finished product
+- Phase 7 | Final week of submitting finished product |  19 August - 26 August: Wrap-up and finish working on remaining issues
 
-- (Phase 8) 26 August - 2 September: Final evaluation
+- Phase 8 | Final evaluation | 26 August - 2 September: Blog on analysis of Australian smart meters using R package developed and upload progess report
 
 
 Detailed Project Timeline
 -------------------------
 | Phase   	| Phase Description                	| Date                             	| Task Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                	|
 |---------	|----------------------------------	|----------------------------------	|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| Phase 0 	| Pre-GSoC Period                  	| 3 Weeks (11 Apr - 6 May)         	| Thinking about other functions (beyond the ones conceptualized at this stage) that can be included in each modules. This will be done by extending the idea beyond smart meters and reasoning what other features might me useful in those applications. Some small datasets will be created from data publicly available on the web. This will later help me establish the utility of each of the functions in the coding phase.                                                                                                                                               	|
-| Phase 1 	| Community Bonding Period         	| 2 Weeks (7 May - 26 May)         	| During the community bonding, the main focus will be to frame a road map for the project with the guidance of the mentor and improving bonding with the community. The second module of the package would require the output from the first one. Hence, it is important to brainstorm and map out the set of functions to be developed for each module. I will ensure all the ideas developed at this stage are implemented by the end of the GSoC period. The proposal needs to be revised at this stage to add more details on the planned activities of each of the modules. 	|
-| Phase 2 	| Coding Period 1                  	| 3 Weeks (27 May - 16 June)       	| Create functions for module BUILD and COMPATIBLE. Conduct unit tests to check robustness of functions. Use example data sets (created in Pre-GSoc period) to demonstrate the utility of each of the functions in that module.                                                                                                                                                                                                                                                                                                        	|
-|         	|                                  	| 1 Week (17 June - 23 June)       	| This period will be used as a buffer to complete documentation, fix bugs in the program and making the code more efficient.                                                                                                                                                                                                                                                                                                                                                                                                                                                     	|
-| Phase 3 	| Phase 1 Evaluations              	| (24 June - 28 June)              	| This period will be used to write a detailed report on the work done in Coding Period 1. Final report will be uploaded at the project’s wiki page after feedback from mentors.                                                                                                                                                                                                                                                                                                                                                                                                  	|
-| Phase 4 	| Coding Period 2                  	| 1 Week (29 June - 6 July)     	| Conduct tests on functions for module COMPATIBLE and improve efficiency.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          	|
-|         	|                                  	| 2.5 Weeks (7 July - 22 July)     	| Develop shiny UI to guide an user to navigate through the modules of the R package.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	|
-| Phase 5 	| Phase 2 Evaluations              	| (23 July - 26 July)              	| This period will be used to write a detailed report on the work done in Coding Period 2 and also a buffer to create user documentation for the shiny app. Final report will be uploaded at the project’s wiki page after feedback from mentors.                                                                                                                                                                                                                                                                                                                                 	|
-| Phase 6 	| Coding Period 3                  	| ~ 2 Weeks (27 July - 6 August)   	| Document the R package functionality in a vignette                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              	|
-|         	|                                  	| ~ 1 Weeks (7 August - 13 August) 	| Provide examples of probability visualization of smart meter data collected on Australian households                                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
-|         	|                                  	| ~ 1 Week (14 August - 18 August) 	| Work on improving the shiny UI features that is developed in phase 2 coding. Also document ideas that were discussed after community bonding period and could not be implemented due to time limitations. These can then form the basis of future extension of this work.                                                                                                                                                                                                                                                                                                       	|
-| Phase 7 	| Final Week of submitting product 	| (19 August - 26 August)          	| Wrapping up and stitching all independent parts together in the final report. Ensuring the package is ready to use.                                                                                                                                                                                                                                                                                                                                                                                                                                                	|
-| Phase 8 	| Final evaluation                 	| (27 August - 2 September)        	| Revision of the final report based on comments from mentors to be uploaded.                                                                                                                                                                                                                                                                                                                                                                                                                                                   	|
-
-### Deliverables - 1 (Phase 1 Evaluations)
-
-- Write functions for modules **BUILD** and **COMPATIBLE**
-
-- Tests for module **BUILD** and making it more efficient
-
-- Detailed report on work done during Coding period 1
-
-
-### Deliverables - 2 (Phase 2 Evaluations)
-
-- Tests for module **COMPATIBLE** and making it more efficient
-
-- shiny UI for creating a menu driven front end of gravitas
-
-- documentation of the features of shiny UI
-
-- Detailed report from  Phase 1 to be amended with work done in this phase
-
-
-
-### Deliverables - 3 (Final Evaluations)
-
-- R package vignette
-
-- Application on smart meter data
-
-- Final report detailing all work done in GSoC period.
+| Phase 0 	| Pre-GSoC Period      (11 Apr - 6 May)             	| weeks 1-3         	| Literature reading, and outline broad range of functions to be developed for each modules. Compiling range of applications and data, additional to smart meters, and creation of small testing sets.                                                                                                                                               	|
+| Phase 1 	| Community Bonding Period (7 May - 26 May)       	| weeks 1-2         	| Lay out the road map for the project with the guidance of the mentors and establish modes of communication. Create and share github site for the project, and set up issues, code structure, invite mentors as collaborators. Add travis CI to site to continuously check code as it is developed. Brainstorm the ideas with mentors, range of applications and test data sets compiled, and code structure to be developed.  	|
+| Phase 2 	| Coding Period 1 (27 May - 23 June)   | week 1      	| Code simple granularity functions (BUILD). Create unit tests. |
+|           |                                      | week 2       | Code remaining granularity functions (BUILD), and unit tests. Document with roxygen. Provide example code on test data sets. |
+|           |                                      | week 3       | Code advice functions (COMPATIBILTY), and unit tests. Document with roxygen. Provide example code on test data sets. |
+|           |                                      | week 4       | Documentation in the form of a vignette on broader range of data applications. CRAN tests completed. |                                                                                                                          	|
+| Phase 3 	| Phase 1 Evaluations (24 June - 28 June)   	|              	|  Announce package base to social media community, and request input, and code review. Report on current progress at project’s wiki page after feedback from mentors.        <br><br>  Deliverables: <br><br>  1. **R package with granularity and advice functions** <br>2. **documentation with roxygen** <br>3. **unit tests** <br>4. **example code on test data** <br>5. **CRAN tests**<br>6. **progess report**                                                                                                                                                                                                                                                                                                                                                                                                   	|
+| Phase 4 	| Coding Period 2 (29 June - 22 July)                  	| week 1      	| Address issues and improvements from community on functions (BUILD and COMPATIBILITY) and make the package ready for submission to CRAN.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          	|
+|         	|                                  	| weeks 2-3    	| Develop shiny UI to guide an user to navigate through the modules of the R package.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	|
+| Phase 5 	| Phase 2 Evaluations (23 July - 26 July)              	|               	| Create user documentation for the shiny app. Announce shiny app to social media community, and request input, code and features review. Report on current progress at project’s wiki page after feedback from mentors.<br><br>  Deliverables: <br><br>  1. **address issues and improvements on R package** <br>2. **Shiny UI** <br>3. **documentation for shiny app** <br>4. **progess report**                                                                                                                                                                                                                                                                                                                                 	|
+| Phase 6 	| Coding Period 3 (27 July - 18 August)                  	| week 1    	|Work on improving the shiny UI features based on reviews and issues.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	|
+|         	|                                  	| week 2 	|Document the R package functionality in a vignette                                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
+|         	|                                  	| week 3	| Provide examples of probability visualization of smart meter data collected on Australian households                                                                                                                                                                                                                                                                                                         	|
+| Phase 7 	| Final Week of submitting product (19 August - 26 August) 	|           	|Use as buffer to wrap up and address remaining issues. Document ideas that resulted from discussion with mentors and community but could not be implemented due to time limitations. These can then form the basis of future work.                                                                                                                                                                                                                                                                                                                                                                                                                                                 	|
+| Phase 8 	| Final evaluation (27 August - 2 September)                	|         	| Announce vignette to social media community. Write a blog on analysis of Australian smart meter data exemplifying the usefulness of functions developed in this project . Report on all work done at project’s wiki page after feedback from mentors.<br><br>  Deliverables: <br><br>  1. **improve Shiny UI features** <br>2. **R package vignette** <br>3. **application on Australian smart meters** <br>4. **progess report**                                                                                                                                                                                                                                                                                                                                                                                                                                                   	|
 
 Additional information regarding timeline
 -----------------------------------------
@@ -199,6 +160,11 @@ Additional information regarding timeline
 ## Mentors
 
 - Dianne Cook <dicook@monash.edu>
-- Antony Unwin
+- Antony Unwin <au50au@me.com>
 
 
+
+Brief bio
+----------------
+
+I'm a PhD student in the Department of Econometrics and Business Statistics at Monash University, Australia. I had completed M.Stat from the Indian Statistical Institute, India, following which I had worked with KPMG and PAYBACK in the Analytics team. Although I have had a training in Pure Statistics, I have always been fascinated by the role of statistics in real world applications. I love working with data and create useful tools that can be deployed by users in different application. One of the interesting projects that I had implemented using R can be found [here](https://ieeexplore.ieee.org/abstract/document/7935757). Thus, I have used R as a tool to implement statistical techniques earlier. However, looking at it from the perspective of open source technology has given it a totally different meaning. It made me realise that working on an open source project amounts to improving the quality of the final product through transparent collaboration with others. Moreover, I also learnt the importance of documented and easy to read codes. Some of my open source contributions can be found [here](https://github.com/ropenscilabs/cricketdata).
