@@ -1,7 +1,5 @@
-# 'gravitas: exploring probability distributions for bivariate temporal granularities'
+# Proposal for gravitas: exploring probability distributions for bivariate temporal granularities
 
-Project Proposal
-----------------
 
 
 **Student information**
