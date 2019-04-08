@@ -28,6 +28,12 @@ Twitter: https://twitter.com/SayaniGupta07
 Timezone: AEST (UTC + 11:00)
 
 
+Brief bio
+----------------
+
+I'm a PhD student at the Department of Econometrics and Business Statistics at Monash University, Australia. I had completed M.Stat from the Indian Statistical Institute, following which I had worked with KPMG and PAYBACK in the Analytics team. Although I have had a more traditional education in Statistics, I have always been fascinated by it's application in the real world. I love when I can my use my background apply it to 
+
+
 Abstract
 --------
 
@@ -38,6 +44,8 @@ Motivation
 ----------
 
 Considerable data is accumulated by sensors today. An example is data measuring energy usage on a fine scale using smart meters. Smart meters are installed on many households in many countries now. Providing tools to explore this type of data is an important activity. Probability distributions are induced by various aggregations of the data, by temporal components, by spatial region or by type of household. Visualizing the probability distribution of different households across different circular granularities will help energy retailers find similar households or understand consumer behavior better and consequently increase efficiency in planning ahead.
+
+
 
 Project gravitas
 ----------------
