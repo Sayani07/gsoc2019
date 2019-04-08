@@ -6,6 +6,7 @@ output:
 ---
 
 
+
 **Student information**
 -----------------------
 
@@ -149,11 +150,9 @@ Additional information regarding timeline
 
 -   The above timeline is tentative and gives a rough idea of my planned project work. I’ve no major commitments during summer (winter in Australia) and hence, will be able to dedicate 40 hours to 50 hours a week. During the last month of the project, my university will reopen and I’ll be able to dedicate around 30 hours a week. I plan to complete major chunk of the work before university reopens.
 
--   Each week, time will be divided amongst planning, learning and coding, testing features and documentation. I plan to work on the documentation at the end of each week to minimize bugs in later stages and also establish the utility for all functions (developed that week) using small data sets from real world application.
+-   I'll publish blogs at the end of each coding phase that will include highlights of the development process, hurdles that I came across and how I overcame them. Also, I would document some good practices that I learnt while looking at codes from developers of R community who are working in similar fields.
 
-- I'll publish blogs at the end of each coding phase that will include highlights of the development process, hurdles that I came across and how I overcame them. Also, I would document some good practices that I learnt while looking at codes from developers of R community who are working in similar fields.
-
-- I’ll be setting up weekly meetings with my mentors where I update them on where I am on the project with the documentation that I plan to work on at the end of each week. 
+-   I’ll be setting up weekly meetings with my mentors where I update them on where I am on the project and discussing ideas on improving functions and features.
 
 
 ## Mentors
@@ -166,4 +165,4 @@ Additional information regarding timeline
 Brief bio
 ----------------
 
-I'm a PhD student in the Department of Econometric and Business Statistics at Monash University, Australia. My research interests are in data visualization, exploratory analysis, time series analysis and computational statistics. I had completed M.Stat from the Indian Statistical Institute, India, following which I had worked with KPMG and PAYBACK in the Analytics team. Although I have had a training in Pure Statistics, I have always been fascinated by the role of statistics in real world applications. I love working with data and create useful tools that can be deployed by users in different application. One of the interesting projects that I had implemented using R can be found [here](https://ieeexplore.ieee.org/abstract/document/7935757). Thus, I have used R as a tool to implement statistical techniques earlier. However, looking at it from the perspective of open source technology has given it a totally different meaning. It made me realize that working on an open source project amounts to improving the quality of the final product through transparent collaboration with others. Moreover, I also learnt the importance of documented and easy to read codes. Some of my open source contributions can be found [here](https://github.com/ropenscilabs/cricketdata).
+I'm a PhD student in the Department of Econometrics and Business Statistics at Monash University, Australia. My research interests are in data visualization, exploratory analysis, time series analysis and computational statistics. I had completed M.Stat (Masters in Statistics) from the Indian Statistical Institute with Quantitative Economics specialization and Bachelors (Honors) in Statistics from St.Xavier’s College, University of Calcutta, following which I had worked with KPMG and PAYBACK in the Analytics/ Modelling team. Although I have had a training in Pure Statistics, I have always been fascinated by the role of statistics in real world applications. I love working with data and create useful tools that can be deployed by users in different application. One of the interesting projects that I had implemented using R can be found [here](https://ieeexplore.ieee.org/abstract/document/7935757). Thus, I have used R as a tool to implement statistical techniques earlier. However, looking at it from the perspective of open source technology has given it a totally different meaning. It made me realize that working on an open source project amounts to improving the quality of the final product through transparent collaboration with others. Moreover, I also learnt the importance of documented and easy to read codes. Some of my open source contributions can be found [here](https://github.com/ropenscilabs/cricketdata).
