@@ -28,11 +28,6 @@ Twitter: https://twitter.com/SayaniGupta07
 Timezone: AEST (UTC + 11:00)
 
 
-Brief bio
-----------------
-
-I'm a PhD student at the Department of Econometrics and Business Statistics at Monash University, Australia. I had completed M.Stat from the Indian Statistical Institute, following which I had worked with KPMG and PAYBACK in the Analytics team. Although I have had a more traditional education in Statistics, I have always been fascinated by it's application in the real world. I love when I can my use my background apply it to 
-
 
 Abstract
 --------
@@ -59,7 +54,8 @@ Project gravitas will consist of four parts:
 3. **Application**: Provide examples of probability visualization of smart meter data collected on Australian households
 
 4. **Vignette**: Document the R package functionality in a vignette  
-z
+
+
 #### Module BUILD
 
 The module **BUILD** will provide the methods to exhaustively construct any granularities. Some of the functions that will be created as part of this module are as follows:
@@ -72,26 +68,7 @@ The module **BUILD** will provide the methods to exhaustively construct any gran
 
 The data fed is a tsibble so that time indices are preserved as an essential data component. The function will create granularities in combination with any time index that are one or multiple levels higher in resolution than the  time index in the given tsibble.
 
-Additionally, a function will be created to compute exhaustive set of granularities with temporal scales that are one or multiple level above the time index in the given tsibble object.
-
-**Function name**: build_gran
-
-**Description**: compute granularities in combination with temporal scales that are one or multiple level above the time index in given tsibble object
-
-**Usage**: build_gran(.data, gran = c("hour", "day")) # will create all granularities with hour and day.
-
-**Arguments**: 
-
-.data  - A tsibble 
-
- gran  - A vector indicating time indices that are at least one level above the given time index
-
- label - TRUE will display the expected granularity as a character and FALSE will display a number.
-
-**Value**: Numeric or character vectors of the same length as the data
-
 The idea in this module is to have exhaustive set of granularities at our disposal so that we can use them in later module to figure out periodicities, patterns or anomalies in the data.   
-
 
 
 #### Module COMPATIBLE
@@ -189,3 +166,8 @@ Additional information regarding timeline
 - Antony Unwin <au50au@me.com>
 
 
+
+Brief bio
+----------------
+
+I'm a PhD student in the Department of Econometrics and Business Statistics at Monash University, Australia. I had completed M.Stat from the Indian Statistical Institute, India, following which I had worked with KPMG and PAYBACK in the Analytics team. Although I have had a training in Pure Statistics, I have always been fascinated by the role of statistics in real world applications. I love working with data and create useful tools that can be deployed by users in different application. One of the interesting projects that I had implemented using R can be found [here](https://ieeexplore.ieee.org/abstract/document/7935757). Thus, I have used R as a tool to implement statistical techniques earlier. However, looking at it from the perspective of open source technology has given it a totally different meaning. It made me realise that working on an open source project amounts to improving the quality of the final product through transparent collaboration with others. Moreover, I also learnt the importance of documented and easy to read codes. Some of my open source contributions can be found [here](https://github.com/ropenscilabs/cricketdata).
