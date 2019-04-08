@@ -153,44 +153,15 @@ Detailed Project Timeline
 |           |                                      | week 2       | Code remaining granularity functions (BUILD), and unit tests. Document with roxygen. Provide example code on test data sets. |
 |           |                                      | week 3       | Code advice functions (COMPATIBILTY), and unit tests. Document with roxygen. Provide example code on test data sets. |
 |           |                                      | week 4       | Documentation in the form of a vignette on broader range of data applications. CRAN tests completed. |                                                                                                                          	|
-| Phase 3 	| Phase 1 Evaluations (24 June - 28 June)   	|              	|  Announce package base to social media community, and request input, and code review. Report on current progress at project’s wiki page after feedback from mentors.        <br><br>  Deliverables: <br><br>  1. **granularity and advice functions** <br>2. **documentation with roxygen** <br>3. **unit tests** <br>4. **example code on test data** <br>5. **CRAN tests**<br>6. **progess report**                                                                                                                                                                                                                                                                                                                                                                                                   	|
+| Phase 3 	| Phase 1 Evaluations (24 June - 28 June)   	|              	|  Announce package base to social media community, and request input, and code review. Report on current progress at project’s wiki page after feedback from mentors.        <br><br>  Deliverables: <br><br>  1. **R package with granularity and advice functions** <br>2. **documentation with roxygen** <br>3. **unit tests** <br>4. **example code on test data** <br>5. **CRAN tests**<br>6. **progess report**                                                                                                                                                                                                                                                                                                                                                                                                   	|
 | Phase 4 	| Coding Period 2 (29 June - 22 July)                  	| week 1      	| Address issues and improvements from community on functions (BUILD and COMPATIBILITY) and make the package ready for submission to CRAN.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          	|
 |         	|                                  	| weeks 2-3    	| Develop shiny UI to guide an user to navigate through the modules of the R package.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	|
-| Phase 5 	| Phase 2 Evaluations (23 July - 26 July)              	|               	| Create user documentation for the shiny app. Announce shiny app to social media community, and request input, code and features review. Report on current progress at project’s wiki page after feedback from mentors.<br><br>  Deliverables: <br><br>  1. **address issues and improvements on R package** <br>2. **shiny UI** <br>3. **progess report**                                                                                                                                                                                                                                                                                                                                 	|
+| Phase 5 	| Phase 2 Evaluations (23 July - 26 July)              	|               	| Create user documentation for the shiny app. Announce shiny app to social media community, and request input, code and features review. Report on current progress at project’s wiki page after feedback from mentors.<br><br>  Deliverables: <br><br>  1. **address issues and improvements on R package** <br>2. **Shiny UI** <br>3. **documentation for shiny app** <br>4. **progess report**                                                                                                                                                                                                                                                                                                                                 	|
 | Phase 6 	| Coding Period 3 (27 July - 18 August)                  	| week 1    	|Work on improving the shiny UI features based on reviews and issues.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	|
 |         	|                                  	| week 2 	|Document the R package functionality in a vignette                                                                                                                                                                                                                                                                                                                                                                                                                                                                            	|
 |         	|                                  	| week 3	| Provide examples of probability visualization of smart meter data collected on Australian households                                                                                                                                                                                                                                                                                                         	|
 | Phase 7 	| Final Week of submitting product (19 August - 26 August) 	|           	|Use as buffer to wrap up and address remaining issues. Document ideas that resulted from discussion with mentors and community but could not be implemented due to time limitations. These can then form the basis of future work.                                                                                                                                                                                                                                                                                                                                                                                                                                                 	|
-| Phase 8 	| Final evaluation (27 August - 2 September)                	|         	| Announce vignette to social media community. Write a blog on analysis of Australian smart meter data exemplifying the usefulness of functions developed in this project . Report on all work done at project’s wiki page after feedback from mentors.<br><br>  Deliverables: <br><br>  1. **improve Shiny features** <br>2. **R package vignette** <br>3. **application on Australian smart meters** <br>4. **progess report**                                                                                                                                                                                                                                                                                                                                                                                                                                                   	|
-
-### Deliverables - 1 (Phase 1 Evaluations)
-
-- Write functions for modules **BUILD** and **COMPATIBLE**
-
-- Tests for module **BUILD** and making it more efficient
-
-- Detailed report on work done during Coding period 1
-
-
-### Deliverables - 2 (Phase 2 Evaluations)
-
-- Tests for module **COMPATIBLE** and making it more efficient
-
-- shiny UI for creating a menu driven front end of gravitas
-
-- documentation of the features of shiny UI
-
-- Detailed report from  Phase 1 to be amended with work done in this phase
-
-
-
-### Deliverables - 3 (Final Evaluations)
-
-- R package vignette
-
-- Application on smart meter data
-
-- Final report detailing all work done in GSoC period.
+| Phase 8 	| Final evaluation (27 August - 2 September)                	|         	| Announce vignette to social media community. Write a blog on analysis of Australian smart meter data exemplifying the usefulness of functions developed in this project . Report on all work done at project’s wiki page after feedback from mentors.<br><br>  Deliverables: <br><br>  1. **improve Shiny UI features** <br>2. **R package vignette** <br>3. **application on Australian smart meters** <br>4. **progess report**                                                                                                                                                                                                                                                                                                                                                                                                                                                   	|
 
 Additional information regarding timeline
 -----------------------------------------
@@ -207,6 +178,6 @@ Additional information regarding timeline
 ## Mentors
 
 - Dianne Cook <dicook@monash.edu>
-- Antony Unwin
+- Antony Unwin <au50au@me.com>
 
 
