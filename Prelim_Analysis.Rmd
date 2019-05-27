@@ -21,7 +21,7 @@ library(tsibble)
 - **Spread** ~ Australian State (Victoria)
 
 
-```{r allFig, fig.height=5.5, out.width="50%", fig.pos = "p", fig.align= 'left',echo=FALSE, eval=TRUE, fig.cap="Various probability distribution plots of electricity consumption data of Victoria from 2012 to 2014. (a) Letter value plot by DoM and MoY, (b) Decile plot by HoD and DoW (c) Box plot by DoY and DoM, (d) Violin plot of DoM and WoM, (e) Ridge plot by WoM and WoY, (f) Decile plot by DoY and MoY. Only plots (a) and (b) show harmonised time variables.", fig.show = 'hold'}
+```{r allFig, fig.height=5.5, out.width="50%", fig.pos = "p", fig.align= 'left',echo=FALSE, eval=TRUE, fig.cap="Various probability distribution plots of electricity consumption data of Victoria from 2012 to 2014. (a)-(b) are examples of Harmonies (c)-(e) are examples of Clashes", fig.show = 'hold'}
 
 VIC <- read.csv("VIC2015/Data/demand_VIC.csv")
 VIC$Date <- as.Date(VIC$Date,origin = "1899-12-30")
@@ -227,17 +227,26 @@ SU_uniform_mutate <-selected_units  %>% mutate(date = date(`Timestamp UTC`),wday
 #   ggplot(aes(x=wday, y=dkwh)) + geom_boxplot() + ylab("Energy consumption in KwH ") +  xlab("Day-of-Week") 
     
 p12 = SU_uniform_mutate %>% filter(Source=="B4 29") %>%
-  # group_by(date,wday) %>%
-  # summarise(dkwh = sum(Value, na.rm=TRUE)) %>%
-  ggplot(aes(x=wday, y=Value)) + geom_boxplot() + ylab("Energy consumption in KwH ") + xlab("Day-of-Week") + coord_cartesian(ylim = c(0,0.6))+ ggtitle("a) Across DoY - B4 29") 
+   group_by(date,wday) %>%
+  summarise(dkwh = sum(Value, na.rm=TRUE)) %>%
+  ggplot(aes(x=wday, y=dkwh)) + geom_boxplot() + ylab("Energy consumption in KwH ") + xlab("Day-of-Week") + coord_cartesian(ylim = c(0,25)) +  ggtitle("a) Across DoY - B4 29") 
 p12
 
 p22 = SU_uniform_mutate %>% filter(Source=="B3 37") %>%
-  # group_by(date,wday) %>%
-  # summarise(dkwh = sum(Value, na.rm=TRUE)) %>%
-  ggplot(aes(x=wday, y=Value)) + geom_boxplot() + ylab("Energy consumption in KwH ") + xlab("Day-of-Week") + coord_cartesian(ylim = c(0,0.6))+ ggtitle("b) Across DoW - B3 37") 
+  group_by(date,wday) %>%
+  summarise(dkwh = sum(Value, na.rm=TRUE)) %>%
+  ggplot(aes(x=wday, y=dkwh)) + geom_boxplot() + ylab("Energy consumption in KwH ") + xlab("Day-of-Week")+ coord_cartesian(ylim = c(0,25)) + ggtitle("b) Across DoW - B3 37") 
 p22
+```
+From a) and b), we observe that: 
 
+For B4 29, median energy consumption and variation on weekends are higher than weekdays. The same can't be observed for B3 37, where median consumption and variation remains unifrom for all days of the week.
+
+For B3 37, pretty stable Wednesday and Thursdays compared to other weekdays. Also Saturday has less variation and consumption compared to Sundays.
+
+Next, we might be interested in knowing if these variation are a result of varied behavior only for certain hours of the day or through out the day.
+
+```{r DoW_HoD, echo=FALSE}
 p14 = SU_uniform_mutate %>% filter(Source=="B4 29") %>%
   group_by(wday,hour) %>% filter(wday %in% c("Tue","Wed","Thu","Fri","Sat","Sun")) %>% 
   ggplot(aes(x=as.factor(hour), y=Value, group=hour)) + geom_boxplot() +
@@ -256,7 +265,15 @@ p24 = SU_uniform_mutate %>% filter(Source=="B3 37") %>%
   xlab("Hour-of-Day") +  
     coord_cartesian(xlim= c(0,23), ylim = c(0,0.75))+ scale_x_discrete(breaks=c(0,5,10,15,20))+  ggtitle("B4 29")+ ggtitle("d) Across DoW and HoD - B3 37") 
 p24
+```
 
+
+From c) suggests that the high variation in energy usage on Wednesday compared to other weekdays can only be attributed to the energy behavior from roughly 10am -1pm. Also, the same hours are responsible for difference in variation between Sunday and Wednesday.
+
+From d) suggests Saturday and Sunday are similar after 5pm. The increased variation on Sunday can be the result of variation only in the early morning hours of Sunday.
+
+
+```{r HoD,WD_NWD, echo=FALSE}
 
 s1 <- SU_uniform_mutate %>%
   mutate(work = ifelse(date %in% vic_holidays$date, "No", work))
@@ -285,3 +302,14 @@ b22_Quantile <- s1 %>% filter(Source=="B3 37") %>% group_by(work,hour) %>%
 p26 <- b22_Quantile %>% ggplot(aes(x=hour,y=Value,col=as.factor(Quantile))) +geom_line() + scale_x_continuous(breaks=seq(1, 24, 5)) +theme(legend.position = "bottom") + facet_wrap(~work, labeller = "label_both") + ylab("Daily Consumpttion in KwH") +  xlab("Hour-of-Day") + coord_cartesian(ylim = c(0,0.75)) +  ggtitle("B4 29") + ggtitle("f) Across HoD and WD/NWD - B3 37") 
 p26
 ```
+
+From e) Energy consumption is pretty variable on weekends/No work days during late night hours and increases till 3am
+
+On weekdays energy consumption is low till 8am and starts increasing from 9am to 4pm and then again decreases till 10pm and peaks up from 11 to 12pm
+
+Looks like from 4pm the student is not at home for weekdays and weekends.
+
+On weekends, student goes to sleep around 2 or 3 am and wakes up around 10am. (consistent behavior as can be seen even 30th or 40th percentile)
+
+
+From f) Variation is almost uniform across hours of the day and days of the week.
