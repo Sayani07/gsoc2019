@@ -1,0 +1,246 @@
+---
+title: "Addressing Comments"
+author: "Sayani Gupta"
+date: "30/05/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(forecast)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(tidyverse)
+library(lvplot)
+library(ggridges)
+library(tsibble)
+library(sugrrants)
+```
+
+1) Will you be including a check on Clashes and warning users if they choose an inappropriate coupling?
+
+
+
+Yes. It can be provided either as a warning or in a summary format. However, the data structure will be provided even for clashes. To me, this will enable the user to visualize the plot and see where the problem lies. 
+
+
+2) The captions to the first two sets of graphics ignore (f) and do not say anything about what can be seen.  Why do Tasmania and Victoria have different patterns?
+
+Plot a) suggests that aggregate demand in Victoria is most variable for summer months from mid-November to mid March. Summer in Victoria is considered to include the months December to February. So the increased variation in the energy usage can be attributed to the increased use of air conditioners or coolers in those months.
+
+```{r VIC, echo=FALSE}
+VIC <- read.csv("VIC2015/Data/demand_VIC.csv")
+VIC$Date <- as.Date(VIC$Date,origin = "1899-12-30")
+
+first_day_of_month_wday <- function(dx) {
+  day(dx) <- 1
+  wday(dx)
+}
+
+VIC <- VIC %>%mutate(Indx_Year = year(Date),
+                     Indx_Month = month(Date, label = FALSE, abbr = TRUE),
+                     Indx_Wk_Yr = week(Date),
+                     Indx_Wk_Month = ceiling((day(Date) + first_day_of_month_wday(Date) - 1) / 7),
+                     Indx_Day_Week = wday(Date, label=FALSE, abbr=TRUE,
+                                          week_start=1),
+
+                     Indx_Day_Month = day(Date),
+
+                     Indx_Day_Year =  yday(Date),
+
+                     Indx_Weekend=if_else(Indx_Day_Week %in% c(6,7),1,0),
+
+                     Indx_HlHr_day = Period,
+                     month = month(Date, label = FALSE, abbr = TRUE),
+         year =  year(Date),
+         yday =yday(Date),
+         wday = wday(Date, label=FALSE, abbr=TRUE,
+                     week_start=1),
+         bow = (wday - 1) * 48 + Period,
+         dom = day(Date),
+         bom = (dom - 1) * 48 + Period,
+         Weekend=if_else(wday %in% c(6,7),1,0),
+         Indx_hour = ceiling(Period/2),
+         Indx_Hour_Yr = Indx_hour + 24*(yday-1),
+         Indx_Hour_Month = Indx_hour + 24*(Indx_Day_Month-1),
+         Indx_Hour_Wk = Indx_hour + 24*(wday-1))
+
+VIC <- as_tibble(VIC)
+
+
+VIC%>% filter(year %in% c(2002:2014))%>% ggplot(aes(Indx_Day_Month,OperationalLessIndustrial,group = Indx_Day_Month)) + geom_lv(aes(fill=..LV..),outlier.colour = "red",outlier.shape = 1) + scale_fill_brewer()+ facet_wrap(~Indx_Month) + ylab("Electricity Demand [KWh]") + xlab("Days of the Month") + scale_x_continuous(breaks=seq(0,31,5)) + ggtitle("(a) Letter value plot by DoM and MoY for Victoria")
+
+```
+
+
+
+
+```{r TAS, echo=FALSE}
+TAS <- read.csv("TAS2015/Data/demand_TAS.csv")
+TAS$Date <- as.Date(TAS$Date,origin = "1899-12-30")
+
+first_day_of_month_wday <- function(dx) {
+  day(dx) <- 1
+  wday(dx)
+}
+
+TAS <- TAS %>%mutate(Indx_Year = year(Date),
+                     Indx_Month = month(Date, label = FALSE, abbr = TRUE),
+                     Indx_Wk_Yr = week(Date),
+                     Indx_Wk_Month = ceiling((day(Date) + first_day_of_month_wday(Date) - 1) / 7),
+                     Indx_Day_Week = wday(Date, label=FALSE, abbr=TRUE,
+                                          week_start=1),
+
+                     Indx_Day_Month = day(Date),
+
+                     Indx_Day_Year =  yday(Date),
+
+                     Indx_Weekend=if_else(Indx_Day_Week %in% c(6,7),1,0),
+
+                     Indx_HlHr_day = Period,
+                     month = month(Date, label = FALSE, abbr = TRUE),
+         year =  year(Date),
+         yday =yday(Date),
+         wday = wday(Date, label=FALSE, abbr=TRUE,
+                     week_start=1),
+         bow = (wday - 1) * 48 + Period,
+         dom = day(Date),
+         bom = (dom - 1) * 48 + Period,
+         Weekend=if_else(wday %in% c(6,7),1,0),
+         Indx_hour = ceiling(Period/2),
+         Indx_Hour_Yr = Indx_hour + 24*(yday-1),
+         Indx_Hour_Month = Indx_hour + 24*(Indx_Day_Month-1),
+         Indx_Hour_Wk = Indx_hour + 24*(wday-1))
+         
+         
+
+
+TAS <- as_tibble(TAS)
+
+TAS%>% filter(year %in% c(2002:2014))%>% ggplot(aes(Indx_Day_Month,OperationalLessIndustrial,group = Indx_Day_Month)) + geom_lv(aes(fill=..LV..),outlier.colour = "red",outlier.shape = 1) + scale_fill_brewer()+ facet_wrap(~Indx_Month) + ylab("Electricity Demand [KWh]") + xlab("Days of the Month") + scale_x_continuous(breaks=seq(0,31,5)) + ggtitle("(b) Letter value plot by DoM and MoY for Tasmania")
+
+```
+
+Plot b) suggests that aggregate demand in Tasmania is more variable for winter months compared to summer months. This is the opposite to how Victoria behaves. This can be explained with the range of summer temperature in these regions. Summer temperatures in [Melbourne, Victoria](https://www.australia.com/en/facts-and-planning/weather-in-australia/weather-in-melbourne.html) ranges from 14 - 25.3°C(occasionally soar past 30°C), whereas for [Hobart, Tasmania](https://www.australia.com/en/facts-and-planning/weather-in-australia/weather-in-hobart.html) goes to 21°C at max. So while Victoria needs a lot of heating, Tasmania stays pleasant in summer days leading to almost null usage of air conditioning.
+
+
+
+```{r temp, echo=FALSE}
+VIC_temp <- read.csv("VIC2015/Data/temp_86071.csv")
+VIC_temp$Date <- as.Date(VIC_temp$Date,origin = "1899-12-30")
+
+# Summer months (December - February)
+
+VIC_temperature <- VIC_temp %>% 
+  mutate(Date = case_when(
+    month(Date) %in% c(12, 1, 2) ~ 'Summer',
+     month(Date) %in% c(3, 4, 5) ~ 'Autumn',
+     month(Date) %in% c(6, 7, 8) ~ 'Winter',
+     month(Date) %in% c(9, 10,11) ~ 'Spring',
+    TRUE ~ as.character(Date)))
+
+temp_sum_VIC <- VIC_temperature %>% group_by(Date) %>%
+  do({x <- .$Temp
+  map_dfr(.x = c(seq(0.5,0.9,0.1), 0.95, 0.99),
+          .f = ~ tibble(Quantile = .x,
+                            Value = quantile(x, probs = .x,na.rm=TRUE)))
+  }) %>% filter(Date %in% c("Summer", "Winter"))
+
+###
+###
+###
+TAS_temp <- read.csv("TAS2015/Data/temp_94029.csv")
+TAS_temp$Date <- as.Date(VIC_temp$Date,origin = "1899-12-30")
+
+# Summer months (December - February)
+
+TAS_temperature <- TAS_temp %>% 
+  mutate(Date = case_when(
+    month(Date) %in% c(12, 1, 2) ~ 'Summer',
+     month(Date) %in% c(3, 4, 5) ~ 'Autumn',
+     month(Date) %in% c(6, 7, 8) ~ 'Winter',
+     month(Date) %in% c(9, 10,11) ~ 'Spring',
+    TRUE ~ as.character(Date)))
+
+temp_sum_TAS <- TAS_temperature %>% group_by(Date) %>%
+  do({x <- .$Temp
+  map_dfr(.x = c(seq(0.5,0.9,0.1), 0.95, 0.99),
+          .f = ~ tibble(Quantile = .x,
+                            Value = quantile(x, probs = .x,na.rm=TRUE)))
+  }) %>% filter(Date %in% c("Summer", "Winter"))
+
+```
+
+Temperature of Victoria
+```{r temp"_VC, echo=FALSE}
+temp_sum_VIC
+```
+Temperature of Tasmania
+```{r, echo=FALSE}
+temp_sum_TAS
+```
+
+3) The title of the first Buildings plot should be DoW not DoY.  Will you automate the correct choice of heading?
+
+Good idea. I can work on it.
+
+
+4) Your comments on the Buildings plots seem to me to be too strong.  Sunday is the day of highest consumption (why?), but Saturday is not so high.  Is it correct that you are only looking at 7 weeks of data?Boxplots are poor then and you cannot draw conclusions from such small datasets.
+
+The idea is to hence throw warnings or summarise when can boxplots(or summary plots based on probability) can/cannot be used. Or, which summary plots one should choose for few observations?
+
+5) Why did you drop Monday data in (c) and (d)?    The boxplots are again an odd choice.  Why not use time series plots?  Your conclusions here are again open to debate.
+
+
+6) Presumably the quantiles in (e) and (f) are based on 35 and 14 days respectively, not a lot of data to estimate quantiles.  There is an interesting question here of whether quantile plots look so nice because they are too good to be true.  I would at least like to see the individual time series plots before drawing conclusions like yours.
+
+Calendar plot of  B4 29
+
+```{r calendar, echo = FALSE}
+
+DHR <-read_rds("DHResidence.rds")
+
+selected_units <- DHR %>% filter(Source %in% c("B3 37","B2 15","B3 37", "B4 29", "BG 50"))
+
+
+selected_units$`Timestamp UTC` <-lubridate::ymd_hms(selected_units$`Timestamp UTC`)
+
+# selected_units_tsibble <- as_tsibble(selected_units,key=id(Source),index=`Timestamp UTC`,tz="UTC")
+
+vic_holidays <- holiday_aus(2018, state = "VIC")
+
+SU_uniform_mutate <-selected_units  %>% mutate(date = date(`Timestamp UTC`),wday = wday(date, label = TRUE, abbr = TRUE,
+                       week_start = 1),
+                       month = month(date, label = TRUE, abbr = TRUE),
+                       year = year(date),
+                       hour = hour(`Timestamp UTC`),
+                       work = ifelse(wday %in% c("Mon", "Tue", "Wed", "Thu", "Fri"), "Yes", "No"))
+
+p1 <- SU_uniform_mutate %>% filter(Source=="B4 29") %>% 
+  frame_calendar(x = hour, y = Value, date = date, ncol = 5) %>%
+  ggplot(aes(x = .hour, y = .Value, group = date, colour=factor(work))) +
+  geom_line() +
+  scale_colour_brewer("work", palette = "Dark2") +
+  theme(legend.position="none")
+prettify(p1)
+```
+
+
+Calendar plot of  B3 37
+
+```{r b337_calendar, echo=FALSE}
+p2 <- SU_uniform_mutate %>% filter(Source=="B3 37") %>% 
+  frame_calendar(x = hour, y = Value, date = date, ncol = 5) %>%
+  ggplot(aes(x = .hour, y = .Value, group = date, colour=factor(work))) +
+  geom_line() +
+  scale_colour_brewer("work", palette = "Dark2") +
+  theme(legend.position="none")
+prettify(p2)
+```
+
+7) Have you considered using FDA?
+
+Functional Data Analysis? I have not considered yet.
+
+
+
