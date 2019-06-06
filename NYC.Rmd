@@ -98,14 +98,15 @@ top_bikes %>%ggplot(aes(x = reorder(start_station, -count), y= count)) + geom_ba
 
 devtools::install_github("Sayani07/gravitas")
 
-rides_busiest <- nyc_bikes %>% filter(start_station %in% 3186|end_station %in% 3186)
+rides_busiest <- nyc_bikes %>% filter(start_station %in% c(3186, 3203)|end_station %in% c(3186, 3203))
 summary(rides_busiest)
 
 rides_busiest_grans <- rides_busiest  %>% mutate(hour_day = nest("hour", "day", start_time),
                      month_year =   nest("month", "year", start_time),
                      day_week   = nest("day", "week", start_time, abbr),
                      hhour_day   = nest("hhour", "day", start_time),
-                     minute_hour = nest("minute", "hour", start_time))
+                     minute_hour = nest("minute", "hour", start_time),
+                     hhour_hour = nest("hhour", "hour", start_time))
 
 rides_busiest_grans %>% 
   as_tibble %>% group_by(hour_day) %>%
@@ -144,13 +145,21 @@ granplot = function(data, x, y) {
 
 
 granplot(rides_busiest_grans, "hhour_day",  "day_week")
+#
+
 granplot(rides_busiest_grans, "hour_day",  "day_week")
+# No peaks on Monday and total counts across hours are less compared to other days
+
+
 granplot(rides_busiest_grans, "day_week",  "month_year")
+# During Summers,  high ride shares on weekends are observed. In Winters (Nov - February), counts are much less for all days of the week
 
-# Peaks are at different times of the day on Sunday, also there are more than 2 peaks
+
 granplot(rides_busiest_grans, "hour_day",  "day_week")
+# Peaks are at different times of the day on Sunday(compared to other days), also there are more than 2 peaks
 
-
+granplot(rides_busiest_grans, "hour_day",  "hhour_hour")
+# For first peak (around 8am) first half hour of the hour sees more count, while during the evening peak, later half hour sees more count.
 ```
 
 ```{r}
