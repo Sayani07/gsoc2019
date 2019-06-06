@@ -95,6 +95,9 @@ top_bikes %>%ggplot(aes(x = reorder(start_station, -count), y= count)) + geom_ba
 
 
 ```{r busiest_bike_behavior}
+
+devtools::install_github("Sayani07/gravitas")
+
 rides_busiest <- nyc_bikes %>% filter(start_station %in% 3186|end_station %in% 3186)
 summary(rides_busiest)
 
