@@ -1,0 +1,98 @@
+---
+title: "Chicago Bikedata Analysis"
+author: "Sayani Gupta"
+date: "06/06/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(forecast)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(tidyverse)
+library(lvplot)
+library(ggridges)
+library(tsibble)
+library(bikedata)
+```
+
+```{r dataextract, echo=FALSE}
+#extract chicago datas for 2017 and 2018
+# chicago <- dl_bikedata (city = 'divvy', dates = 2017:2018, data_dir = "bikedata/Data", quiet = TRUE)
+
+# 2018 data doesn't exist
+
+# nyc citibikes for 2017 and 2018 downloaded
+#nyc <- dl_bikedata (city = 'citibike', dates = 2017:2018, data_dir = "bikedata/Data", quiet = TRUE)
+
+# 48 monthly files downloaded
+
+file_list <- list.files("bikedata/Data")
+
+for (file in file_list){
+       
+  # if the merged dataset doesn't exist, create it
+  if (!exists("dataset")){
+    dataset <- read.table(file, header=TRUE, sep="\t")
+  }
+   
+  # if the merged dataset does exist, append to it
+  if (exists("dataset")){
+    temp_dataset <-read.table(file, header=TRUE, sep="\t")
+    dataset<-rbind(dataset, temp_dataset)
+    rm(temp_dataset)
+  }
+ 
+}
+
+```
+
+#Data Description
+
+1. Trip Duration (seconds) — How long a trip lasted
+2. Start Time and Date - time and date where trip started
+3. Stop Time and Date -  time and date where trip ended
+4. Start/End Station ID  -  Unique identifier for starting/end bike station
+5. Start/End Station Name - Brief address for starting/end bike station
+6. Start Station Latitude/Longitude - Coordinates
+7. Bike ID - unique identifier for each bike
+8. User Type (Customer = 24-hour pass or 3-day pass user;  Subscriber = Annual Member) - Customers are usually tourists, subscribers are usually NYC residents
+9. Year of Birth
+10. Gender (Zero=unknown; 1=male; 2=female) 
+
+
+```{r overall_view, echo=FALSE}
+
+nyc_bikes <- tsibbledata::nyc_bikes %>% as_tsibble()
+summary(nyc_bikes)
+
+# Top 20 Bike stations by number of starts
+
+top_bikes <- nyc_bikes %>%as_tibble() %>% group_by(start_station) %>% summarise(count = n()) %>% arrange(-count)
+
+top_bikes %>%ggplot(aes(x = reorder(start_station, -count), y= count)) + geom_bar(stat="identity")
+
+
+nyc_bikes %>%
+  as_tibble() %>% 
+  dplyr::select(start_station, start_lat, start_long)%>%
+  right_join(top_bikes) %>% distinct()
+
+ggplot(nyc_bikes) + geom_polygon(aes(start_long, start_lat, group = group,fill=p1)) + coord_fixed()
+```
+
+
+```{r popular_bikes}
+
+```
+
+
+```{r busiest_bike_behavior}
+
+```
+
+```{r}
+
+```
+
