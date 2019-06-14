@@ -1,0 +1,37 @@
+---
+title: "Untitled"
+author: "Sayani Gupta"
+date: "14/06/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(tsibbledata)
+library(tidyr)
+```
+
+Suppose we have a granularity C1 which has levels {A, B, C, D}, and another granularity C2 with levels {X, Y, Z}. When we plot some observations with C1 and C2 used as aesthetics or facets, problems arise when we have empty combinations. 
+
+For example, C1 is Day-of-Month and C2 is Week-of-Month. 
+
+Here C1 can take 31 values while C2 can take 5 values. There will be 31 × 5 = 155 combinations of C1 and C2. Many of these are empty. For example (2,5), (21,1), etc, that is, second day of the month can never correspond to 5th week of the month and 21st day of the month can never correspond to 1st week of the month. Most of these 155 combinations will be empty set, making the combination of C1 and C2 in a graph unhelpful. 
+
+Some examples follow which will demonstrate the idea more. comp_tbl function in the package "gravitas" now allows to see the matrix given any lower and upper granularities. Please run the Rmd to view the entire matrix or try-out other values of lgran(required lower granularity) and ugran(required upper granularity). It is to be noted that the matrix is symmetric, that is, if (A, B) = FALSE then (B, A) is false too. It might appear to be NA in the matrix as both (A, B) and (B, A) combinations are populated while creating the matrix.
+
+```{r matrix_demo, echo=TRUE}
+#devtools::install_github("Sayani07/gravitas")
+library(gravitas)
+# Case 1
+aus_elec %>% comp_tbl(lgran = "hour", ugran = "week")
+
+# Case 2
+aus_elec %>% comp_tbl(lgran = "hour", ugran = "fortnight")%>% print(n = nrow(.))
+
+# Case 3
+aus_elec %>% comp_tbl(lgran = "day", ugran = "month") %>% print(n = nrow(.))
+
+# Case 4
+aus_elec %>% comp_tbl(lgran = "month", ugran = "year") %>% print(n = nrow(.))
+```
