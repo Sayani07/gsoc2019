@@ -1,0 +1,174 @@
+---
+title: "Chicago Bikedata Analysis"
+author: "Sayani Gupta"
+date: "06/06/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(forecast)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(tidyverse)
+library(lvplot)
+library(ggridges)
+library(tsibble)
+library(bikedata)
+library(gravitas)
+```
+
+
+```{r overall_view, echo=FALSE}
+
+nyc_bikes <- tsibbledata::nyc_bikes %>% as_tsibble()
+summary(nyc_bikes)
+
+# Top 20 Bike stations by number of starts
+
+top_bikes <- nyc_bikes %>%as_tibble() %>% group_by(start_station) %>% summarise(count = n()) %>% arrange(-count) %>% slice(1:6)
+
+#top_bikes <- nyc_bikes %>%as_tibble() %>% group_by(start_station) %>% summarise(count = n()) %>% arrange(-count)
+
+top_bikes %>%ggplot(aes(x = reorder(start_station, -count), y= count)) + geom_bar(stat="identity")
+
+```
+
+
+```{r busiest_bike_behavior}
+
+#devtools::install_github("Sayani07/gravitas")
+library(gravitas)
+rides_busiest <- nyc_bikes %>% filter(start_station %in% c(3186, 3203)|end_station %in% c(3186, 3203))
+summary(rides_busiest)
+
+rides_busiest_grans <- rides_busiest  %>% mutate(hour_day = nest("hour", "day", start_time),
+                     month_year =   nest("month", "year", start_time),
+                     day_week   = nest("day", "week", start_time, abbr),
+                     hhour_day   = nest("hhour", "day", start_time),
+                     minute_hour = nest("minute", "hour", start_time),
+                     hhour_hour = nest("hhour", "hour", start_time))
+
+rides_busiest_grans %>% 
+  as_tibble %>% group_by(hour_day) %>%
+  summarise(Count = n()) %>% 
+  ggplot(aes(x = hour_day, y= Count)) + geom_col() + scale_x_continuous(breaks = seq(0, 23, 1))
+#8am and 6pm experiences maximum rush in terms of rides
+
+rides_busiest_grans %>% 
+  as_tibble %>% group_by(day_week) %>%
+  summarise(Count = n()) %>% 
+  ggplot(aes(x = day_week, y= Count)) + geom_col() + scale_x_continuous(breaks = seq(1, 7, 1))
+#Monday has lowest count when compared with other days of the week
+
+rides_busiest_grans %>% 
+  as_tibble %>% group_by(minute_hour) %>%
+  summarise(Count = n()) %>% 
+  ggplot(aes(x = minute_hour, y= Count)) + geom_line() 
+
+
+rides_busiest_grans %>% 
+  as_tibble %>% group_by(month_year) %>%
+  summarise(Count = n()) %>% 
+  ggplot(aes(x = month_year, y= Count)) + geom_line() + scale_x_continuous(breaks = seq(1,12,1))
+# Mostly in summer months counts are more
+
+granplot = function(data, x, y) {
+    data %>% as_tibble %>%  group_by(!!sym(x), !!sym(y)) %>% 
+    summarise(ecount = n()) %>% 
+     ggplot(aes(x = !!sym(x), y = ecount)) +
+          geom_line() +
+          theme_bw() + 
+          facet_wrap(as.formula(paste("~", y))) + 
+          ylab("Total Count") + 
+          ggtitle(paste0("Plot of ", x, " given ", y))
+}
+
+
+granplot(rides_busiest_grans, "hhour_day",  "day_week")
+#
+
+granplot(rides_busiest_grans, "hour_day",  "day_week")
+# No peaks on Monday and total counts across hours are less compared to other days
+
+
+granplot(rides_busiest_grans, "day_week",  "month_year")
+# During Summers,  high ride shares on weekends are observed. In Winters (Nov - February), counts are much less for all days of the week
+
+
+granplot(rides_busiest_grans, "hour_day",  "day_week")
+# Peaks are at different times of the day on Sunday(compared to other days), also there are more than 2 peaks
+
+granplot(rides_busiest_grans, "hour_day",  "hhour_hour")
+# For first peak (around 8am) first half hour of the hour sees more count, while during the evening peak, later half hour sees more count.
+```
+
+```{r}
+rawbikedata <- read.csv(file="./bikeshare_nyc_raw.csv", head=TRUE,sep="\t")
+
+# Create a working data frame
+bikedata <- rawbikedata %>% as_tibble()
+
+# Remove any rows which the total docks is zero
+bikedata <- bikedata[bikedata$tot_docks != 0 ,]
+View(bikedata)
+
+# Create a POSIXct date and time variable using available data
+bikedata$date <- as.character.Date(bikedata$date)
+bikedata$hour <- bikedata$hour + (bikedata$pm * 12) * (bikedata$hour != 12)
+bikedata$hour <- sprintf("%02d",bikedata$hour)
+bikedata$minute <- sprintf("%02d",bikedata$minute)
+
+bikedata$hour <- paste(bikedata$hour, bikedata$minute, sep=":" )
+bikedata$date <- paste(bikedata$date, bikedata$hour, sep="")
+bikedata$date <- as.POSIXct(bikedata$date ,format= "%y-%m-%d %H:%M")
+
+# Create a variable which measure how 'full' a bikeshare dock is
+# 0 = empty, 1.0 = full
+bikedata$avail_ratio <- bikedata$avail_bikes / bikedata$tot_docks
+
+#Remove columns of data we don't need
+bikedata <- bikedata[c("dock_id","dock_name","date","avail_bikes","avail_docks", "tot_docks", "avail_ratio","X_lat", "X_long")]
+
+
+top_bikestn <- bikedata %>% filter(dock_id %in%  c(3186, 3203)) %>% as_tibble()
+
+
+top_bike_mut <- top_bikestn %>% mutate(hour_day = build_gran("hour", "day", date),
+                     month_year =   build_gran("month", "year", date),
+                     day_week   = build_gran("day", "week", date),
+                     hhour_day   = build_gran("hhour", "day", date))
+#Draw plot
+bike_3203 <- top_bike_mut %>% filter(dock_id==3203)
+
+theme_set(theme_classic())
+
+# Allow Default X Axis Labels
+ggplot(bike_3203, aes(x=hour_day, y=avail_ratio)) +
+  geom_point(col="tomato2", size=1) + 
+  labs(title="	Hamilton Park", 
+       subtitle="December 2018", 
+       caption="Source: Open Bus", 
+       y="Availability Ratio") + 
+ scale_y_continuous(name = "avail_ratio", 
+    sec.axis = sec_axis(~ . / 60, name = "Productivity % of best")) + 
+  theme(
+      axis.title.y = element_text(color = "grey"),
+      axis.title.y.right = element_text(color = "blue")) + geom_line(data=count_3203, aes(x = hour_day, y=Count, colour="#000099")) 
+
+#last_plot() + scale_x_datetime(breaks = date_breaks("1 day"))
+
+
+rides_busiest <- tsibbledata::nyc_bikes %>% filter(start_station %in% c(3186, 3203)|end_station %in% c(3186, 3203))
+
+
+rides_busiest_grans <- rides_busiest  %>% mutate(hour_day = build_gran("hour", "day", start_time),
+                     month_year =   build_gran("month", "year", start_time),
+                     day_week   = build_gran("day", "week", start_time),
+                     hhour_day   = build_gran("hhour", "day", start_time))
+
+
+count_3203 <- rides_busiest_grans %>% as_tibble %>%  filter(start_station==3203) %>% group_by(hour_day) %>%
+  summarise(Count = n())
+```
+
