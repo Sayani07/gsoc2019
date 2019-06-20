@@ -1,0 +1,746 @@
+dock_name,dock_id,percent_empty,percent_full
+"1 Ave & E 16 St",504,9.577922,10.22727
+"1 Ave & E 18 St",2003,9.74026,13.14935
+"1 Ave & E 30 St",536,16.72078,2.11039
+"1 Ave & E 44 St",455,20.77922,4.058442
+"",489,,
+"11 Ave & W 27 St",458,15.25974,5.194805
+"11 Ave & W 41 St",478,10.87662,10.38961
+"11 Ave & W 59 St",530,.8116883,14.93507
+"12 Ave & W 40 St",514,2.272727,14.61039
+"2 Ave & E 31 St",528,14.44805,0
+"",290,,
+"",298,,
+"5 Ave & E 29 St",474,23.53896,1.623377
+"",2004,,
+"6 Ave & Canal St",377,13.96104,1.623377
+"6 Ave & W 33 St",505,16.07143,0
+"",521,,
+"8 Ave & W 33 St",490,10.87662,.487013
+"8 Ave & W 52 St",447,19.96753,0
+"",404,,
+"",463,,
+"",434,,
+"9 Ave & W 22 St",509,3.896104,4.707792
+"9 Ave & W 45 St",479,13.14935,1.136364
+"Adelphi St & Myrtle Ave",270,8.603896,3.084416
+"Allen St & Stanton St",312,4.87013,14.61039
+"Allen St & Hester St",361,4.220779,8.928572
+"Allen St & Rivington St",401,13.47403,11.68831
+"",271,,
+"Atlantic Ave & Fort Greene Pl",83,0,.3246753
+"Atlantic Ave & Furman St",398,0,2.11039
+"Avenue D & E 12 St",339,5.681818,13.14935
+"Avenue D & E 3 St",302,9.253246,26.94805
+"Avenue D & E 8 St",266,10.06493,22.72727
+"Bank St & Hudson St",346,5.194805,12.33766
+"Bank St & Washington St",238,70.12987,1.948052
+"Barclay St & Church St",417,9.253246,6.655844
+"Barrow St & Hudson St",127,1.623377,16.72078
+"Bayard St & Baxter St",355,.487013,2.597403
+"Bedford Ave & S 9 St",443,3.571429,.8116883
+"Bialystoker Pl & Delancey St",356,4.220779,33.27922
+"",395,,
+"Broad St & Bridge St",260,22.56494,3.733766
+"Broadway & Battery Pl",304,9.74026,1.948052
+"Broadway & Berry St",389,4.058442,.487013
+"Broadway & E 14 St",285,3.084416,1.948052
+"Broadway & E 22 St",402,16.88312,.3246753
+"",444,,
+"Broadway & W 29 St",486,33.11688,.3246753
+"Broadway & W 32 St",498,30.03247,0
+"Broadway & W 36 St",267,37.01299,0
+"Broadway & W 37 St",362,42.53247,0
+"Broadway & W 38 St",533,39.93507,0
+"Broadway & W 41 St",465,29.54545,0
+"Broadway & W 49 St",173,26.94805,.3246753
+"Broadway & W 51 St",500,32.62987,.487013
+"Broadway & W 53 St",469,34.25325,0
+"Broadway & W 56 St",468,32.30519,0
+"Broadway & W 58 St",457,20.45455,.3246753
+"Broadway & W 60 St",499,7.467533,.3246753
+"Bus Slip & State St",427,5.194805,2.435065
+"Cadman Plaza E & Red Cross Pl",321,3.409091,3.896104
+"Cadman Plaza E & Tillary St",232,1.136364,1.785714
+"Cadman Plaza West & Montague St",314,5.032467,.487013
+"Canal St & Rutgers St",307,3.571429,11.52597
+"Carlton Ave & Park Ave",419,2.435065,2.597403
+"Carmine St & 6 Ave",368,1.136364,7.62987
+"Catherine St & Monroe St",2009,1.136364,23.86364
+"Central Park S & 6 Ave",2006,23.7013,6.331169
+"Centre St & Chambers St",387,11.52597,2.597403
+"Centre St & Worth St",386,10.55195,5.357143
+"Cherry St",332,6.493506,19.15584
+"Christopher St & Greenwich St",358,3.896104,20.45455
+"Clark St & Henry St",391,6.493506,0
+"Clermont Ave & Lafayette Ave",420,4.707792,.6493506
+"Clermont Ave & Park Ave",421,3.246753,1.623377
+"Cleveland Pl & Spring St",151,14.77273,2.75974
+"Cliff St & Fulton St",306,7.954545,9.415585
+"Clinton Ave & Flushing Ave",343,.8116883,4.058442
+"Clinton Ave & Myrtle Ave",366,7.62987,.974026
+"Clinton St & Grand St",350,6.980519,15.58442
+"Clinton St & Joralemon St",143,3.571429,4.545455
+"Clinton St & Tillary St",322,1.298701,.6493506
+"Columbia Heights & Cranberry St",216,2.597403,0
+"Columbia St & Rivington St",342,2.922078,31.49351
+"Concord St & Bridge St",278,1.623377,.974026
+"Cumberland St & Lafayette Ave",416,2.75974,.1623377
+"DeKalb Ave & Hudson Ave",324,.6493506,3.084416
+"DeKalb Ave & S Portland Ave",241,2.11039,.974026
+"DeKalb Ave & Skillman St",409,1.948052,.487013
+"DeKalb Ave & Vanderbilt Ave",258,6.331169,1.461039
+"Dean St & 4 Ave",467,1.136364,2.272727
+"Division St & Bowery",296,.3246753,10.38961
+"Duane St & Greenwich St",276,2.272727,6.655844
+"Duffield St & Willoughby St",390,1.136364,3.246753
+"E 10 St & 5 Ave",280,69.96753,.8116883
+"E 10 St & Avenue A",445,6.006494,5.519481
+"E 11 St & 1 Ave",326,9.902597,13.47403
+"E 11 St & 2 Ave",237,6.493506,6.006494
+"E 11 St & Broadway",357,6.980519,.6493506
+"E 12 St & 3 Ave",483,2.435065,.974026
+"E 13 St & Avenue A",433,7.954545,9.090909
+"",511,,
+"E 15 St & 3 Ave",297,5.519481,1.136364
+"E 16 St & 5 Ave",496,13.7987,2.272727
+"",475,,
+"E 17 St & Broadway",497,10.38961,3.084416
+"E 19 St & 3 Ave",325,6.818182,0
+"E 2 St & 2 Ave",403,1.785714,7.954545
+"E 2 St & Avenue B",301,11.85065,17.37013
+"E 2 St & Avenue C",150,10.38961,15.25974
+"E 20 St & 2 Ave",461,10.71429,5.519481
+"E 20 St & FDR Drive",487,7.62987,14.28571
+"E 20 St & Park Ave",503,68.34415,.8116883
+"E 23 St & 1 Ave",545,6.980519,8.603896
+"E 24 St & Park Ave S",491,24.18831,3.409091
+"E 25 St & 1 Ave",174,8.441559,3.733766
+"E 25 St & 2 Ave",507,8.441559,.3246753
+"E 27 St & 1 Ave",2012,11.68831,.487013
+"",428,,
+"E 30 St & Park Ave S",546,15.25974,.974026
+"E 31 St & 3 Ave",476,11.2013,0
+"E 32 St & Park Ave",472,18.99351,.3246753
+"E 33 St & 2 Ave",527,11.03896,0
+"E 33 St & 5 Ave",526,32.62987,0
+"",160,,
+"E 39 St & 2 Ave",518,12.98701,0
+"E 39 St & 3 Ave",167,24.02597,0
+"E 4 St & 2 Ave",439,4.383117,5.844156
+"",153,,
+"",2017,,
+"",318,,
+"E 45 St & 3 Ave",440,33.6039,3.246753
+"E 47 St & 1 Ave",516,21.75325,1.461039
+"E 47 St & 2 Ave",164,27.43506,.3246753
+"E 47 St & Park Ave",359,24.02597,0
+"E 48 St & 3 Ave",228,34.09091,.6493506
+"",538,,
+"E 5 St & Avenue C",393,8.603896,25.81169
+"E 51 St & 1 Ave",454,17.53247,0
+"E 51 St & Lexington Ave",522,37.01299,4.220779
+"E 52 St & 2 Ave",441,20.94156,.974026
+"",367,,
+"E 53 St & Madison Ave",456,44.31818,6.818182
+"E 55 St & 2 Ave",385,100,100
+"E 55 St & Lexington Ave",2023,39.28571,3.896104
+"",464,,
+"",137,,
+"E 58 St & 3 Ave",305,30.68182,2.435065
+"E 60 St & York Ave",2022,18.83117,0
+"E 6 St & Avenue B",317,11.68831,26.62338
+"E 6 St & Avenue D",411,6.331169,16.07143
+"E 7 St & Avenue A",432,6.493506,14.44805
+"E 9 St & Avenue C",394,7.467533,13.47403
+"",263,,
+"Emerson Pl & Myrtle Ave",354,.1623377,0
+"FDR Drive & E 35 St",501,5.032467,2.272727
+"Carlton Ave & Flushing Ave",242,1.623377,6.818182
+"Forsyth St & Broome St",531,.974026,4.220779
+"Forsyth St & Canal St",412,.487013,12.33766
+"Franklin Ave & Myrtle Ave",372,.3246753,0
+"Franklin St & W Broadway",79,11.2013,6.493506
+"Front St & Gold St",418,.6493506,4.707792
+"Front St & Maiden Ln",351,7.305195,4.383117
+"Front St & Washington St",2000,1.136364,9.902597
+"Fulton St & Clermont Ave",397,3.733766,.1623377
+"Fulton St & Grand Ave",365,5.681818,0
+"Fulton St & Rockwell Pl",243,0,4.058442
+"",384,,
+"Fulton St & William St",316,7.142857,1.623377
+"",218,,
+"Grand Army Plaza & Central Park S",281,24.02597,2.272727
+"Grand St & Greene St",2010,9.253246,4.220779
+"Grand St & Havemeyer St",471,.487013,1.948052
+"Great Jones St",229,16.3961,6.655844
+"Greenwich Ave & 8 Ave",284,69.96753,.3246753
+"Greenwich Ave & Charles St",383,2.435065,5.032467
+"",329,,
+"",147,,
+"Hancock St & Bedford Ave",436,1.785714,0
+"",431,,
+"Harrison St & Hudson St",249,4.220779,6.168831
+"Henry St & Atlantic Ave",157,1.298701,4.058442
+"Henry St & Grand St",502,8.603896,26.94805
+"Henry St & Poplar St",407,.8116883,.974026
+"Hicks St & Montague St",406,1.136364,.1623377
+"Howard St & Centre St",268,7.62987,3.733766
+"Hudson St & Reade St",146,1.948052,4.87013
+"Jay St & Tech Pl",392,1.948052,3.084416
+"John St & William St",376,5.844156,1.785714
+"Johnson St & Gold St",261,.1623377,.487013
+"",233,,
+"Kent Ave & S 11 St",282,1.298701,.3246753
+"LaGuardia Pl & W 3 St",161,3.246753,3.896104
+"Lafayette Ave & Classon Ave",364,2.922078,0
+"Lafayette Ave & Fort Greene Pl",274,.487013,.487013
+"Lafayette Ave & St James Pl",399,.487013,0
+"Lafayette St & E 8 St",293,5.681818,2.11039
+"",250,,
+"Laight St & Hudson St",248,20.94156,9.902597
+"Lawrence St & Willoughby St",323,1.948052,4.383117
+"Lefferts Pl & Franklin Ave",396,4.058442,0
+"Leonard St & Church St",320,12.5,3.896104
+"Lexington Ave & Classon Ave",120,3.571429,1.623377
+"Lexington Ave & E 24 St",537,12.5,.3246753
+"Lexington Ave & E 29 St",540,8.766233,0
+"Liberty St & Broadway",195,17.53247,3.084416
+"Lispenard St & Broadway",257,29.38312,23.53896
+"Little West St & 1 Pl",2008,.8116883,11.2013
+"MacDougal St & Prince St",128,4.058442,9.74026
+"MacDougal St & Washington Sq",252,.3246753,6.168831
+"Macon St & Nostrand Ave",437,7.792208,3.896104
+"Madison St & Clinton St",340,5.681818,13.31169
+"Madison St & Montgomery St",291,7.305195,17.37013
+"Maiden Ln & Pearl St",264,4.058442,8.116883
+"Market St & Cherry St",408,.974026,23.53896
+"",375,,
+"Mercer St & Spring St",303,14.77273,5.681818
+"Metropolitan Ave & Bedford Ave",539,1.298701,1.785714
+"Monroe St & Bedford Ave",344,2.11039,0
+"Monroe St & Classon Ave",289,.974026,.1623377
+"Mott St & Prince St",251,2.272727,5.844156
+"Murray St & West St",309,18.66883,10.71429
+"Myrtle Ave & St Edwards St",245,1.623377,0
+"Nassau St & Navy St",144,0,3.571429
+"Norfolk St & Broome St",311,4.707792,11.68831
+"Old Fulton St",217,.1623377,.487013
+"Old Slip & Front St",337,20.29221,5.032467
+"Park Ave & St Edwards St",119,0,.1623377
+"Fulton St & Broadway",319,11.2013,4.545455
+"Pearl St & Anchorage Pl",414,2.922078,11.03896
+"Pearl St & Hanover Square",415,10.22727,3.896104
+"Peck Slip & Front St",279,.487013,2.435065
+"Perry St & Bleecker St",247,7.954545,17.20779
+"Pershing Square North",519,20.45455,0
+"Pershing Square South",517,40.90909,0
+"Pike St & E Broadway",295,3.409091,14.77273
+"Pike St & Monroe St",331,2.922078,18.01948
+"Pitt St & Stanton St",400,11.36364,20.12987
+"Railroad Ave & Kay Ave",2005,.1623377,1.298701
+"Reade St & Broadway",330,13.14935,4.545455
+"Rivington St & Chrystie St",473,1.785714,10.22727
+"Rivington St & Ridge St",349,10.55195,17.04545
+"S 3 St & Bedford Ave",481,6.493506,.1623377
+"S 4 St & Wythe Ave",460,3.246753,2.597403
+"S 5 Pl & S 4 St",532,.487013,0
+"S Portland Ave & Hanson Pl",353,3.571429,0
+"Sands St & Navy St",2001,2.11039,6.493506
+"",300,,
+"South End Ave & Liberty St",3002,1.623377,13.14935
+"South St & Gouverneur Ln",315,6.331169,5.357143
+"South St & Whitehall St",259,2.272727,6.006494
+"",224,,
+"St James Pl & Oliver St",308,.974026,12.17532
+"St James Pl & Pearl St",82,0,21.75325
+"St Marks Pl & 1 Ave",438,9.902597,14.93507
+"St Marks Pl & 2 Ave",236,7.62987,4.707792
+"Stanton St & Chrystie St",265,1.623377,8.441559
+"Stanton St & Mangin St",341,40.58442,9.902597
+"State St & Smith St",310,0,1.298701
+"Suffolk St & Stanton St",410,8.279221,15.58442
+"Sullivan St & Washington Sq",336,.487013,8.441559
+"University Pl & E 14 St",382,4.220779,6.168831
+"Vesey Pl & River Terrace",327,3.084416,9.902597
+"W 11 St & 6 Ave",254,1.136364,5.681818
+"W 13 St & 5 Ave",253,86.85065,0
+"W 13 St & 6 Ave",345,81.33117,81.65585
+"W 13 St & 7 Ave",223,.8116883,1.785714
+"",225,,
+"W 15 St & 7 Ave",482,.6493506,2.435065
+"W 16 St & The High Line",212,18.34416,2.922078
+"",116,,
+"W 18 St & 6 Ave",168,18.50649,2.11039
+"W 20 St & 11 Ave",459,27.92208,2.272727
+"W 20 St & 7 Ave",334,5.032467,.487013
+"W 20 St & 8 Ave",470,24.67533,20.94156
+"W 21 St & 6 Ave",435,16.55844,2.922078
+"W 22 St & 10 Ave",462,2.11039,1.461039
+"W 22 St & 8 Ave",453,6.655844,1.623377
+"W 24 St & 7 Ave",446,17.53247,0
+"W 25 St & 6 Ave",466,25.48701,1.948052
+"W 26 St & 10 Ave",388,12.01299,2.435065
+"W 26 St & 8 Ave",494,9.902597,0
+"W 27 St & 7 Ave",442,27.75974,0
+"",512,,
+"W 31 St & 7 Ave",379,12.98701,2.435065
+"W 33 St & 7 Ave",492,10.22727,1.948052
+"W 34 St & 11 Ave",525,3.409091,1.461039
+"W 37 St & 10 Ave",448,11.85065,8.441559
+"W 37 St & 5 Ave",485,29.87013,0
+"W 38 St & 8 Ave",523,6.655844,.3246753
+"",488,,
+"W 4 St & 7 Ave S",380,70.61688,72.56493
+"W 41 St & 8 Ave",477,11.36364,2.922078
+"W 42 St & 8 Ave",529,15.42208,5.032467
+"W 43 St & 10 Ave",515,10.55195,10.06493
+"W 43 St & 6 Ave",524,36.85065,.487013
+"W 44 St & 5 Ave",484,39.93507,3.246753
+"",493,,
+"W 45 St & 8 Ave",2021,19.96753,0
+"W 46 St & 11 Ave",508,7.142857,4.383117
+"W 47 St & 10 Ave",495,10.87662,8.116883
+"W 49 St & 8 Ave",450,11.52597,0
+"",510,,
+"W 52 St & 11 Ave",72,3.896104,0
+"W 52 St & 5 Ave",520,41.88312,1.623377
+"W 52 St & 9 Ave",449,100,100
+"W 53 St & 10 Ave",480,7.305195,1.785714
+"W 54 St & 9 Ave",423,26.46104,0
+"W 56 St & 10 Ave",513,10.71429,0
+"",352,,
+"W 59 St & 10 Ave",422,3.246753,0
+"",348,,
+"Greenwich St & W Houston St",347,6.655844,7.467533
+"Warren St & Church St",152,70.12987,.6493506
+"Washington Ave & Greene Ave",275,4.058442,.8116883
+"Washington Ave & Park Ave",313,.1623377,2.11039
+"Washington Park",262,6.168831,0
+"Washington Pl & 6 Ave",369,2.922078,4.87013
+"Washington Pl & Broadway",335,12.01299,4.87013
+"",294,,
+"Washington St & Gansevoort St",405,1.623377,2.11039
+"Water - Whitehall Plaza",534,17.04545,7.792208
+"Watts St & Greenwich St",328,11.2013,6.655844
+"West St & Chambers St",426,1.461039,12.66234
+"West Thames St",363,2.435065,11.68831
+"William St & Pine St",360,18.01948,2.597403
+"Willoughby Ave & Hall St",244,4.87013,.8116883
+"Willoughby Ave & Walworth St",373,.487013,.8116883
+"Willoughby St & Fleet St",239,7.142857,4.058442
+"Wythe Ave & Metropolitan Ave",2002,.487013,2.597403
+"",430,,
+"",3014,,
+"Kent Ave & N 7 St",3016,0,4.707792
+"Kingston Ave & Herkimer St",3041,8.766233,1.298701
+"Fulton St & Utica Ave",3042,0,1.785714
+"Lewis Ave & Decatur St",3043,23.7013,0
+"Albany Ave & Fulton St",3044,6.655844,0
+"",3045,,
+"Marcus Garvey Blvd & Macon St",3046,1.785714,0
+"Halsey St & Tompkins Ave",3047,6.006494,.1623377
+"Putnam Ave & Nostrand Ave",3048,3.896104,0
+"Cambridge Pl & Gates Ave",3049,10.71429,6.493506
+"Putnam Ave & Throop Ave",3050,9.902597,1.298701
+"",3051,,
+"Lewis Ave & Madison St",3052,8.766233,1.136364
+"Marcy Ave & Lafayette Ave",3053,10.38961,0
+"Greene Ave & Throop Ave",3054,11.52597,0
+"Greene Ave & Nostrand Ave",3055,8.766233,3.084416
+"Kosciuszko St & Nostrand Ave",3056,7.142857,0
+"Kosciuszko St & Tompkins Ave",3057,8.766233,0
+"Lewis Ave & Kosciuszko St",3058,9.253246,0
+"Pulaski St & Marcus Garvey Blvd",3059,12.17532,0
+"Willoughby Ave & Tompkins Ave",3060,2.597403,3.896104
+"Throop Ave & Myrtle Ave",3061,20.12987,13.63636
+"Myrtle Ave & Marcy Ave",3062,5.844156,1.785714
+"Nostrand Ave & Myrtle Ave",3063,0,3.084416
+"Myrtle Ave & Lewis Ave",3064,7.792208,0
+"Union Ave & Wallabout St",3065,0,13.96104
+"Tompkins Ave & Hopkins St",3066,1.461039,3.246753
+"Broadway & Whipple St",3067,0,0
+"Humboldt St & Varet St",3068,0,14.93507
+"Lorimer St & Broadway",3069,5.519481,.8116883
+"McKibbin St & Manhattan Ave",3070,1.623377,0
+"Boerum St & Broadway",3071,2.597403,5.032467
+"Leonard St & Boerum St",3072,2.272727,7.467533
+"Division Ave & Hooper St",3073,6.980519,0
+"Montrose Ave & Bushwick Ave",3074,1.136364,1.785714
+"Division Ave & Marcy Ave",3075,0,0
+"Scholes St & Manhattan Ave",3076,5.519481,0
+"Stagg St & Union Ave",3077,7.305195,0
+"Broadway & Roebling St",3078,4.707792,.8116883
+"",3079,,
+"S 4 St & Rodney St",3080,6.818182,.974026
+"Graham Ave & Grand St",3081,6.006494,0
+"Hope St & Union Ave",3082,3.246753,5.357143
+"Bushwick Ave & Powers St",3083,12.5,0
+"",3084,,
+"Roebling St & N 4 St",3085,.487013,3.896104
+"Graham Ave & Conselyea St",3086,16.07143,3.246753
+"Metropolitan Ave & Meeker Ave",3087,5.032467,1.298701
+"Union Ave & Jackson St",3088,.1623377,2.435065
+"",3089,,
+"N 8 St & Driggs Ave",3090,14.77273,6.168831
+"Frost St & Meeker St",3091,.974026,0
+"Berry St & N 8 St",3092,10.38961,2.597403
+"N 6 St & Bedford Ave",3093,13.96104,8.116883
+"Graham Ave & Withers St",3094,8.766233,.3246753
+"Graham Ave & Herbert St",3095,6.818182,.3246753
+"Union Ave & N 12 St",3096,2.75974,2.272727
+"",3097,,
+"",3098,,
+"",3099,,
+"Nassau Ave & Newell St",3100,3.571429,1.948052
+"N 12 St & Bedford Ave",3101,11.52597,0
+"Driggs Ave & Lorimer St",3102,9.577922,0
+"N 11 St & Wythe Ave",3103,.3246753,1.461039
+"",3104,,
+"N 15 St & Wythe Ave",3105,0,.6493506
+"Driggs Ave & N Henry St",3106,16.23377,18.50649
+"Bedford Ave & Nassau Ave",3107,.6493506,.974026
+"Nassau Ave & Russell St",3108,9.253246,15.0974
+"Banker St & Meserole Ave",3109,0,16.55844
+"Meserole Ave & Manhattan Ave",3110,2.922078,1.948052
+"",3111,,
+"Milton St & Franklin St",3112,0,3.733766
+"Greenpoint Ave & Manhattan Ave",3113,1.785714,2.75974
+"",3114,,
+"India St & Manhattan Ave",3115,.1623377,7.62987
+"Huron St & Franklin St",3116,.1623377,6.493506
+"Franklin St & Dupont St",3117,.6493506,1.785714
+"McGuinness Blvd & Eagle St",3118,2.75974,1.136364
+"Vernon Blvd & 50 Ave",3119,10.38961,4.87013
+"Center Blvd & Borden Ave",3120,2.11039,5.194805
+"Jackson Ave & 46 Rd",3121,.3246753,0
+"48 Ave & 5 St",3122,0,9.415585
+"31 St & Thomson Ave",3123,13.63636,0
+"46 Ave & 5 St",3124,1.298701,13.7987
+"45 Rd & 11 St",3125,6.006494,0
+"44 Dr & Jackson Ave",3126,6.980519,0
+"9 St & 44 Rd",3127,0,0
+"21 St & 43 Ave",3128,4.383117,0
+"Queens Plaza North & Crescent St",3129,10.87662,.487013
+"21 St & Queens Plaza North",3130,11.36364,0
+"E 68 St & 3 Ave",3131,26.94805,0
+"E 59 St & Madison Ave",3132,35.71429,2.75974
+"",3133,,
+"3 Ave & E 62 St",3134,34.25325,0
+"E 75 St & 3 Ave",3135,4.87013,0
+"5 Ave & E 63 St",3136,8.928572,.3246753
+"5 Ave & E 73 St",3137,14.93507,0
+"",3138,,
+"E 72 St & Park Ave",3139,27.27273,0
+"1 Ave & E 78 St",3140,2.597403,3.246753
+"1 Ave & E 68 St",3141,15.0974,.487013
+"1 Ave & E 62 St",3142,15.0974,0
+"5 Ave & E 78 St",3143,14.44805,0
+"E 81 St & Park Ave",3144,16.23377,0
+"E 84 St & Park Ave",3145,3.571429,0
+"E 81 St & 3 Ave",3146,7.954545,.487013
+"E 85 St & 3 Ave",3147,4.058442,.1623377
+"E 84 St & 1 Ave",3148,6.168831,8.279221
+"",3149,,
+"E 85 St & York Ave",3150,7.792208,0
+"E 81 St & York Ave",3151,7.467533,1.461039
+"3 Ave & E 71 St",3152,24.18831,0
+"",3153,,
+"",3154,,
+"Lexington Ave & E 63 St",3155,26.62338,0
+"E 72 St & York Ave",3156,8.603896,0
+"East End Ave & E 86 St",3157,4.220779,2.922078
+"W 63 St & Broadway",3158,13.7987,0
+"W 67 St & Broadway",3159,3.896104,.8116883
+"Central Park West & W 76 St",3160,.1623377,6.493506
+"W 76 St & Columbus Ave",3161,1.623377,2.435065
+"W 78 St & Broadway",3162,3.409091,5.194805
+"Central Park West & W 68 St",3163,.974026,0
+"Columbus Ave & W 72 St",3164,.3246753,3.571429
+"Central Park West & W 72 St",3165,.6493506,4.707792
+"Riverside Dr & W 72 St",3166,2.75974,14.28571
+"Amsterdam Ave & W 73 St",3167,1.461039,4.707792
+"Central Park West & W 85 St",3168,1.623377,12.33766
+"Riverside Dr & W 82 St",3169,.974026,6.006494
+"W 84 St & Columbus Ave",3170,2.597403,6.818182
+"Amsterdam Ave & W 82 St",3171,2.75974,4.058442
+"W 74 St & Columbus Ave",3172,4.707792,5.681818
+"Riverside Blvd & W 67 St",3173,2.75974,14.28571
+"",3174,,
+"W 70 St & Amsterdam Ave",3175,5.357143,2.922078
+"W 64 St & West End Ave",3176,2.272727,6.331169
+"W 84 St & Broadway",3177,1.298701,1.623377
+"Riverside Dr & W 78 St",3178,2.435065,7.142857
+"Park Ave & Marcus Garvey Blvd",3179,1.948052,0
+"Brooklyn Bridge Park - Pier 2",3180,.6493506,2.435065
+"",3181,,
+"Yankee Ferry Terminal",3182,0,0
+"Exchange Place",3183,23.21428,2.435065
+"Paulus Hook",3184,10.06493,5.844156
+"City Hall",3185,2.922078,.487013
+"Grove St PATH",3186,26.62338,1.461039
+"Warren St",3187,2.922078,0
+"NJCU",3188,0,0
+"West Side Light Rail",3189,.3246753,0
+"Garfield Ave Station",3190,.6493506,.3246753
+"Union St",3191,0,0
+"Liberty Light Rail",3192,.487013,2.272727
+"Lincoln Park",3193,.1623377,1.298701
+"McGinley Square",3194,2.597403,0
+"Sip Ave",3195,29.22078,0
+"Riverview Park",3196,5.844156,0
+"",3197,,
+"Heights Elevator",3198,2.11039,0
+"Newport Pkwy",3199,.487013,2.922078
+"MLK Light Rail",3200,2.11039,.1623377
+"Dey St",3201,0,.1623377
+"Newport PATH",3202,23.53896,7.305195
+"Hamilton Park",3203,2.272727,19.15584
+"",3204,,
+"JC Medical Center",3205,1.623377,1.623377
+"Hilltop",3206,16.88312,0
+"Oakland Ave",3207,10.06493,0
+"",3208,,
+"Brunswick St",3209,3.246753,6.493506
+"Pershing Field",3210,1.785714,0
+"Newark Ave",3211,10.38961,0
+"Christ Hospital",3212,4.545455,0
+"Van Vorst Park",3213,3.571429,1.948052
+"Essex Light Rail",3214,.8116883,0
+"",3215,,
+"Columbia Park",3216,0,0
+"Bayside Park",3217,7.467533,.1623377
+"",3219,,
+"5 Corners Library",3220,9.090909,0
+"47 Ave & 31 St",3221,25.48701,0
+"",3222,,
+"E 55 St & 3 Ave",3223,27.92208,5.357143
+"W 13 St & Hudson St",3224,3.246753,7.142857
+"W 27 St & 10 Ave",3258,7.305195,0
+"Manila & 1st",3273,21.26623,.3246753
+"5 Ave & E 103 St",3367,6.818182,.8116883
+"E 106 St & Lexington Ave",3424,1.298701,.3246753
+"E 103 St & Lexington Ave",3379,.1623377,0
+"E 95 St & 3 Ave",3325,25.81169,0
+"E 44 St & 2 Ave",3462,21.75325,.6493506
+"Pioneer St & Van Brunt St",3344,0,20.12987
+"E 106 St & Madison Ave",3387,1.298701,4.707792
+"Devoe St & Lorimer St",3453,9.090909,3.571429
+"West End Ave & W 107 St",3366,5.844156,0
+"3 St & 3 Ave",3373,0,13.47403
+"Plaza St West & Flatbush Ave",3418,12.66234,2.922078
+"E 89 St & 3 Ave",3286,3.409091,.3246753
+"9 Ave & W 28 St",3259,12.17532,0
+"W 106 St & Amsterdam Ave",3357,1.623377,0
+"E 58 St & 1 Ave",3243,15.0974,0
+"E 41 St & Madison Ave",3235,51.46104,0
+"Bond St & Fulton St",3232,0,.3246753
+"Richards St & Delavan St",3393,0,20.61688
+"Verona Pl & Fulton St",3249,8.279221,.8116883
+"4 Ave & 9 St",3403,0,7.954545
+"3 Ave & E 72 St",3375,21.91558,0
+"Amsterdam Ave & W 79 St",3360,4.220779,10.55195
+"E 67 St & Park Ave",3231,23.21428,0
+"1 Ave & E 94 St",3312,.3246753,8.603896
+"Schermerhorn St & 3 Ave",3455,.1623377,0
+"Clinton St & 4 Place",3396,2.75974,.8116883
+"E 91 St & Park Ave",3294,8.279221,0
+"E 98 St & Park Ave",3299,32.79221,1.785714
+"14 St & 5 Ave",3319,1.298701,4.545455
+"Lenox Ave & W 115 St",3509,1.461039,0
+"Madison Ave & E 82 St",3362,11.2013,0
+"Astor Place",3280,0,2.922078
+"12 St & 4 Ave",3322,0,17.20779
+"Bond St & Bergen St",3411,.1623377,2.11039
+"Lexington Ave & E 111 St",3502,2.435065,.1623377
+"E 115 St & Lexington Ave",3494,2.272727,0
+"Riverside Dr & W 91 St",3437,.974026,0
+"E 91 St & 2 Ave",3305,1.948052,8.928572
+"6 Ave & 12 St",3313,6.331169,0
+"Montgomery St",3483,.8116883,0
+"Cathedral Pkwy & Broadway",3383,5.194805,0
+"Monroe St & Tompkins Ave",3241,12.66234,5.681818
+"Schermerhorn St & Bond St",3486,.1623377,1.298701
+"1 Pl & Clinton St",3386,3.571429,2.11039
+"W 104 St & Amsterdam Ave",3316,.8116883,0
+"E 97 St & 3 Ave",3309,7.142857,0
+"Dixon Mills",3279,3.409091,.1623377
+"E 118 St & 3 Ave",3493,.487013,0
+"Morris Canal",3267,6.006494,19.31818
+"Riverside Dr & W 104 St",3331,1.136364,.3246753
+"Douglass St & 4 Ave",3419,.3246753,6.331169
+"Picnic Point",3479,0,0
+"W 100 St & Broadway",3350,2.75974,.6493506
+"W 88 St & West End Ave",3434,1.785714,2.435065
+"E 76 St & Park Ave",3378,9.74026,.1623377
+"Bergen St & Smith St",3409,0,6.655844
+"Central Park West & W 102 St",3341,5.357143,0
+"E 123 St & Lexington Ave",3504,6.006494,.487013
+"E 109 St & 3 Ave",3390,.8116883,0
+"E 35 St & 3 Ave",3431,16.55844,0
+"Soissons Landing",3254,0,0
+"Prospect Pl & 6 Ave",3415,0,1.136364
+"Pier 40 - Hudson River Park",3256,9.577922,13.31169
+"Bayard St & Leonard St",3452,.8116883,0
+"8 Ave & W 31 St",3255,12.01299,5.681818
+"3 Ave & E 100 St",3327,.974026,0
+"27 Ave & 4 St",3512,0,0
+"3 St & Hoyt St",3381,0,8.603896
+"2 Ave & E 96 St",3318,.487013,3.246753
+"10 St & 7 Ave",3306,7.62987,0
+"Carroll St & Bond St",3377,0,14.77273
+"Columbus Drive",3275,16.3961,.3246753
+"Degraw St & Hoyt St",3332,.1623377,25.32467
+"Congress St & Clinton St",3408,.487013,3.409091
+"Norman Ave & Leonard St",3476,100,100
+"St Nicholas Ave & Manhattan Ave",3508,5.357143,0
+"W 55 St & 6 Ave",3458,27.11039,2.597403
+"Hanson Pl & Ashland Pl",3429,1.461039,2.75974
+"E 110 St & Madison Ave",3400,2.435065,3.733766
+"Court St & State St",3402,0,1.298701
+"Degraw St & Smith St",3329,0,12.66234
+"5 St & 6 Ave",3405,0,0
+"2 Ave & 9 St",3401,0,24.83766
+"1 Ave & E 110 St",3496,0,16.72078
+"5 Ave & E 93 St",3292,5.194805,0
+"West Drive & Prospect Park West",3423,1.136364,.1623377
+"W 45 St & 6 Ave",3466,35.06493,4.545455
+"Baldwin at Montgomery",3225,2.75974,0
+"Fulton St & Adams St",3440,19.31818,2.435065
+"Columbus Ave & W 95 St",3301,3.246753,0
+"Park Ave & E 124 St",3507,3.084416,0
+"Berkeley Pl & 7 Ave",3346,0,4.058442
+"Grand St & Elizabeth St",3435,.8116883,1.623377
+"E 114 St & 1 Ave",3495,0,9.74026
+"W 106 St & Central Park West",3323,2.597403,1.785714
+"Union St & 4 Ave",3335,.6493506,17.04545
+"E 88 St & Park Ave",3284,13.31169,0
+"E 58 St & Madison Ave",3457,29.22078,3.084416
+"Henry St & Bay St",3330,0,34.41558
+"Clinton St & Union St",3321,7.305195,12.66234
+"Butler St & Court St",3303,0,10.06493
+"Coffey St & Conover St",3348,0,15.74675
+"W 100 St & Manhattan Ave",3328,.487013,0
+"Commerce St & Van Brunt St",3392,0,20.45455
+"Berkeley Pl & 6 Ave",3339,0,20.45455
+"Garfield Pl & 8 Ave",3358,4.707792,0
+"Murray St & Greenwich St",3461,8.279221,9.577922
+"Van Brunt St & Wolcott St",3347,0,19.15584
+"E 97 St & Madison Ave",3336,10.87662,0
+"Wolcott St & Dwight St",3340,0,29.87013
+"W 95 St & Broadway",3314,.8116883,1.461039
+"Amsterdam Ave & W 66 St",3356,3.409091,1.948052
+"Sigourney St & Columbia St",3352,0,21.59091
+"7 St & 3 Ave",3399,0,9.74026
+"Leonard Gordon Park",3281,5.519481,3.246753
+"Prospect Park West & 8 St",3300,16.88312,.6493506
+"E 53 St & 3 Ave",3459,34.9026,4.545455
+"Warren St & Court St",3298,2.435065,1.948052
+"2 Ave & 36 St - Citi Bike HQ at Industry City",3478,.3246753,.1623377
+"E 93 St & 2 Ave",3296,.6493506,5.194805
+"Madison Ave & E 99 St",3345,25.97403,0
+"6 Ave & Spring St",3474,6.493506,9.577922
+"E 89 St & York Ave",3290,4.707792,6.493506
+"W 90 St & Amsterdam Ave",3289,3.733766,2.75974
+"E 88 St & 1 Ave",3288,70.29221,3.409091
+"W 87 St & Amsterdam Ave",3285,1.785714,.974026
+"E 65 St & 2 Ave",3376,23.86364,0
+"E 102 St & Park Ave",3363,7.305195,0
+"Communipaw & Berry Lane",3277,1.785714,0
+"Kane St & Clinton St",3308,2.75974,12.98701
+"Jersey & 6th St",3270,4.220779,13.63636
+"Brunswick & 6th",3269,3.084416,8.279221
+"Wyckoff St & 3 Ave",3413,0,5.032467
+"Carroll St & Columbia St",3389,0,22.4026
+"Schermerhorn St & Court St",3242,5.681818,0
+"W 42 St & Dyer Ave",3236,12.33766,7.467533
+"E 48 St & 5 Ave",3233,37.01299,3.084416
+"E 118 St & Madison Ave",3501,8.441559,0
+"10 St & 5 Ave",3317,.6493506,7.305195
+"2 Ave & E 99 St",3338,3.084416,0
+"Jersey & 3rd",3272,1.785714,2.597403
+"Douglass St & 3 Ave",3420,0,8.603896
+"W 89 St & Columbus Ave",3283,1.136364,0
+"6 Ave & 9 St",3304,1.461039,.8116883
+"Bergen St & Flatbush Ave",3414,.1623377,.1623377
+"W 92 St & Broadway",3293,4.058442,2.11039
+"India St & West St",3469,0,4.707792
+"Marin Light Rail",3276,0,0
+"14 St & 7 Ave",3310,6.168831,1.948052
+"Central Park W & W 96 St",3295,1.136364,0
+"Lexington Ave & E 120 St",3506,0,0
+"E 102 St & 1 Ave",3351,1.298701,14.77273
+"Central Park North & Adam Clayton Powell Blvd",3374,1.298701,8.603896
+"Lafayette St & Jersey St",3427,19.48052,6.168831
+"Bethune Center",3274,9.577922,6.980519
+"Gold St & Frankfort St",3489,6.331169,1.298701
+"Carroll St & 5 Ave",3364,0,19.64286
+"Columbia St & Kane St",3311,2.435065,25.16234
+"Madison Ave & E 120 St",3503,5.681818,0
+"E 66 St & Madison Ave",3355,36.85065,8.928572
+"E 71 St & 1 Ave",3447,10.06493,0
+"3 Ave & 14 St",3324,0,17.04545
+"E 118 St & 1 Ave",3491,0,19.31818
+"6 St & 7 Ave",3297,6.168831,0
+"Cooper Square & Astor Pl",3263,8.441559,.1623377
+"Lexington Ave & E 127 St",3505,.487013,0
+"Smith St & 3 St",3384,.6493506,1.948052
+"3 St & Prospect Park West",3354,5.844156,0
+"Danforth Light Rail",3271,2.11039,.3246753
+"3 St & 7 Ave",3365,4.545455,2.11039
+"Jackson St & Leonard St",3456,10.87662,0
+"E 68 St & Madison Ave",3359,20.61688,0
+"University Pl & E 8 St",3244,12.5,2.11039
+"Carroll St & Smith St",3382,3.084416,2.597403
+"Grand Army Plaza & Plaza St West",3349,5.844156,2.11039
+"Columbia St & Lorraine St",3333,0,32.95454
+"E 82 St & East End Ave",3369,5.357143,.6493506
+"5 Ave & 3 St",3368,.1623377,24.83766
+"E 118 St & Park Ave",3492,21.59091,0
+"E 78 St & 2 Ave",3370,10.87662,.3246753
+"E 74 St & 1 Ave",3372,5.032467,.1623377
+"W 52 St & 6 Ave",3443,33.92857,0
+"2 Ave & E 122 St",3499,5.519481,0
+"Columbia St & Degraw St",3422,.1623377,32.95454
+"West End Ave & W 94 St",3307,1.948052,0
+"W 82 St & Central Park West",3226,2.435065,1.623377
+"Pleasant Ave & E 116 St",3497,0,10.87662
+"Lafayette Park",3268,5.519481,2.922078
+"W Broadway & Spring Street",3467,100,0
+"4 Ave & 2 St",3371,0,30.35714
+"Dean St & Hoyt St",3410,0,4.383117
+"Adam Clayton Powell Blvd & W 115 St",3511,.8116883,0
+"Adam Clayton Powell Blvd & W 123 St",3510,0,0
+"Dwight St & Van Dyke St",3337,0,41.3961
+"E 106 St & 1 Ave",3391,0,20.61688
+"Smith St & 9 St",3398,6.655844,7.954545
+"Pleasant Ave & E 120 St",3498,9.090909,7.954545
+"Mercer St & Bleecker St",3260,3.409091,5.194805
+"Clinton St & Centre St",3326,0,30.03247
+"E 116 St & 2 Ave",3490,0,0
+"Court St & Nelson St",3397,.487013,21.26623
+"Henry St & Degraw St",3315,3.733766,20.12987
+"Central Park West & W 100 St",3320,.3246753,.487013
+"Hoyt St & Warren St",3421,0,16.72078
+"Pacific St & Nevins St",3412,6.980519,5.357143
+"Carroll St & 6 Ave",3361,1.298701,15.0974
+"E 16 St & Irving Pl",3463,5.681818,.487013
+"W 15 St & 10 Ave",3472,14.12338,4.87013
+"W 107 St & Columbus Ave",3343,8.766233,2.75974
+"5 Ave & E 88 St",3282,2.11039,.3246753
+"President St & Henry St",3388,4.545455,27.11039
+"7 St & 5 Ave",3404,0,11.03896
+"39 St & 2 Ave - Citi Bike HQ at Industry City",3477,4.220779,0
+"Union St & Nevins St",3407,0,11.68831
+"Columbus Ave & W 103 St",3302,14.77273,1.136364
+"Leonard St & Maujer St",3454,5.681818,4.87013
+"Eckford St & Engert Ave",3449,6.006494,1.136364
+"2 Ave & E 104 St",3425,.1623377,2.922078
+"E 76 St & 3 Ave",3438,8.766233,0
+"Pioneer St & Richards St",3342,0,29.22078
+"Richardson St & N Henry St",3430,13.63636,6.980519
+"York St",3481,3.733766,0
+"E 115 St & Madison Ave",3500,.3246753,0
+"Monmouth and 6th",3278,2.272727,15.25974
+"Baltic St & 5 Ave",3417,0,7.142857
+"Columbia St & W 9 St",3394,1.136364,48.37663

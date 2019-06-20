@@ -21,24 +21,15 @@ library(gravitas)
 
 ```{r data_prep, echo=F}
 
-## DOCkS DATA
+
  
-rawbikedata <- read.csv(file="./bikeshare_nyc_raw.csv", head=TRUE,sep="\t")
+# rawbikedata <- read.csv(file="./bikeshare_nyc_raw.csv", head=TRUE,sep="\t")
+# 
+# # Create a working data frame
+# bikedata <- rawbikedata %>% as_tibble()
 
-# Create a working data frame
-bikedata <- rawbikedata %>% as_tibble()
-
-# Remove any rows which the total docks is zero
-bikedata <- bikedata[bikedata$tot_docks != 0 ,]
-# Create a POSIXct date and time variable using available data
-bikedata$date <- as.character.Date(bikedata$date)
-bikedata$hour <- bikedata$hour + (bikedata$pm * 12) * (bikedata$hour != 12)
-bikedata$hour <- sprintf("%02d",bikedata$hour)
-bikedata$minute <- sprintf("%02d",bikedata$minute)
-
-bikedata$hour <- paste(bikedata$hour, bikedata$minute, sep=":" )
-bikedata$date <- paste(bikedata$date, bikedata$hour, sep="")
-bikedata$date <- as.POSIXct(bikedata$date ,format= "%y-%m-%d %H:%M")
+## Load DOCkS DATA
+load("bikedata.Rda")
 
 # Create a variable which measure how 'full' a bikeshare dock is
 # 0 = empty, 1.0 = full
@@ -150,7 +141,6 @@ rides_dock_avail(4) # 4th most busy station in terms of total number of start tr
 
 The time series pattern of "from" and "to" trip is similar to the first and third case, implying it is a major office hub/ station. But for this station avail_ratio is pretty high in the morning - which can create a hurdle for people to park their bikes in the morning. It might also be the case that people parked in the morning and hence the resulting avail_ratio became low. Since we are doing this analysis ex-post, it might be a good idea to plot count for hour (x) and availability at hour (x - 1).
 
-Also note that docks availability data is only for the month of December 2018 and count data is for entire 2018. This analysis needs to be redone using docks data for entire 2018.
 
 
 
