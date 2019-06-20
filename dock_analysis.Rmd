@@ -1,7 +1,7 @@
 ---
-title: "Chicago Bikedata Analysis"
+title: "NYC Bikedata Analysis"
 author: "Sayani Gupta"
-date: "06/06/2019"
+date: "19/06/2019"
 output: html_document
 ---
 
@@ -19,91 +19,10 @@ library(gravitas)
 ```
 
 
-```{r overall_view, echo=FALSE}
+```{r data_prep, echo=F}
 
-nyc_bikes <- tsibbledata::nyc_bikes %>% as_tsibble()
-summary(nyc_bikes)
-
-# Top 20 Bike stations by number of starts
-
-top_bikes <- nyc_bikes %>%as_tibble() %>% group_by(start_station) %>% summarise(count = n()) %>% arrange(-count) %>% slice(1:6)
-
-#top_bikes <- nyc_bikes %>%as_tibble() %>% group_by(start_station) %>% summarise(count = n()) %>% arrange(-count)
-
-top_bikes %>%ggplot(aes(x = reorder(start_station, -count), y= count)) + geom_bar(stat="identity")
-
-```
-
-
-```{r busiest_bike_behavior}
-
-#devtools::install_github("Sayani07/gravitas")
-library(gravitas)
-rides_busiest <- nyc_bikes %>% filter(start_station %in% c(3186, 3203)|end_station %in% c(3186, 3203))
-summary(rides_busiest)
-
-rides_busiest_grans <- rides_busiest  %>% mutate(hour_day = nest("hour", "day", start_time),
-                     month_year =   nest("month", "year", start_time),
-                     day_week   = nest("day", "week", start_time, abbr),
-                     hhour_day   = nest("hhour", "day", start_time),
-                     minute_hour = nest("minute", "hour", start_time),
-                     hhour_hour = nest("hhour", "hour", start_time))
-
-rides_busiest_grans %>% 
-  as_tibble %>% group_by(hour_day) %>%
-  summarise(Count = n()) %>% 
-  ggplot(aes(x = hour_day, y= Count)) + geom_col() + scale_x_continuous(breaks = seq(0, 23, 1))
-#8am and 6pm experiences maximum rush in terms of rides
-
-rides_busiest_grans %>% 
-  as_tibble %>% group_by(day_week) %>%
-  summarise(Count = n()) %>% 
-  ggplot(aes(x = day_week, y= Count)) + geom_col() + scale_x_continuous(breaks = seq(1, 7, 1))
-#Monday has lowest count when compared with other days of the week
-
-rides_busiest_grans %>% 
-  as_tibble %>% group_by(minute_hour) %>%
-  summarise(Count = n()) %>% 
-  ggplot(aes(x = minute_hour, y= Count)) + geom_line() 
-
-
-rides_busiest_grans %>% 
-  as_tibble %>% group_by(month_year) %>%
-  summarise(Count = n()) %>% 
-  ggplot(aes(x = month_year, y= Count)) + geom_line() + scale_x_continuous(breaks = seq(1,12,1))
-# Mostly in summer months counts are more
-
-granplot = function(data, x, y) {
-    data %>% as_tibble %>%  group_by(!!sym(x), !!sym(y)) %>% 
-    summarise(ecount = n()) %>% 
-     ggplot(aes(x = !!sym(x), y = ecount)) +
-          geom_line() +
-          theme_bw() + 
-          facet_wrap(as.formula(paste("~", y))) + 
-          ylab("Total Count") + 
-          ggtitle(paste0("Plot of ", x, " given ", y))
-}
-
-
-granplot(rides_busiest_grans, "hhour_day",  "day_week")
-#
-
-granplot(rides_busiest_grans, "hour_day",  "day_week")
-# No peaks on Monday and total counts across hours are less compared to other days
-
-
-granplot(rides_busiest_grans, "day_week",  "month_year")
-# During Summers,  high ride shares on weekends are observed. In Winters (Nov - February), counts are much less for all days of the week
-
-
-granplot(rides_busiest_grans, "hour_day",  "day_week")
-# Peaks are at different times of the day on Sunday(compared to other days), also there are more than 2 peaks
-
-granplot(rides_busiest_grans, "hour_day",  "hhour_hour")
-# For first peak (around 8am) first half hour of the hour sees more count, while during the evening peak, later half hour sees more count.
-```
-
-```{r}
+## DOCkS DATA
+ 
 rawbikedata <- read.csv(file="./bikeshare_nyc_raw.csv", head=TRUE,sep="\t")
 
 # Create a working data frame
@@ -111,8 +30,6 @@ bikedata <- rawbikedata %>% as_tibble()
 
 # Remove any rows which the total docks is zero
 bikedata <- bikedata[bikedata$tot_docks != 0 ,]
-View(bikedata)
-
 # Create a POSIXct date and time variable using available data
 bikedata$date <- as.character.Date(bikedata$date)
 bikedata$hour <- bikedata$hour + (bikedata$pm * 12) * (bikedata$hour != 12)
@@ -130,45 +47,111 @@ bikedata$avail_ratio <- bikedata$avail_bikes / bikedata$tot_docks
 #Remove columns of data we don't need
 bikedata <- bikedata[c("dock_id","dock_name","date","avail_bikes","avail_docks", "tot_docks", "avail_ratio","X_lat", "X_long")]
 
-
-top_bikestn <- bikedata %>% filter(dock_id %in%  c(3186, 3203)) %>% as_tibble()
-
-
-top_bike_mut <- top_bikestn %>% mutate(hour_day = build_gran("hour", "day", date),
+bikedata_mut <- bikedata %>% mutate(hour_day = build_gran("hour", "day", date),
                      month_year =   build_gran("month", "year", date),
                      day_week   = build_gran("day", "week", date),
                      hhour_day   = build_gran("hhour", "day", date))
+
+
+## RIDES DATA
+
+# Top 20 Bike stations by number of starts
+
+
+rides_busiest_grans <- tsibbledata::nyc_bikes  %>% mutate(hour_day = build_gran("hour", "day", start_time),
+                     month_year =   build_gran("month", "year", start_time),
+                     day_week   = build_gran("day", "week", start_time),
+                     hhour_day   = build_gran("hhour", "day", start_time),
+                     day_month   = build_gran("day", "month", start_time)
+                     )
+
+```
+
+```{r Rides_Docks_Avail}
+
+
+top_bikes <- tsibbledata::nyc_bikes %>%as_tibble() %>% group_by(start_station) %>% summarise(count = n()) %>% arrange(-count) %>% mutate(rank = row_number())
+
+
+rides_dock_avail <- function(i)
+  
+{
+ station = top_bikes$start_station[top_bikes$rank==i] %>% as.character %>% as.numeric()
+
+ 
+ 
+rides_from <- rides_busiest_grans %>% as_tibble %>%  filter(start_station==station) %>% group_by(hour_day) %>%
+  summarise(Count = n())
+
+
+rides_to <- rides_busiest_grans %>% as_tibble %>%  filter(end_station==station) %>% group_by(hour_day) %>%
+  summarise(Count = n())
+
 #Draw plot
-bike_3203 <- top_bike_mut %>% filter(dock_id==3203)
+docks_avail <- bikedata_mut %>% filter(dock_id==station)
 
 theme_set(theme_classic())
 
 # Allow Default X Axis Labels
-ggplot(bike_3203, aes(x=hour_day, y=avail_ratio)) +
-  geom_point(col="tomato2", size=1) + 
-  labs(title="	Hamilton Park", 
-       subtitle="December 2018", 
+
+ggplot(docks_avail, aes(x=as.factor(hour_day), y=avail_ratio*50)) +
+  geom_boxplot(col="tomato2", size=1) + 
+   geom_line(data = rides_from, aes(x = hour_day, y=Count)) +
+   geom_line(data = rides_to, aes(x = hour_day, y=Count), colour = "blue") +
+   labs(title=paste("Boxplot of Dock Availability for station", station), 
+        subtitle = paste("Black: Count from station", station, "Blue: Count to station", station),
        caption="Source: Open Bus", 
-       y="Availability Ratio") + 
- scale_y_continuous(name = "avail_ratio", 
-    sec.axis = sec_axis(~ . / 60, name = "Productivity % of best")) + 
+       y="Count") + 
+   xlab("hour of the day") + 
+ scale_y_continuous(name = "Count", 
+    sec.axis = sec_axis(~ . /50, name = "avail_ratio")) + 
   theme(
-      axis.title.y = element_text(color = "grey"),
-      axis.title.y.right = element_text(color = "blue")) + geom_line(data=count_3203, aes(x = hour_day, y=Count, colour="#000099")) 
+      axis.title.y = element_text(color = "black"),
+      axis.title.y.right = element_text(color = "black"), legend.text =element_text( "grey(from), black(to)") ) 
+}
 
-#last_plot() + scale_x_datetime(breaks = date_breaks("1 day"))
-
-
-rides_busiest <- tsibbledata::nyc_bikes %>% filter(start_station %in% c(3186, 3203)|end_station %in% c(3186, 3203))
-
-
-rides_busiest_grans <- rides_busiest  %>% mutate(hour_day = build_gran("hour", "day", start_time),
-                     month_year =   build_gran("month", "year", start_time),
-                     day_week   = build_gran("day", "week", start_time),
-                     hhour_day   = build_gran("hhour", "day", start_time))
-
-
-count_3203 <- rides_busiest_grans %>% as_tibble %>%  filter(start_station==3203) %>% group_by(hour_day) %>%
-  summarise(Count = n())
 ```
+
+```{r analysis_1, echo=TRUE}
+rides_dock_avail(1) # most busy station in terms of total number of start trips
+```
+
+# Grove St PATH
+
+Trips starting from this station rises in the evening, implying people getting back from work are taking bikes from this station to reach home. Similarly, the trips to this station are also higher in the morning hours indicating it is a major office hub/station. On further inspection, we found 3186 to be Grove St PATH, NYC is indeed a busy station in NYC.
+For rebalancing of bikes, what is therefore needed is to ensure that the dock spaces are available (low avail_ratio) in the morning so that customers can park their bikes there. In the evening, it is to be ensured that bikes are available (high avail_ratio) at this dock.
+Perhaps, it is more appropriate to look at median counts and not total counts per hour. But median counts were pretty flat (mostly 1, maximum 3), so I chose to display total counts to have an overall idea.
+
+```{r analysis_2, echo=TRUE}
+
+rides_dock_avail(2) # 2nd most busy station in terms of total number of start trips
+```
+
+# Hamilton Park
+
+Trips starting from this station are higher in number in the morning, which indicates people are starting their rides from this bike station to reach to their work place. This implies, bikes should be available in the morning (avail_ratio) and dock space should be available in the evening (low avail_ratio) so that people can park their bikes here.
+
+# Sip Ave
+
+The time series pattern of "from" and "to" trip is similar to the first case, implying it is a major office hub/ station.
+
+```{r analysis_3, echo=TRUE}
+
+rides_dock_avail(3) # 3rd most busy station in terms of total number of start trips
+```
+
+
+# Exchange Place
+
+```{r analysis_4, echo=TRUE}
+
+rides_dock_avail(4) # 4th most busy station in terms of total number of start trips
+```
+
+The time series pattern of "from" and "to" trip is similar to the first and third case, implying it is a major office hub/ station. But for this station avail_ratio is pretty high in the morning - which can create a hurdle for people to park their bikes in the morning. It might also be the case that people parked in the morning and hence the resulting avail_ratio became low. Since we are doing this analysis ex-post, it might be a good idea to plot count for hour (x) and availability at hour (x - 1).
+
+Also note that docks availability data is only for the month of December 2018 and count data is for entire 2018. This analysis needs to be redone using docks data for entire 2018.
+
+
+
 
