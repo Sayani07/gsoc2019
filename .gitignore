@@ -1,4 +1,5 @@
 .Rproj.user
 .Rhistory
-.RData
 .Ruserdata
+Data/docks_data
+transit-data-toolkit/
