@@ -59,7 +59,7 @@ bikedata$hour <- bikedata$hour + (bikedata$PM * 12)
 bikedata_new <- bikedata %>% mutate(date_time = make_datetime(year = year(date), month = month(date), day = day(date), hour = hour, min = minute))
 
 save(bikedata_new, file =  "Data/bikedata.Rda")
-
+# entire 2018 data#
 
 ##### EXTRACT bikeshare data
 ##### using code below
