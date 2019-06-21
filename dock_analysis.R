@@ -22,7 +22,17 @@ bikedata <- rawbikedata %>% as_tibble()
 
 # Remove any rows which the total docks is zero
 bikedata <- bikedata[bikedata$tot_docks != 0 ,]
-View(bikedata)
+
+bikecheck <- bikedata %>% mutate(free_docks = tot_docks - avail_bikes - avail_docks)
+
+quantile(bikecheck$free_docks, seq(0.1,0.9,0.1))
+
+quantile(bikecheck$free_docks, seq(0.01,0.99,0.01))
+
+quantile(bikecheck$free_docks, seq(0.99,0.999,0.001))
+
+bikedata <- bikecheck %>% filter(free_docks<=6) 
+
 
 # Select data for the week of October 9th (10/16 - 10/22)
 summary(bikedata)
