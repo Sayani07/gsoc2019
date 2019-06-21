@@ -73,8 +73,6 @@ summary(nyc_bikes)
 
 top_bikes <- nyc_bikes %>%as_tibble() %>% group_by(start_station) %>% summarise(count = n()) %>% arrange(-count)
 
-#top_bikes %>%ggplot(aes(x = reorder(start_station, -count), y= count)) + geom_bar(stat="identity")
-
 
 nyc_all <- nyc_bikes %>%
   as_tibble() %>% 
@@ -98,7 +96,7 @@ top_bikes %>%ggplot(aes(x = reorder(start_station, -count), y= count)) + geom_ba
 
 devtools::install_github("Sayani07/gravitas")
 
-rides_busiest <- nyc_bikes %>% filter(start_station %in% c(3186, 3203)|end_station %in% c(3186, 3203))
+rides_busiest <- tsibbledata::nyc_bikes %>% filter(start_station %in% c(3186, 3203)|end_station %in% c(3186, 3203))
 summary(rides_busiest)
 
 rides_busiest_grans <- rides_busiest  %>% mutate(hour_day = nest("hour", "day", start_time),

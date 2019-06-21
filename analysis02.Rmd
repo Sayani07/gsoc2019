@@ -137,7 +137,9 @@ rides_dock_avail(3) # 3rd most busy station in terms of total number of start tr
 rides_dock_avail(4) # 4th most busy station in terms of total number of start trips
 ```
 
+
 The time series pattern of "from" and "to" trip is similar to the first and third case, implying it is a major office hub/ station. But for this station avail_ratio is pretty high in the morning - which can create a hurdle for people to park their bikes in the morning. It might also be the case that people parked in the morning and hence the resulting avail_ratio became low. Since we are doing this analysis ex-post, it might be a good idea to plot count for hour (x) and availability at hour (x - 1)..
+
 
 
 

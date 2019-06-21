@@ -16,7 +16,9 @@ library(rgeos)
 # Go to Bike share data
 # download  folders for all months in Data/Docks Data 2018/ folder
 # extract files using the code below - change year
+
 file.paths <- glue::glue("Data/docks_data/2018-{formatC(1:12, width = 2, flag = '0')}/bikeshare_nyc_raw.csv")
+
 
 tmp <- tempfile(fileext = ".csv")
 
@@ -30,6 +32,7 @@ bikedata_raw <- data %>% as_tibble()
 
 
 # Remove any rows which the total docks is zero
+
 # # Remove any rows which the in_service = 0
 bikedata <- bikedata_raw %>% filter(tot_docks != 0, in_service != 0)
 
@@ -56,6 +59,7 @@ bikedata$hour <- bikedata$hour + (bikedata$PM * 12)
 bikedata_new <- bikedata %>% mutate(date_time = make_datetime(year = year(date), month = month(date), day = day(date), hour = hour, min = minute))
 
 save(bikedata_new, file =  "Data/bikedata.Rda")
+
 
 ##### EXTRACT bikeshare data
 ##### using code below
