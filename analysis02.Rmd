@@ -27,19 +27,16 @@ library(gravitas)
 # bikedata <- rawbikedata %>% as_tibble()
 
 ## Load DOCkS DATA
-load("bikedata.Rda")
+load("Data/bikedata.Rda")
 
 # Create a variable which measure how 'full' a bikeshare dock is
-# 0 = empty, 1.0 = full
-bikedata$avail_ratio <- bikedata$avail_bikes / bikedata$tot_docks
+# 0 = empty, 1.0 = full and #Remove columns of data we don't nee/d
+bikedata <- bikedata_new %>% mutate(avail_ratio = avail_bikes/tot_docks) %>% select(dock_id,dock_name,date_time,avail_bikes,avail_docks, tot_docks, avail_ratio,X_lat, X_long)
 
-#Remove columns of data we don't nee/d
-bikedata <- bikedata[c("dock_id","dock_name","date","avail_bikes","avail_docks", "tot_docks", "avail_ratio","X_lat", "X_long")]
-
-bikedata_mut <- bikedata %>% mutate(hour_day = build_gran("hour", "day", date),
-                     month_year =   build_gran("month", "year", date),
-                     day_week   = build_gran("day", "week", date),
-                     hhour_day   = build_gran("hhour", "day", date))
+bikedata_mut <- bikedata %>% mutate(hour_day = build_gran("hour", "day", date_time),
+                     month_year =   build_gran("month", "year", date_time),
+                     day_week   = build_gran("day", "week", date_time),
+                     hhour_day   = build_gran("hhour", "day", date_time))
 
 
 ## RIDES DATA
@@ -83,17 +80,17 @@ theme_set(theme_classic())
 
 # Allow Default X Axis Labels
 
-ggplot(docks_avail, aes(x=as.factor(hour_day), y=avail_ratio*50)) +
+ggplot(docks_avail, aes(x=as.factor(hour_day), y=avail_docks)) +
   geom_boxplot(col="tomato2", size=1) + 
-   geom_line(data = rides_from, aes(x = hour_day, y=Count)) +
-   geom_line(data = rides_to, aes(x = hour_day, y=Count), colour = "blue") +
+   geom_step(data = rides_from, aes(x = hour_day, y=Count)) +
+   geom_step(data = rides_to, aes(x = hour_day, y=Count), colour = "blue") +
    labs(title=paste("Boxplot of Dock Availability for station", station), 
         subtitle = paste("Black: Count from station", station, "Blue: Count to station", station),
        caption="Source: Open Bus", 
        y="Count") + 
    xlab("hour of the day") + 
- scale_y_continuous(name = "Count", 
-    sec.axis = sec_axis(~ . /50, name = "avail_ratio")) + 
+ scale_y_continuous(name = "Count of Rides", 
+    sec.axis = sec_axis(~ . *1, name = "Available Docks")) + 
   theme(
       axis.title.y = element_text(color = "black"),
       axis.title.y.right = element_text(color = "black"), legend.text =element_text( "grey(from), black(to)") ) 
