@@ -30,17 +30,32 @@ bikedata_raw <- data %>% as_tibble()
 
 
 # Remove any rows which the total docks is zero
-bikedata <- bikedata_raw[bikedata_raw$tot_docks != 0 ,]
+# # Remove any rows which the in_service = 0
+bikedata <- bikedata_raw %>% filter(tot_docks != 0, in_service != 0)
+
+bikecheck <- bikedata %>% mutate(free_docks = tot_docks - avail_bikes - avail_docks)
+
+quantile(bikecheck$free_docks, seq(0.1,0.9,0.1))
+
+quantile(bikecheck$free_docks, seq(0.01,0.99,0.01))
+
+quantile(bikecheck$free_docks, seq(0.99,0.999,0.001))
+
+bikedata <- bikecheck %>% filter(free_docks<=5) 
+
 # Create a POSIXct date and time variable using available data
 bikedata$date <- as.character.Date(bikedata$date)
-bikedata$hour <- bikedata$hour + (bikedata$pm * 12) * (bikedata$hour != 12)
-bikedata$hour <- sprintf("%02d",bikedata$hour)
-bikedata$minute <- sprintf("%02d",bikedata$minute)
 
-bikedata$hour <- paste(bikedata$hour, bikedata$minute, sep=":" )
-bikedata$date <- paste(bikedata$date, bikedata$hour, sep="")
-bikedata$date <- as.POSIXct(bikedata$date ,format= "%y-%m-%d %H:%M")
-save(bikedata, file =  "Data/bikedata.Rda")
+# clean hour data using pm data
+bikedata <- bikedata %>% mutate(PM=ifelse((hour>11 & minute>0), 1-pm, pm))
+
+# bikedata$hour <- bikedata$hour + (bikedata$pm * 12) * (bikedata$hour != 12)
+
+bikedata$hour <- bikedata$hour + (bikedata$PM * 12)
+
+bikedata_new <- bikedata %>% mutate(date_time = make_datetime(year = year(date), month = month(date), day = day(date), hour = hour, min = minute))
+
+save(bikedata_new, file =  "Data/bikedata.Rda")
 
 ##### EXTRACT bikeshare data
 ##### using code below
