@@ -1,0 +1,51 @@
+---
+title: "How granplot works"
+output: html_document
+---
+
+
+<!--temporal granularities and why should we care --> 
+
+**granplot**
+
+Usage: recommends statistical distribution plots of bivariate time granularities that aids systematic exploration
+
+granplot(.data, ugran = NULL, lgran = NULL, response = NULL, plot_type = NULL, ...)
+
+
+granplot is useful for exploring statistical distributions for bivariate granularities. It provides the recommended distribution plots given an upper and lower level of time indices. For example, if lgran = "hour" and ugran = "week",the pair of time granularities that can be conceptualized as "harmonies" is -  (hour_day, day_week). The way the function "harmony" is currently defined, it is a symmetric function. However, recommendations for plotting will vary depending on which granularity is placed on the x-axis and which one across facets. Thus, this particular value for lgran and ugran should output two potential plots:  
+
+-  day_week across facets and hour_day along x-axis
+-  hour_day across facets and day_week along x-axis
+
+granplot uses **gran_advice** to obtain the recommendations of distribution plots depending on the following:
+
+- levels(high/medium/low) of the two granularities plotted  
+Assumptions are made to ensure display is not too cluttered and the space occupied by various kinds of distribution plots
+
+   - very high (facet), high/medium/low(x -axis) -> no bivariate distribution plots recommended as number of facets too high
+   
+   - high (facet), very high (x -axis) ->  c("percentile", "decile")
+   - high (facet), high (x -axis) ->  c("percentile", "decile")
+   - high (facet), medium (x -axis) -> c("percentile", "decile")
+   - high (facet), low (x -axis) -> c("ridge", "violin", "lv", "density")
+   
+   - medium (facet), very high (x -axis) -> c("percentile", "decile")
+   - medium (facet), high (x -axis) -> c("percentile", "decile")
+   - medium (facet), medium (x -axis) -> c("percentile", "decile")
+   - medium (facet), low (x -axis) -> c("ridge", "violin", "lv", "density")
+   
+   - low (facet), very high (x -axis) -> c("percentile", "decile")
+   - low (facet), high (x -axis) -> c("percentile", "decile", "boxplot", "lv")
+   - low (facet), medium (x -axis) -> c("ridge", "violin", "lv", "density", "percentile", "decile")
+   - low (facet), low (x -axis) -> c("ridge", "violin", "lv", "density", "percentile", "decile")
+   
+   
+   
+
+- Minimum number of observations for combinations of time granularities  
+Assumptions are made to ensure decile/percentile/density based plots are avoided for too few observations
+
+
+It uses gran_advise to choose the recommended plots if plot_type = NULL.
+Now the user might want to plot two temporal granularities that are clashes, they are free to do so however, they will be shown a warning that they are plotting clashes. Warnings will also be shown if number of levels of facet variable too high (inappropriate for facetting), if number of observations are homogenous inter and intra facets. 
