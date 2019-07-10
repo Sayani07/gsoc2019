@@ -4,6 +4,21 @@ output: html_document
 ---
 
 
+```{r setup, include=FALSE, echo=TRUE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, cache=TRUE)
+# Load any R packages you need here
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(lvplot)
+library(ggridges)
+library(tsibbledata)
+library(purrr)
+library(tsibble)
+library(gravitas)
+```
+
 <!--temporal granularities and why should we care --> 
 
 **granplot**
@@ -32,7 +47,7 @@ Assumptions are made to ensure display is not too cluttered and the space occupi
    
    - medium (facet), very high (x -axis) -> c("percentile", "decile")
    - medium (facet), high (x -axis) -> c("percentile", "decile")
-   - medium (facet), medium (x -axis) -> c("percentile", "decile")
+   - medium (facet), medium (x -axis) -> c("ridge", "violin", "lv", "density")
    - medium (facet), low (x -axis) -> c("ridge", "violin", "lv", "density")
    
    - low (facet), very high (x -axis) -> c("percentile", "decile")
@@ -42,6 +57,15 @@ Assumptions are made to ensure display is not too cluttered and the space occupi
    
    
    
+  facet_h <- 31  
+  facet_m <- 15  
+  facet_l <- 9  
+
+  x_h <- 31  
+  x_m <- 15    
+  x_l <- 9    
+   
+   
 
 - Minimum number of observations for combinations of time granularities  
 Assumptions are made to ensure decile/percentile/density based plots are avoided for too few observations
@@ -49,3 +73,22 @@ Assumptions are made to ensure decile/percentile/density based plots are avoided
 
 It uses gran_advise to choose the recommended plots if plot_type = NULL.
 Now the user might want to plot two temporal granularities that are clashes, they are free to do so however, they will be shown a warning that they are plotting clashes. Warnings will also be shown if number of levels of facet variable too high (inappropriate for facetting), if number of observations are homogenous inter and intra facets. 
+
+
+**Warnings for granularities  hour_day and month_year
+```{r}
+data1 = tsibbledata::nyc_bikes %>% as_tsibble()
+data2 = tsibbledata::aus_elec %>% as_tsibble()
+gravitas:::gran_advice(data1, gran1="hour_day", gran2 = "month_year")
+```
+**Warnings for granularities  hour_day and day_week
+```{r}
+gravitas:::gran_advice(data2, gran1="hour_day", gran2 = "day_week")
+```
+
+**granplot
+```{r}
+gravitas::granplot(data2, ugran="week", lgran = "hour", response="Demand")
+```
+
+
