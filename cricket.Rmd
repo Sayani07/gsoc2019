@@ -62,41 +62,8 @@ hierarchy_model <- tibble(category_ls = c("ball", "over", "quarter", "semester",
 hierarchy_model
 ```
 
+### [Dataset: Indian Premier League (IPL) ball by ball](https://www.kaggle.com/littleraj30/indian-premier-league-2019-ball-by-ball)
 
-The dataset provides balls per over. Can we compute all other  categorisations given the hierarchy model?
-
-Suppose: $f(x, y)$ represents the functional form for computing x per y. 
-
-$f(ball, quarter) = f(ball, over) + c(ball, over)*[f(over, quarter)-1]$  
-
-and, 
-
-$f(ball, semester) = f(ball, over) + c(ball, over)* [f(over, semester) - 1]$
-
-or, 
-$f(ball, semester)                  =  f(ball, over) + c(ball, over)*f(over, quarter) +c(over, quarter)f(quarter, semester)$  
-                  
-and so on.
-
-In the above equations, it is shown how to obtain f(x,z) given f(x,y) and the hierarchy table,  provided $order(z) > order(y) \neq order(x)$. In general,
-
- $f(x,z) = \sum_{i=0}^{order(z) - order(y) + 1}c(x, x+i)f(x+1, x+i)$
-
-We could also derive f(w, y) given f(x, y) and the hierarchy table, for $order(y)>=order(w) > order(x)$.
-
-$f(w,y) = f(x,y) \mod c(x,w)$, for $f(x,y) \mod c(x,w)!=0$ \\
-        $= c(x,w))$, otherwise.
-
-Let us investigate if that is true:
-
-f(ball, over) = 1
-f(over, quarter) = 4
-f(quarter, semester) = 2
-f(semester, match) = `1
-
-then, f(ball_quarter) = 1 + 6*4 = 25, 
-      f(ball, semester) = 1 + 6*4 + 5*6*1 = 55
-      f(ball, semester) = 1 + 6*4 + 5*6*1 + 5*6*2*1 = 115
 
 We will look at the ball by ball data for Mumbai Indians.  Performance will vary depending on if they are batting 1st or 2nd. Hence, it is a good idea to filter the matches in which they have batted first.
 
@@ -153,7 +120,7 @@ data_MI <- data_MI %>% filter(!match_id  %in% match_er$match_id, wide_runs + nob
 ```
 
 
-a) How the score varies across each balls (a simple time plot), over, quarter or semester of the match. What we are trying to understand here is the distribution of scores across linear time units.
+<!-- a) How the score varies across each balls (a simple time plot), over, quarter or semester of the match. What we are trying to understand here is the distribution of scores across linear time units. -->
 
 ```{r balls, echo=TRUE}
 # data_MI %>% ggplot(aes(x = as.factor(balls_game), y= total_runs)) +  geom_boxplot()+ xlab("balls")
@@ -177,19 +144,19 @@ data_MI_dec %>%
 
 ```
 
-From the 1st to 6th ball, looks like the maximum total runs alternate between 6 and 7. The distribution of 1st, 3rd and 5th ball are more similar to each other than that of 2nd, 4th and 6th which also looks pretty close. The 8th and 9th balls in most cases scatters around 0 and 1 as they might be a result of no/wide balls. 
+The scores/ball increases from 1st to 120th ball in the 90th percentile. In the last 2 overs, players are more vulnerable to get more scores, which is evident from the fact that in 90 percent of cases, their scores vary between 4 and 6. Till around 50th ball, players play safe and may get no runs per ball in 25% of the times, after which they more likely to get one score per ball.
 
 ```{r over, echo=TRUE}
-data_MI %>% ggplot(aes(x = as.factor(over), y= total_runs)) +  geom_violin()+ xlab("Overs per match") + ggtitle("Violin plot of runs per ball across each over of a match")
+data_MI %>% ggplot(aes(x = as.factor(over), y= total_runs)) + ggtitle("Letter value plot of runs per ball across each over of a match") + geom_lv(aes(fill = ..LV..), outlier.colour = "red", outlier.shape = 1, k = 5) + xlab("overs per match")
 
 # data_MI %>% ggplot(aes(y =as.factor(over), x= total_runs)) + geom_density_ridges2() + ylab("Balls per  over")
 ```
 
-distribution of first three overs look similar where total runs/ball mostly centers around 0/1. The 4th, 5th and 6th over looks similar where probability of total scores less than 1 decreases.From 7th to 14th over, total runs/ball centers mostly around 1/2. Again from 15th to 20th over, behaviors are similar.
+In the first two overs, players play really safe and make no runs 50% of the times. The median is constant at 1 for all overs after the 2nd over. It is interesting to see the distribution of tails in this plot. M, F, E, D and C represents 50%, 25%, 12.5%, 6.25% and 3.13% of the tail area respectively. Till the first four overs, scoring a 4 or a 6 is extreme. The region which covers the tail 3.13% falls between 4 and 6 till up to 13th over. It is interesting to see how the letter values of scores (D, E and F) moves up, as we move towards the end of the game. 
 
 
 ```{r quarter, echo=TRUE}
-data_MI %>% ggplot(aes(x = as.factor(quarter_match), y= total_runs)) +  geom_violin()+ xlab("quarters")+ ylab(" Total runs per ball") + ggtitle("Violin plot of runs per ball across each quarter of a match")
+data_MI %>% ggplot(aes(x = as.factor(quarter_match), y= total_runs)) +  geom_violin()+ xlab("quarters per match")+ ylab(" Total runs per ball") + ggtitle("Violin plot of runs per ball across each quarter of a match")
 
 # data_MI %>% ggplot(aes(y =as.factor(quarter), x= total_runs)) + geom_density_ridges2() + ylab("quarters per match") + xlab(" Total runs per ball")
 ```
@@ -197,9 +164,9 @@ data_MI %>% ggplot(aes(x = as.factor(quarter_match), y= total_runs)) +  geom_vio
 
 
 ```{r semester, echo=TRUE}
-data_MI %>% ggplot(aes(x = as.factor(semester_match), y= total_runs)) +  geom_violin()+ xlab("semester per match")+ ylab(" Total runs per ball") +ggtitle("Violin plot of runs per ball across each semesters of a match")
+# data_MI %>% ggplot(aes(x = as.factor(semester_match), y= total_runs)) +  geom_violin()+ xlab("semester per match")+ ylab(" Total runs per ball") +ggtitle("Violin plot of runs per ball across each semesters of a match")
 
-data_MI %>% ggplot(aes(x = total_runs, y= as.factor(semester_match))) +  geom_density_ridges2()+ xlab("semesters per match")+ ylab(" Total runs per ball")+ ggtitle("Ridge plot of runs per ball across each semesters of a match")
+data_MI %>% ggplot(aes(x = total_runs, y= as.factor(semester_match))) +  geom_density_ridges2()+ ylab("semesters per match")+ xlab(" Total runs per ball")+ ggtitle("Ridge plot of runs per ball across each semesters of a match")
 
 # data_MI %>% ggplot(aes(y =as.factor(semester), x= total_runs, fill=factor(..quantile..))) +   stat_density_ridges(
 #     geom = "density_ridges_gradient", calc_ecdf = TRUE,
@@ -208,7 +175,7 @@ data_MI %>% ggplot(aes(x = total_runs, y= as.factor(semester_match))) +  geom_de
 #   scale_fill_viridis(discrete = TRUE, name = "Quartiles")
 ```
       
-
+In the second semester of the game, there is more probability to score more than zero as can be seen from the drop in peaks of the distribution at 0 and increased peak at 1, 2, 4 and 6.
       
 
 
