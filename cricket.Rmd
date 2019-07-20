@@ -23,11 +23,80 @@ year: 20 overs
 
 Suppose, we are interested to see how the distribution of scores vary from the start to the end of the game. Let us brainstorm some of the questions that might help us comprehend that.
 
-a) How the score varies across each balls (a simple time plot), over, quarter or semester of the game. What we are trying to understand here is the distribution of scores across linear time units.
+a) How the score varies across each balls, over, quarter or semester of the game for the number of matches played. 
+
+For example, if the team has played 5 T20 matches and we are interested to know how scores varied for each of those 20*5 = 100 overs, then what we are trying to understand here is the distribution of scores across linear categorization, overs in this case. 
 
 
-b) How the scores vary per over of the 4 quarters, or per quarter of the 2 semesters or per over of the 2 semesters? What we are trying to understand here is the distribution of scores across periodic time units.
+b) How the scores vary per each over of a quarter, or each quarter of a semester each over of a semester? 
 
+
+We are essentially trying to understand the distribution of scores across periodic categorisations, where each coarser unit consists of equal number of finer units for all levels of the coarser unit. For each match, balls, overs, quarters and semesters can be thought to align linearly where balls vary from 1,2, ..120, overs vary from 1, 2, ...20, quarters range from 1, 2,...,4 and so on. We call these "linear" categorisation if we are just looking at one match.But for 80 matches, these are not "linear" since they keep on repeating themselves within a match. We call these "circular" categorisations. Similarly,  we can also be interested to study the distribution of runs across balls per over/quarter/semester, overs per quarter/semester and quarters per semester. 
+
+
+What are the exhaustive list of circular categorisation that we can look at here:
+
+ 1) balls of an over (ball_over)
+ 2) balls of a quarter (ball_quarter)
+ 3) balls of a  semester (ball_semester)
+ 4) balls of a  match (ball_match)
+ 5) overs of a quarter (ball_quarter)
+ 6) overs of a semester (over_semester)
+ 7) overs of a match (over_match)
+ 8) quarters of a semester (quarter_semester)
+ 9) quarters of a match (quarter_match)
+ 10) semesters of a match (semester_match)
+
+
+The hierarchy being as follows - 
+
+ - ball
+ - over -> 6 balls
+ - quarter -> 5 overs
+ - semester -> 2 quarters
+ - match -> 2 semesters
+
+
+```{r hierarchy, echo=TRUE}
+hierarchy_model <- tibble(category_ls = c("ball", "over", "quarter", "semester", "match"), conversion_fac  = c(6, 5, 2, 2, 1))
+hierarchy_model
+```
+
+
+The dataset provides balls per over. Can we compute all other  categorisations given the hierarchy model?
+
+Suppose: $f(x, y)$ represents the functional form for computing x per y. 
+
+$f(ball, quarter) = f(ball, over) + c(ball, over)*[f(over, quarter)-1]$  
+
+and, 
+
+$f(ball, semester) = f(ball, over) + c(ball, over)* [f(over, semester) - 1]$
+
+or, 
+$f(ball, semester)                  =  f(ball, over) + c(ball, over)*f(over, quarter) +c(over, quarter)f(quarter, semester)$  
+                  
+and so on.
+
+In the above equations, it is shown how to obtain f(x,z) given f(x,y) and the hierarchy table,  provided $order(z) > order(y) \neq order(x)$. In general,
+
+ $f(x,z) = \sum_{i=0}^{order(z) - order(y) + 1}c(x, x+i)f(x+1, x+i)$
+
+We could also derive f(w, y) given f(x, y) and the hierarchy table, for $order(y)>=order(w) > order(x)$.
+
+$f(w,y) = f(x,y) \mod c(x,w)$, for $f(x,y) \mod c(x,w)!=0$ \\
+        $= c(x,w))$, otherwise.
+
+Let us investigate if that is true:
+
+f(ball, over) = 1
+f(over, quarter) = 4
+f(quarter, semester) = 2
+f(semester, match) = `1
+
+then, f(ball_quarter) = 1 + 6*4 = 25, 
+      f(ball, semester) = 1 + 6*4 + 5*6*1 = 55
+      f(ball, semester) = 1 + 6*4 + 5*6*1 + 5*6*2*1 = 115
 
 We will look at the ball by ball data for Mumbai Indians.  Performance will vary depending on if they are batting 1st or 2nd. Hence, it is a good idea to filter the matches in which they have batted first.
 
@@ -38,17 +107,17 @@ data <-  read_csv("deliveries.csv")
 
 data_MI <- data %>% 
   filter(batting_team =="Mumbai Indians", inning ==1) %>% 
-  mutate(quarter = case_when(
+  mutate(quarter_match = case_when(
     
     between(over,1,5) ~ 1,
     between(over,6,10) ~ 2,
     between(over,11,15) ~ 3,
     between(over,16,20) ~ 4
   )) %>% 
-   mutate(semester = case_when(
+   mutate(semester_match = case_when(
     
-    between(quarter,1,2) ~ 1,
-    between(quarter,3,4) ~ 2
+    between(quarter_match,1,2) ~ 1,
+    between(quarter_match,3,4) ~ 2
   )) 
 ```
 
@@ -77,14 +146,14 @@ nover = data_MI %>% distinct(over) %>% nrow()
 data_MI <- data_MI %>% filter(!match_id  %in% match_er$match_id, wide_runs + noball_runs==0) %>% 
   mutate(balls = purrr::rep_along(match_id, 1:6),
          balls_game =  purrr::rep_along(match_id, 1:120)) %>% 
-  select(match_id, over, balls, balls_game,  quarter, semester,  total_runs)
+  select(match_id, over, balls, balls_game,  quarter_match, semester_match,  total_runs)
   
 
 #data_MI %>% group_by(match_id, over) %>% summarise(n = n()) %>% distinct()
 ```
 
 
-a) How the score varies across each balls (a simple time plot), over, quarter or semester of the game. What we are trying to understand here is the distribution of scores across linear time units.
+a) How the score varies across each balls (a simple time plot), over, quarter or semester of the match. What we are trying to understand here is the distribution of scores across linear time units.
 
 ```{r balls, echo=TRUE}
 # data_MI %>% ggplot(aes(x = as.factor(balls_game), y= total_runs)) +  geom_boxplot()+ xlab("balls")
@@ -120,7 +189,7 @@ distribution of first three overs look similar where total runs/ball mostly cent
 
 
 ```{r quarter, echo=TRUE}
-data_MI %>% ggplot(aes(x = as.factor(quarter), y= total_runs)) +  geom_violin()+ xlab("quarters")+ ylab(" Total runs per ball") + ggtitle("Violin plot of runs per ball across each quarter of a match")
+data_MI %>% ggplot(aes(x = as.factor(quarter_match), y= total_runs)) +  geom_violin()+ xlab("quarters")+ ylab(" Total runs per ball") + ggtitle("Violin plot of runs per ball across each quarter of a match")
 
 # data_MI %>% ggplot(aes(y =as.factor(quarter), x= total_runs)) + geom_density_ridges2() + ylab("quarters per match") + xlab(" Total runs per ball")
 ```
@@ -128,9 +197,9 @@ data_MI %>% ggplot(aes(x = as.factor(quarter), y= total_runs)) +  geom_violin()+
 
 
 ```{r semester, echo=TRUE}
-data_MI %>% ggplot(aes(x = as.factor(semester), y= total_runs)) +  geom_violin()+ xlab("semester per match")+ ylab(" Total runs per ball") +ggtitle("Violin plot of runs per ball across each semesters of a match")
+data_MI %>% ggplot(aes(x = as.factor(semester_match), y= total_runs)) +  geom_violin()+ xlab("semester per match")+ ylab(" Total runs per ball") +ggtitle("Violin plot of runs per ball across each semesters of a match")
 
-data_MI %>% ggplot(aes(x = total_runs, y= as.factor(semester))) +  geom_density_ridges2()+ xlab("semesters per match")+ ylab(" Total runs per ball")+ ggtitle("Ridge plot of runs per ball across each semesters of a match")
+data_MI %>% ggplot(aes(x = total_runs, y= as.factor(semester_match))) +  geom_density_ridges2()+ xlab("semesters per match")+ ylab(" Total runs per ball")+ ggtitle("Ridge plot of runs per ball across each semesters of a match")
 
 # data_MI %>% ggplot(aes(y =as.factor(semester), x= total_runs, fill=factor(..quantile..))) +   stat_density_ridges(
 #     geom = "density_ridges_gradient", calc_ecdf = TRUE,
@@ -138,76 +207,6 @@ data_MI %>% ggplot(aes(x = total_runs, y= as.factor(semester))) +  geom_density_
 #   )  + ylab("semester") + xlab(" Total runs per ball") +
 #   scale_fill_viridis(discrete = TRUE, name = "Quartiles")
 ```
-Notice that we could analyse runs per ball across balls, overs, quaters and semester of each match since we have data for 80 matches. For each match, balls, overs , quarters and semester can be thought to align linearly where balls vary from 1,2, ..120, overs vary from 1, 2, ...20, quarters range from 1, 2,...,4 and so on. We call these "linear" categorisation.
-
-But for 80 matches, these are  not "linear" since they keep on repeating themselves within a match. We call these "circular" categorisations. Similarly,  we can also be interested to study the distribution of runs across balls per over/quarter/semester, overs per quarter/semester and quarters per semester. 
-
-
-
-
-But how to construct these circular categorisation?
-
-The hierarchy proposed here is - 
-
- - ball
- - over -> 6 balls
- - quarter -> 5 overs
- - semester -> 2 quarters
- - match -> 2 semesters
-
-We can construct 5 combination 2 =  10 cicular categorisations as follows:
-
- 1) balls of an over (ball_over)
- 2) balls of a quarter (ball_quarter)
- 3) balls of a  semester (ball_semester)
- 4) balls of a  match (ball_match)
- 5) overs of a quarter (ball_quarter)
- 6) overs of a semester (over_semester)
- 7) overs of a match (over_match)
- 8) quarters of a semester (quarter_semester)
- 9) quarters of a match (quarter_match)
- 10) semesters of a match (semester_match)
-
-
-The dataset provides balls per over. Can we compute all other  categorisations given the hierarchy model?
-
-```{r hierarchy, echo=TRUE}
-hierarhy_model <- tibble(category_ls = c("ball", "over", "quarter", "semester", "match"), conversion_fac  = c(6, 5, 2, 2, 1))
-```
-
-
-Suppose: $f(x, y)$ represents the functional form for computing x per y. 
-
-$f(ball, quarter) = f(ball, over) + c(ball, over)*f(over, quarter)$  
-
-and, 
-
-$f(ball, semester) = f(ball, over) + c(ball, over)* f(over, semester)$
-
-or, 
-$f(ball, semester)                  =  f(ball, over) + c(ball, over)*f(over, quarter) +c(over, quarter)f(quarter, semester)$  
-                  
-and so on.
-
-In the above equations, it is shown how to obtain f(x,z) given f(x,y) and the hierarchy table,  provided $order(z) > order(y) \neq order(x)$. In general,
-
- $f(x,z) = \sum_{i=0}^{order(z) - order(y) + 1}c(x, x+i)f(x+1, x+i)$
-
-We could also derive f(w, y) given f(x, y) and the hierarchy table, for $order(y)>=order(w) > order(x)$.
-
-$f(w,y) = f(x,y) \mod c(x,w)$, for $f(x,y) \mod c(x,w)!=0$ \\
-        $= c(x,w))$, otherwise.
-
-Let us investigate if that is true:
-
-f(ball, over) = 1
-f(over, quarter) = 4
-f(quarter, semester) = 2
-f(semester, match) = `1
-
-then, f(ball_quarter) = 1 + 6*4 = 25, 
-      f(ball, semester) = 1 + 6*4 + 5*6*1 = 55
-      f(ball, semester) = 1 + 6*4 + 5*6*1 + 5*6*2*1 = 115
       
 
       
