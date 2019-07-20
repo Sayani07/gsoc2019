@@ -85,7 +85,12 @@ data_MI <- data %>%
     
     between(quarter_match,1,2) ~ 1,
     between(quarter_match,3,4) ~ 2
-  )) 
+  ))  %>% 
+   mutate(over_quarter = 
+  if_else(over%%5==0,5, over%%5)
+   ) %>%  mutate(quarter_semester = 
+  if_else(quarter_match%%2==0,2, quarter_match%%2)
+   )
 ```
 
 
@@ -113,7 +118,7 @@ nover = data_MI %>% distinct(over) %>% nrow()
 data_MI <- data_MI %>% filter(!match_id  %in% match_er$match_id, wide_runs + noball_runs==0) %>% 
   mutate(balls = purrr::rep_along(match_id, 1:6),
          balls_game =  purrr::rep_along(match_id, 1:120)) %>% 
-  select(match_id, over, balls, balls_game,  quarter_match, semester_match,  total_runs)
+  select(match_id, over, balls, balls_game,  quarter_match, semester_match,  total_runs, over_quarter, quarter_semester)
   
 
 #data_MI %>% group_by(match_id, over) %>% summarise(n = n()) %>% distinct()
@@ -161,6 +166,7 @@ data_MI %>% ggplot(aes(x = as.factor(quarter_match), y= total_runs)) +  geom_vio
 # data_MI %>% ggplot(aes(y =as.factor(quarter), x= total_runs)) + geom_density_ridges2() + ylab("quarters per match") + xlab(" Total runs per ball")
 ```
 
+4th quarter of the match witnesses low density(mass) at scores 0, 1 and more at 4/6. The density at score 6 increases with the quarters of the match.
 
 
 ```{r semester, echo=TRUE}
@@ -174,12 +180,22 @@ data_MI %>% ggplot(aes(x = total_runs, y= as.factor(semester_match))) +  geom_de
 #   )  + ylab("semester") + xlab(" Total runs per ball") +
 #   scale_fill_viridis(discrete = TRUE, name = "Quartiles")
 ```
-      
+
+
+
 In the second semester of the game, there is more probability to score more than zero as can be seen from the drop in peaks of the distribution at 0 and increased peak at 1, 2, 4 and 6.
       
+Now, it will be interesting to see the distribution of runs per ball across two categorisation together:
 
 
+```{r bivariate1, echo=TRUE}
+# data_MI %>% ggplot(aes(x = as.factor(semester_match), y= total_runs)) +  geom_violin()+ xlab("semester per match")+ ylab(" Total runs per ball") +ggtitle("Violin plot of runs per ball across each semesters of a match")
 
+data_MI %>% ggplot(aes(x = as.factor(over_quarter), y = total_runs))+  geom_violin()+
+                     facet_wrap(~quarter_semester) + xlab("overs per quarter")+ ylab(" Total runs per ball") + ggtitle("Boxplot of runs per ball across each over_quarter and quarter_semester") 
+```
+
+WIP
 
 
 
