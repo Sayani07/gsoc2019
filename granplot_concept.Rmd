@@ -21,53 +21,91 @@ library(gravitas)
 
 <!--temporal granularities and why should we care --> 
 
-**granplot**
+`granplot`
 
 Usage: recommends statistical distribution plots of bivariate time granularities that aids systematic exploration
 
-granplot(.data, ugran = NULL, lgran = NULL, response = NULL, plot_type = NULL, ...)
+granplot(.data, gran1 = NULL, gran2 = NULL, response = NULL, plot_type = NULL, facet_h = 31, ...) 
+
+- gran1: the first granularity acting as the facet variable
+- gran2: the granularity which is to be plotted across x-axis
+- response: the univariate time series to be plotted
+- plot_type: the type of distribution plot preferred
+- facet_h: the highest number of levels for facet variables above which facetting is not recommended 
 
 
-granplot is useful for exploring statistical distributions for bivariate granularities. It provides the recommended distribution plots given an upper and lower level of time indices. For example, if lgran = "hour" and ugran = "week",the pair of time granularities that can be conceptualized as "harmonies" is -  (hour_day, day_week). The way the function "harmony" is currently defined, it is a symmetric function. However, recommendations for plotting will vary depending on which granularity is placed on the x-axis and which one across facets. Thus, this particular value for lgran and ugran should output two potential plots:  
+granplot is useful for exploring statistical distributions for bivariate granularities. It provides the plot recommendations given two granularities. Recommendations for plotting will vary depending on which granularity is placed on the x-axis and which one across facets. 
 
--  day_week across facets and hour_day along x-axis
--  hour_day across facets and day_week along x-axis
+granplot uses `gran_advice` to obtain the recommendations of distribution plots depending on the levels(very high/high/medium/low) of the two granularities plotted. Assumptions are made to ensure display is not too cluttered by the space occupied by various kinds of distribution plots.
 
-granplot uses **gran_advice** to obtain the recommendations of distribution plots depending on the following:
+  - very high (facet) and any levels of x-axis
 
-- levels(high/medium/low) of the two granularities plotted  
-Assumptions are made to ensure display is not too cluttered and the space occupied by various kinds of distribution plots
+    plots_list <- c("decile", "percentile")
+ 
+  - high (facet) and very high(x-axis)
+   
+    plots_list <- c("decile", "percentile")
+ 
+  - high (facet) and high(x-axis)
 
-   - very high (facet), high/medium/low(x -axis) -> no bivariate distribution plots recommended as number of facets too high
+    plots_list <- c("decile", "percentile")
    
-   - high (facet), very high (x -axis) ->  c("percentile", "decile")
-   - high (facet), high (x -axis) ->  c("percentile", "decile")
-   - high (facet), medium (x -axis) -> c("percentile", "decile")
-   - high (facet), low (x -axis) -> c("ridge", "violin", "lv", "density")
-   
-   - medium (facet), very high (x -axis) -> c("percentile", "decile")
-   - medium (facet), high (x -axis) -> c("percentile", "decile")
-   - medium (facet), medium (x -axis) -> c("ridge", "violin", "lv", "density")
-   - medium (facet), low (x -axis) -> c("ridge", "violin", "lv", "density")
-   
-   - low (facet), very high (x -axis) -> c("percentile", "decile")
-   - low (facet), high (x -axis) -> c("percentile", "decile", "boxplot", "lv")
-   - low (facet), medium (x -axis) -> c("ridge", "violin", "lv", "density", "percentile", "decile")
-   - low (facet), low (x -axis) -> c("ridge", "violin", "lv", "density", "percentile", "decile")
-   
-   
-   
-  facet_h <- 31  
-  facet_m <- 15  
-  facet_l <- 9  
+  - high(facet) and medium(x-axis)
+  
+    plots_list <- c("decile", "percentile")   
 
-  x_h <- 31  
-  x_m <- 15    
-  x_l <- 9    
-   
-   
+  - high(facet), low(x-axis)
+  
+    plots_list <- c("ridge", "violin", "lv", "density")
+  
+  - medium(facet), very high (x-axis)
 
-- Minimum number of observations for combinations of time granularities  
+    plots_list <- c("decile", "percentile") 
+   
+  - medium(facet), high (x-axis)
+  
+    plots_list <- c("decile", "percentile")
+  }
+  
+  - medium(facet), medium (x-axis)
+  
+    plots_list <- c("decile", "percentile")
+ 
+  
+   - medium(facet), low (x-axis)
+   
+    plots_list <- c("ridge", "violin", "lv", "density")
+    
+  - low(facet), very high (x-axis)
+  
+    plots_list <- c("boxplot", "lv", "percentile", "decile")
+  
+  - low(facet), medium (x-axis)
+ 
+    plots_list <- c("ridge", "violin", "lv", "density", "percentile", "decile")
+    
+   - low(facet), low (x-axis)
+
+     plots_list <- c("ridge", "violin", "lv", "boxplot", density", "percentile", "decile")
+ 
+
+
+# Default values
+
+
+Default levels are chosen as very high/high/medium/low based on levels of common temporal granularities like day of the month, day of a fortnight or day of a week. Users are free to change these values.
+
+levels_high = 31  
+levels_medium = 14  
+levels_low = 7  
+
+
+  very high =  levels <= levels_high  
+  high  =   levels_medium < levels < levels_high   
+  medium =   levels_low < levels <= levels_medium    
+  low  = levels < levels_low  
+  
+Minimum number of observations for combinations of time granularities  
 Assumptions are made to ensure decile/percentile/density based plots are avoided for too few observations
 
 
@@ -75,20 +113,24 @@ It uses gran_advise to choose the recommended plots if plot_type = NULL.
 Now the user might want to plot two temporal granularities that are clashes, they are free to do so however, they will be shown a warning that they are plotting clashes. Warnings will also be shown if number of levels of facet variable too high (inappropriate for facetting), if number of observations are homogenous inter and intra facets. 
 
 
-**Warnings for granularities  hour_day and month_year
+However, warnings are generated in the following order:
+
+- If two granularities fed are clashes, then no other warnings will be generated other than that they are clashes.
+
+- If two granularities fed are harmonies, but levels of facets too high for facetting, warnings will be generated.
+
+- If two granularities fed are harmonies and levels of facets not beyond the default or user assigned highest value of  facets allowed, then warnings will be generated in case number of observations for any combination(s) too few to draw a distribution plot or if there is any inter or intra facet heterogeneity.
+
 ```{r}
 data1 = tsibbledata::nyc_bikes %>% as_tsibble()
-data2 = tsibbledata::aus_elec %>% as_tsibble()
-gravitas:::gran_advice(data1, gran1="hour_day", gran2 = "month_year")
-```
-**Warnings for granularities  hour_day and day_week
-```{r}
-gravitas:::gran_advice(data2, gran1="hour_day", gran2 = "day_week")
+data2 = tsibbledata::vic_elec %>% as_tsibble()
+
+gravitas::granplot(data2, gran1="hour_day", gran2 = "month_year", response = "Demand")
 ```
 
-**granplot
-```{r}
-gravitas::granplot(data2, ugran="week", lgran = "hour", response="Demand")
-```
+User is free to choose any one of the seven distribution plots ("ridge", "violin", "lv", "boxplot", density", "percentile", "decile") in plot_type.If plot_type is not specified, the first one from the recommended list is picked up. To see the list of recommended distribution plots, use the function `gran_advice`.
 
+```{r, echo=TRUE}
+gravitas:::gran_advice(data2, gran1="hour_day", gran2 = "month_year")
+```
 
