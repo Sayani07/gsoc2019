@@ -1,0 +1,19 @@
+---
+title: "Brainstorming"
+author: "Sayani Gupta"
+date: "04/07/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+| Facet levels 	| x-axis levels 	| Number of observations per combinations 	| Potential Distribution Plots                                                                    	| Pros                                                                                                                                                                                        	| Cons                                                                              	|
+|--------------	|---------------	|-----------------------------------------	|-------------------------------------------------------------------------------------------------	|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|-----------------------------------------------------------------------------------	|
+| High         	| High          	| High (Low)                              	| Decile Plots, Percentile plots (with warnings)                                                  	| Less display space -  each combination displayed by points and joined by lines                                                                                                              	| Only summary statistics shown/ not entire distribution                            	|
+| High         	| Low           	| High (Low)                              	| Boxplot family, Percentile plots, Ridge plots, letter value plots, violin plots (with warnings) 	| Moderate display space - entire distribution can be shown in ridge/violin plots 5 point summary along with information on skewness and kurtosis can be obtained for plots in boxplot family 	| Moderate number of levels in facets/x-axis might lead to overlapping/clumsy plots. Also densities are computed basis some assumption 	|
+| Low          	| High          	| High (Low)                              	| Boxplot family, Percentile plots, Ridge plots, letter value plots, violin plots (with warnings) 	| Moderate display space - entire distribution can be shown in ridge/violin plots5 point summary along with information on skewness and kurtosis can be obtained for plots in boxplot family  	| Moderate number of levels in x-axis/facet might lead to overlapping/clumsy plots  	|
+| Low          	| Low           	| High (Low)                              	| Any distribution plot (with warnings)                                                           	| None that is related to display space                                                                                                                                                       	| None that is related to display space                                             	|
