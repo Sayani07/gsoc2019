@@ -1,0 +1,256 @@
+---
+title: "Fun T20 cricket analysis "
+author: "Sayani Gupta"
+date: "12/07/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lvplot)
+library(ggridges)
+library(viridis)
+```
+
+
+```{r, echo=FALSE}
+hierarchy <- tibble(units = c("ball", "over", "quarter", "semester", "match"), convert_fct  = c(6, 5, 2, 2, 1))
+hierarchy
+
+
+
+dynamic_build_gran <- function(x, hierarchy_tbl = NULL, lowest_unit = NULL, highest_unit = NULL, ...) {
+  # for aperiodic granularities - lgran less than month and ugran more than or equal to month
+
+  #
+  #   if (is.null(lgran) | is.null(ugran)) {
+  #     stop("function requires both lgran and ugran to be specified")
+  #   }
+
+
+  if (g_order(hierarchy_tbl, lowest_unit, highest_unit) < 0) {
+    stop("Order of second unit should be larger than the first one in the hierarchy table. Try swapping lgran and ugran")
+  }
+
+    lgran_ordr1 <- g_order(hierarchy_tbl, lowest_unit,  order = 1)
+    if (g_order(hierarchy_tbl, lowest_unit, highest_unit) == 1) {
+      one_order <- convert_fct[units %>% match(x = lowest_unit)]
+      return(hierarchy_tbl$one_order) # need to change
+    } else {
+      value <- build_gran(x, hierarchy_tbl, lowest_unit, lgran_ordr1) +
+        gran_convert(lowest_unit, lgran_ordr1) *
+        (build_gran(x, hierarchy_tbl, lgran_ordr1, highest_unit) - 1)
+      return(value)
+    }
+}
+
+# balls_match, overs_match for example
+#unit_last(hierarchy, "ball", "quarter")
+unit_last <- function(hierarchy_tbl = NULL, lower_gran = NULL, upper_gran = NULL,  ...){
+
+  units <- hierarchy_tbl$units
+  convert_fct <- hierarchy_tbl$convert_fct
+
+  lowest_unit = dplyr::first(hierarchy_tbl$units)
+  highest_unit = dplyr::last(hierarchy_tbl$units)
+
+  index_l = units %>% match(x = lower_gran)
+  index_h = units %>% match(x = upper_gran)
+
+
+  gran_set <- units[index_l:index_h]
+
+  gran <- paste(gran_set, highest_unit, sep="_")
+
+  gran
+
+}
+
+# one order function to create single order up granularities
+one_order <- function(.data, hierarchy_tbl = NULL, lower_gran = NULL,  gran_given = NULL, col_name = NULL,  ...)
+{
+
+    units <- hierarchy_tbl$units
+    convert_fct <- hierarchy_tbl$convert_fct
+
+    lowest_unit = dplyr::first(hierarchy_tbl$units)
+    highest_unit = dplyr::last(hierarchy_tbl$units)
+
+
+    upper_gran = g_order(hierarchy_tbl, lowest_unit = lower_gran, order = 1)
+    index_l = units %>% match(x = lower_gran)
+    index_h = units %>% match(x = upper_gran)
+#
+#     gran_set <- units[index_l:index_h]
+
+
+  if(is.null(col_name))
+  {
+    stop("Column name must be provided")
+  }
+
+    col_req <- .data[[col_name]]
+    # # relating upper_gran and highest_unit
+    # constant <- gran_convert(hierarchy_tbl, lowest_unit = upper_gran, highest_unit = highest_unit)
+    #
+    # upper_highest = ceiling(col_req/constant)
+
+    # relating lowest unit and lower_gran
+    constant_upper <- gran_convert(hierarchy_tbl, lowest_unit = lowest_unit, highest_unit = upper_gran)
+
+    # relating lowest unit and upper_gran
+    constant_lower <- gran_convert(hierarchy_tbl, lowest_unit = lowest_unit, highest_unit = lower_gran)
+
+    
+    rel_upper <- col_req%%constant_upper
+    rel_upper <- if_else(rel_upper!=0, rel_upper, constant_upper)
+      
+    value = ceiling((rel_upper)/constant_lower)
+
+    value
+}
+
+
+
+
+search_gran_v1 <- function(.data, hierarchy_tbl = NULL, ugran = NULL, lgran = NULL, filter_in = NULL, filter_out = NULL, ...) {
+
+  units <- hierarchy_tbl$units
+  convert_fct <- hierarchy_tbl$convert_fct
+
+  if (!tsibble::is_tsibble(.data)) {
+    stop("must use tsibble")
+  }
+
+
+# Put the last element of the vector units as the upper most unit desired - default
+  if (is.null(ugran)) {
+    ugran = dplyr::last(hierarchy_tbl$units)
+  }
+  else if (!(ugran %in% units))
+  {
+     stop("upper unit must be listed as an element in the  hierarchy table")
+    }
+
+  # Put the first element of the vector units as the lowest most unit desired - deafult
+  if (is.null(lgran)) {
+    lgran = dplyr::first(hierarchy_tbl$units)
+  } else if (!(lgran %in% units))
+  {
+    stop("lower unit must be listed as an element in the hierarchy table")
+  }
+
+  return(c(lgran, ugran))
+
+# # Put the first element of the vector units/interval of the tsibble as the least most unit desired
+#   if (tsibble::is_regular(.data)) {
+#     interval_ts <- tsibble::interval(.data)
+#     data_interval <- interval_ts[interval_ts != 0]
+#     if (is.null(lgran)) {
+#       lgran_iden <- names(data_interval)
+#       lgran_multiple <- data_interval[[1]]
+#       if (lgran_multiple == 1) {
+#         lgran <- lgran_iden
+#       }
+#       else if (lgran_multiple > 1) {
+#         index_lgran <- granularity %>% match(x = lgran_iden)
+#
+#
+#         if (convert_fct[index_lgran] < lgran_multiple) {
+#           convert_fct[index_lgran] <- convert_fct[index_lgran] * convert_fct[index_lgran + 1]
+#           last_index <- index_lgran + 1
+#         }
+#         lgran <- granularity[last_index + 1]
+#       }
+#     }
+#   }
+
+}
+
+
+
+# provides the order difference between two granularities, also provide the upper granularity given the order (given a hierachy table)
+
+g_order <- function(hierarchy_tbl = lookup_table, lowest_unit = NULL, highest_unit = NULL, order = NULL,...){
+
+
+  units <- hierarchy_tbl$units
+  convert_fct <- hierarchy_tbl$convert_fct
+
+  # Put the first element of the vector units as the lowest most unit desired - default
+  if (is.null(lowest_unit)) {
+    lowest_unit = dplyr::first(hierarchy_tbl$units)
+  }
+  else if (!(lowest_unit %in% units))
+  {
+    stop("lowest unit must be listed as an element in the  hierarchy table")
+  }
+
+  index_l <- units %>% match(x = lowest_unit)
+  if (!is.null(highest_unit)) {
+    index_h <- units %>% match(x = highest_unit)
+    return(index_h - index_l)
+  }
+  if (!is.null(order)) {
+    return(units[index_l + order])
+  }
+
+}
+
+# provides the conversion factor between two granularities
+
+gran_convert <- function(hierarchy_tbl = NULL,lowest_unit = NULL, highest_unit = NULL, order = NULL) {
+
+  units <- hierarchy_tbl$units
+  convert_fct <- hierarchy_tbl$convert_fct
+
+  index_l <- units %>% match(x = lowest_unit)
+
+  if (!is.null(lowest_unit)) {
+    if (!lowest_unit %in% units | !highest_unit %in% units) {
+      stop(paste0("units ", lowest_unit, " and ", highest_unit, " both should be one of ", paste0(units, collapse = ", ")), call. = F)
+    }
+
+
+    if (g_order(hierarchy_tbl, lowest_unit, highest_unit) < 0) {
+      stop("Order of second unit should be larger than the first one. Try reversing their position")
+    }
+    if (g_order(hierarchy_tbl, lowest_unit, highest_unit) == 0) {
+      return(1)
+    }
+    else {
+      return(convert_fct[index_l] * gran_convert(hierarchy_tbl, g_order(hierarchy_tbl, lowest_unit, order = 1), highest_unit))
+    }
+  }
+  if (!is.null(order)) {
+    converter <- convert_fct[index_l]
+
+    while (converter <= order) {
+      index_l <- index_l + 1
+    }
+  }
+}
+
+
+```
+
+```{r try_gravitas}
+
+data <-  read_csv("deliveries.csv")
+
+
+data_MI <- data %>% 
+  filter(batting_team =="Mumbai Indians", inning ==1)
+
+
+match_er <- data_MI %>% filter(wide_runs + noball_runs==0) %>% group_by(match_id,over) %>%  summarize(n = n()) %>% filter(n!=6) %>% select(match_id)
+
+
+data_rev <- data_MI %>% filter(!match_id  %in% match_er$match_id, wide_runs + noball_runs==0) %>% 
+  mutate(balls = purrr::rep_along(match_id, 1:6),
+         balls_game =  purrr::rep_along(match_id, 1:120))
+
+data_rev2 <- data_rev %>% mutate(new_col = one_order(data_rev, hierarchy_tbl = hierarchy, lower_gran = "ball", col_name = "balls_game"))
+```
+
