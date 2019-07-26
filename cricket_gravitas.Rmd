@@ -18,32 +18,32 @@ library(viridis)
 hierarchy <- tibble(units = c("ball", "over", "quarter", "semester", "match"), convert_fct  = c(6, 5, 2, 2, 1))
 hierarchy
 
-
-
-dynamic_build_gran <- function(x, hierarchy_tbl = NULL, lowest_unit = NULL, highest_unit = NULL, ...) {
-  # for aperiodic granularities - lgran less than month and ugran more than or equal to month
-
-  #
-  #   if (is.null(lgran) | is.null(ugran)) {
-  #     stop("function requires both lgran and ugran to be specified")
-  #   }
-
-
-  if (g_order(hierarchy_tbl, lowest_unit, highest_unit) < 0) {
-    stop("Order of second unit should be larger than the first one in the hierarchy table. Try swapping lgran and ugran")
-  }
-
-    lgran_ordr1 <- g_order(hierarchy_tbl, lowest_unit,  order = 1)
-    if (g_order(hierarchy_tbl, lowest_unit, highest_unit) == 1) {
-      one_order <- convert_fct[units %>% match(x = lowest_unit)]
-      return(hierarchy_tbl$one_order) # need to change
-    } else {
-      value <- build_gran(x, hierarchy_tbl, lowest_unit, lgran_ordr1) +
-        gran_convert(lowest_unit, lgran_ordr1) *
-        (build_gran(x, hierarchy_tbl, lgran_ordr1, highest_unit) - 1)
-      return(value)
-    }
-}
+# 
+# 
+# dynamic_build_gran <- function(x, hierarchy_tbl = NULL, lowest_unit = NULL, highest_unit = NULL, ...) {
+#   # for aperiodic granularities - lgran less than month and ugran more than or equal to month
+# 
+#   #
+#   #   if (is.null(lgran) | is.null(ugran)) {
+#   #     stop("function requires both lgran and ugran to be specified")
+#   #   }
+# 
+# 
+#   if (g_order(hierarchy_tbl, lowest_unit, highest_unit) < 0) {
+#     stop("Order of second unit should be larger than the first one in the hierarchy table. Try swapping lgran and ugran")
+#   }
+# 
+#     lgran_ordr1 <- g_order(hierarchy_tbl, lowest_unit,  order = 1)
+#     if (g_order(hierarchy_tbl, lowest_unit, highest_unit) == 1) {
+#       one_order <- convert_fct[units %>% match(x = lowest_unit)]
+#       return(hierarchy_tbl$one_order) # need to change
+#     } else {
+#       value <- build_gran(x, hierarchy_tbl, lowest_unit, lgran_ordr1) +
+#         gran_convert(lowest_unit, lgran_ordr1) *
+#         (build_gran(x, hierarchy_tbl, lgran_ordr1, highest_unit) - 1)
+#       return(value)
+#     }
+# }
 
 # balls_match, overs_match for example
 #unit_last(hierarchy, "ball", "quarter")
@@ -359,8 +359,33 @@ search_gran_v1 <- function(.data, hierarchy_tbl = NULL, lowest_unit = NULL, high
 
   return(gran)
 }
+```
 
 
+
+```{r build_gran}
+dynamic_build_gran <- function(.data, hierarchy_tbl = NULL, lowest_unit = NULL, highest_unit = NULL, ...) {
+
+  x <- .data[[rlang::as_string(tsibble::index(.data))]]
+  
+  
+  if (g_order(hierarchy_tbl, lowest_unit, highest_unit) < 0) {
+    stop("Order of second unit should be larger than the first one in the hierarchy table. Try swapping lgran and ugran")
+  }
+
+    lgran_ordr1 <- g_order(hierarchy_tbl, lowest_unit,  order = 1)
+    if (g_order(hierarchy_tbl, lowest_unit, highest_unit) == 1) {
+      one_order <- convert_fct[units %>% match(x = lowest_unit)]
+      one_order_gran <- one_order(.data, hierarchy_tbl = NULL, lower_gran = NULL,  gran_given = NULL, col_name = "balls_game")
+      return(one_order_gran) # need to change
+    } else 
+      {
+      value <- dynamic_build_gran(.data, hierarchy_tbl, lowest_unit, lgran_ordr1) +
+        gran_convert(hierarchy_tbl, lowest_unit, lgran_ordr1) *
+        (dynamic_build_gran(.data, hierarchy_tbl, lgran_ordr1, highest_unit) - 1)
+      return(value)
+      }
+    }
 
 ```
 
