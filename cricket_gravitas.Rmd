@@ -117,62 +117,6 @@ if(lower_gran == highest_unit)
 
 
 
-# 
-# search_gran_v1 <- function(.data, hierarchy_tbl = NULL, ugran = NULL, lgran = NULL, filter_in = NULL, filter_out = NULL, ...) {
-# 
-#   units <- hierarchy_tbl$units
-#   convert_fct <- hierarchy_tbl$convert_fct
-# 
-#   if (!tsibble::is_tsibble(.data)) {
-#     stop("must use tsibble")
-#   }
-# 
-# 
-# # Put the last element of the vector units as the upper most unit desired - default
-#   if (is.null(ugran)) {
-#     ugran = dplyr::last(hierarchy_tbl$units)
-#   }
-#   else if (!(ugran %in% units))
-#   {
-#      stop("upper unit must be listed as an element in the  hierarchy table")
-#     }
-# 
-#   # Put the first element of the vector units as the lowest most unit desired - deafult
-#   if (is.null(lgran)) {
-#     lgran = dplyr::first(hierarchy_tbl$units)
-#   } else if (!(lgran %in% units))
-#   {
-#     stop("lower unit must be listed as an element in the hierarchy table")
-#   }
-# 
-#   return(c(lgran, ugran))
-# 
-# # # Put the first element of the vector units/interval of the tsibble as the least most unit desired
-# #   if (tsibble::is_regular(.data)) {
-# #     interval_ts <- tsibble::interval(.data)
-# #     data_interval <- interval_ts[interval_ts != 0]
-# #     if (is.null(lgran)) {
-# #       lgran_iden <- names(data_interval)
-# #       lgran_multiple <- data_interval[[1]]
-# #       if (lgran_multiple == 1) {
-# #         lgran <- lgran_iden
-# #       }
-# #       else if (lgran_multiple > 1) {
-# #         index_lgran <- granularity %>% match(x = lgran_iden)
-# #
-# #
-# #         if (convert_fct[index_lgran] < lgran_multiple) {
-# #           convert_fct[index_lgran] <- convert_fct[index_lgran] * convert_fct[index_lgran + 1]
-# #           last_index <- index_lgran + 1
-# #         }
-# #         lgran <- granularity[last_index + 1]
-# #       }
-# #     }
-# #   }
-# 
-# }
-# 
-
 
 # provides the order difference between two granularities, also provide the upper granularity given the order (given a hierachy table)
 
@@ -364,7 +308,7 @@ search_gran_v1 <- function(.data, hierarchy_tbl = NULL, lowest_unit = NULL, high
 
 
 ```{r build_gran}
-dynamic_build_gran <- function(x, hierarchy_tbl = NULL, lower_gran = NULL, upper_gran = NULL, ...) {
+dynamic_build_gran <- function(x, hierarchy_tbl = NULL, lower_gran = NULL, upper_gran = NULL, label = TRUE, abbr = TRUE, ...) {
 
   if (g_order(hierarchy_tbl, lower_gran, upper_gran) < 0) {
     stop("Order of second unit should be larger than the first one in the hierarchy table. Try swapping lgran and ugran")
@@ -373,16 +317,46 @@ dynamic_build_gran <- function(x, hierarchy_tbl = NULL, lower_gran = NULL, upper
     lgran_ordr1 <- g_order(hierarchy_tbl, lower_gran,  order = 1)
     if (g_order(hierarchy_tbl, lower_gran, upper_gran) == 1) {
       one_order <- convert_fct[units %>% match(x = lower_gran)]
-      one_order_gran <- one_order(.data, hierarchy_tbl, lower_gran, col_name = "balls_game")
-      return(one_order_gran) # need to change
+      value <- one_order(.data, hierarchy_tbl, lower_gran, col_name = "balls_game")
+      value # need to change
     } else 
       {
       value <- dynamic_build_gran(x, hierarchy_tbl, lower_gran, lgran_ordr1) +
         gran_convert(hierarchy_tbl, lower_gran, lgran_ordr1) *
         (dynamic_build_gran(x, hierarchy_tbl, lgran_ordr1, upper_gran) - 1)
-      return(value)
+      value
       }
+    
+    lev <- unique(value)
+    
+     if (label) {
+    if (lower_gran == "day" & upper_gran == "week") {
+      names <- c(
+        "Sunday", "Monday", "Tuesday", "Wednesday",
+        "Thursday", "Friday", "Saturday"
+      )
     }
+    else if (lower_gran == "month" & upper_gran == "year") {
+      names <- c(
+        "January", "February", "March", "April",
+        "May", "June", "July", "August", "September", "October", " November", "December"
+      )
+    }
+    else {
+      names <- as.character(1:length(unique(lev)))
+    }
+    names_abbr <- substr(names, 1, 3)
+
+    if (abbr) names_gran <- names_abbr else names_gran <- names
+  }
+  else {
+    names_gran <- as.character(1:length(unique(lev)))
+  }
+
+  value_label <- factor(value, labels = names_gran)
+
+  value_label
+}
 
 ```
 
@@ -446,4 +420,61 @@ create_gran <- function(.data, gran1 = NULL,  label = TRUE, abbr = TRUE, ...) {
     dplyr::select(-L1)
 }
 ```
+
+
+#
+# search_gran_v1 <- function(.data, hierarchy_tbl = NULL, ugran = NULL, lgran = NULL, filter_in = NULL, filter_out = NULL, ...) {
+#
+#   units <- hierarchy_tbl$units
+#   convert_fct <- hierarchy_tbl$convert_fct
+#
+#   if (!tsibble::is_tsibble(.data)) {
+#     stop("must use tsibble")
+#   }
+#
+#
+# # Put the last element of the vector units as the upper most unit desired - default
+#   if (is.null(ugran)) {
+#     ugran = dplyr::last(hierarchy_tbl$units)
+#   }
+#   else if (!(ugran %in% units))
+#   {
+#      stop("upper unit must be listed as an element in the  hierarchy table")
+#     }
+#
+#   # Put the first element of the vector units as the lowest most unit desired - deafult
+#   if (is.null(lgran)) {
+#     lgran = dplyr::first(hierarchy_tbl$units)
+#   } else if (!(lgran %in% units))
+#   {
+#     stop("lower unit must be listed as an element in the hierarchy table")
+#   }
+#
+#   return(c(lgran, ugran))
+#
+# # # Put the first element of the vector units/interval of the tsibble as the least most unit desired
+# #   if (tsibble::is_regular(.data)) {
+# #     interval_ts <- tsibble::interval(.data)
+# #     data_interval <- interval_ts[interval_ts != 0]
+# #     if (is.null(lgran)) {
+# #       lgran_iden <- names(data_interval)
+# #       lgran_multiple <- data_interval[[1]]
+# #       if (lgran_multiple == 1) {
+# #         lgran <- lgran_iden
+# #       }
+# #       else if (lgran_multiple > 1) {
+# #         index_lgran <- granularity %>% match(x = lgran_iden)
+# #
+# #
+# #         if (convert_fct[index_lgran] < lgran_multiple) {
+# #           convert_fct[index_lgran] <- convert_fct[index_lgran] * convert_fct[index_lgran + 1]
+# #           last_index <- index_lgran + 1
+# #         }
+# #         lgran <- granularity[last_index + 1]
+# #       }
+# #     }
+# #   }
+#
+# }
+#
 
