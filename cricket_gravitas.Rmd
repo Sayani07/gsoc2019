@@ -77,8 +77,12 @@ one_order <- function(.data, hierarchy_tbl = NULL, lower_gran = NULL,  gran_give
     lowest_unit = dplyr::first(hierarchy_tbl$units)
     highest_unit = dplyr::last(hierarchy_tbl$units)
 
-
-    upper_gran = g_order(hierarchy_tbl, lowest_unit = lower_gran, order = 1)
+if(lower_gran == highest_unit)
+{
+  stop("single-order-up granularties can not be obtained for the highest unit in the hierarchy table")
+}
+    
+    upper_gran = g_order(hierarchy_tbl, lower_gran, order = 1)
     index_l = units %>% match(x = lower_gran)
     index_h = units %>% match(x = upper_gran)
 #
@@ -97,10 +101,10 @@ one_order <- function(.data, hierarchy_tbl = NULL, lower_gran = NULL,  gran_give
     # upper_highest = ceiling(col_req/constant)
 
     # relating lowest unit and lower_gran
-    constant_upper <- gran_convert(hierarchy_tbl, lowest_unit = lowest_unit, highest_unit = upper_gran)
+    constant_upper <- gran_convert(hierarchy_tbl, lowest_unit, upper_gran)
 
     # relating lowest unit and upper_gran
-    constant_lower <- gran_convert(hierarchy_tbl, lowest_unit = lowest_unit, highest_unit = lower_gran)
+    constant_lower <- gran_convert(hierarchy_tbl, lowest_unit, lower_gran)
 
     
     rel_upper <- col_req%%constant_upper
@@ -172,7 +176,7 @@ one_order <- function(.data, hierarchy_tbl = NULL, lower_gran = NULL,  gran_give
 
 # provides the order difference between two granularities, also provide the upper granularity given the order (given a hierachy table)
 
-g_order <- function(hierarchy_tbl = lookup_table, lowest_unit = NULL, highest_unit = NULL, order = NULL,...){
+g_order <- function(hierarchy_tbl, lower_gran =NULL, upper_gran = NULL, order = NULL,...){
 
 
   units <- hierarchy_tbl$units
@@ -182,14 +186,10 @@ g_order <- function(hierarchy_tbl = lookup_table, lowest_unit = NULL, highest_un
   if (is.null(lowest_unit)) {
     lowest_unit = dplyr::first(hierarchy_tbl$units)
   }
-  else if (!(lowest_unit %in% units))
-  {
-    stop("lowest unit must be listed as an element in the  hierarchy table")
-  }
 
-  index_l <- units %>% match(x = lowest_unit)
-  if (!is.null(highest_unit)) {
-    index_h <- units %>% match(x = highest_unit)
+  index_l <- units %>% match(x = lower_gran)
+  if (!is.null(upper_gran)) {
+    index_h <- units %>% match(x = upper_gran)
     return(index_h - index_l)
   }
   if (!is.null(order)) {
@@ -200,27 +200,27 @@ g_order <- function(hierarchy_tbl = lookup_table, lowest_unit = NULL, highest_un
 
 # provides the conversion factor between two granularities
 
-gran_convert <- function(hierarchy_tbl = NULL,lowest_unit = NULL, highest_unit = NULL, order = NULL) {
+gran_convert <- function(hierarchy_tbl = NULL,lower_gran = NULL, upper_gran = NULL, order = NULL) {
 
   units <- hierarchy_tbl$units
   convert_fct <- hierarchy_tbl$convert_fct
 
-  index_l <- units %>% match(x = lowest_unit)
+  index_l <- units %>% match(x = lower_gran)
 
-  if (!is.null(lowest_unit)) {
-    if (!lowest_unit %in% units | !highest_unit %in% units) {
-      stop(paste0("units ", lowest_unit, " and ", highest_unit, " both should be one of ", paste0(units, collapse = ", ")), call. = F)
+  if (!is.null(lower_gran)) {
+    if (!lower_gran %in% units | !upper_gran %in% units) {
+      stop(paste0("units ", lower_gran, " and ", upper_gran, " both should be one of ", paste0(units, collapse = ", ")), call. = F)
     }
 
 
-    if (g_order(hierarchy_tbl, lowest_unit, highest_unit) < 0) {
+    if (g_order(hierarchy_tbl, lower_gran, upper_gran) < 0) {
       stop("Order of second unit should be larger than the first one. Try reversing their position")
     }
-    if (g_order(hierarchy_tbl, lowest_unit, highest_unit) == 0) {
+    if (g_order(hierarchy_tbl, lower_gran, upper_gran) == 0) {
       return(1)
     }
     else {
-      return(convert_fct[index_l] * gran_convert(hierarchy_tbl, g_order(hierarchy_tbl, lowest_unit, order = 1), highest_unit))
+      return(convert_fct[index_l] * gran_convert(hierarchy_tbl, g_order(hierarchy_tbl, lower_gran, order = 1), upper_gran))
     }
   }
   if (!is.null(order)) {
@@ -364,28 +364,86 @@ search_gran_v1 <- function(.data, hierarchy_tbl = NULL, lowest_unit = NULL, high
 
 
 ```{r build_gran}
-dynamic_build_gran <- function(.data, hierarchy_tbl = NULL, lowest_unit = NULL, highest_unit = NULL, ...) {
+dynamic_build_gran <- function(x, hierarchy_tbl = NULL, lower_gran = NULL, upper_gran = NULL, ...) {
 
-  x <- .data[[rlang::as_string(tsibble::index(.data))]]
-  
-  
-  if (g_order(hierarchy_tbl, lowest_unit, highest_unit) < 0) {
+  if (g_order(hierarchy_tbl, lower_gran, upper_gran) < 0) {
     stop("Order of second unit should be larger than the first one in the hierarchy table. Try swapping lgran and ugran")
   }
 
-    lgran_ordr1 <- g_order(hierarchy_tbl, lowest_unit,  order = 1)
-    if (g_order(hierarchy_tbl, lowest_unit, highest_unit) == 1) {
-      one_order <- convert_fct[units %>% match(x = lowest_unit)]
-      one_order_gran <- one_order(.data, hierarchy_tbl = NULL, lower_gran = NULL,  gran_given = NULL, col_name = "balls_game")
+    lgran_ordr1 <- g_order(hierarchy_tbl, lower_gran,  order = 1)
+    if (g_order(hierarchy_tbl, lower_gran, upper_gran) == 1) {
+      one_order <- convert_fct[units %>% match(x = lower_gran)]
+      one_order_gran <- one_order(.data, hierarchy_tbl, lower_gran, col_name = "balls_game")
       return(one_order_gran) # need to change
     } else 
       {
-      value <- dynamic_build_gran(.data, hierarchy_tbl, lowest_unit, lgran_ordr1) +
-        gran_convert(hierarchy_tbl, lowest_unit, lgran_ordr1) *
-        (dynamic_build_gran(.data, hierarchy_tbl, lgran_ordr1, highest_unit) - 1)
+      value <- dynamic_build_gran(x, hierarchy_tbl, lower_gran, lgran_ordr1) +
+        gran_convert(hierarchy_tbl, lower_gran, lgran_ordr1) *
+        (dynamic_build_gran(x, hierarchy_tbl, lgran_ordr1, upper_gran) - 1)
       return(value)
       }
     }
 
+```
+
+
+```{r, echo=TRUE}
+create_gran <- function(.data, gran1 = NULL,  label = TRUE, abbr = TRUE, ...) {
+  if (!tsibble::is_tsibble(.data)) {
+    stop("must use tsibble")
+  }
+  # if (is.null(gran2)) {
+  #   gran2 <- g_order(gran1, order = 1)
+  #   col_name <- paste(rlang::quo_name(gran1), gran2, sep = "_")
+  # }
+
+  # if (!is.null(gran2)) {
+  #   col_name <- paste(rlang::quo_name(gran1), rlang::quo_name(gran2), sep = "_")
+  # }
+
+  x <- .data[[rlang::as_string(tsibble::index(.data))]]
+
+  gran1_split <- stringr::str_split(gran1, "_", 2) %>% unlist()
+  lgran <- gran1_split[1]
+  ugran <- gran1_split[2]
+
+
+  data_mutate <- .data %>% dplyr::mutate(L1 = dynamic_build_gran(x, lgran, ugran, ...))
+
+
+  lev <- unique(data_mutate$L1)
+
+  if (label) {
+    if (lgran == "day" & ugran == "week") {
+      names <- c(
+        "Sunday", "Monday", "Tuesday", "Wednesday",
+        "Thursday", "Friday", "Saturday"
+      )
+    }
+    else if (lgran == "month" & ugran == "year") {
+      names <- c(
+        "January", "February", "March", "April",
+        "May", "June", "July", "August", "September", "October", " November", "December"
+      )
+    }
+    else {
+      names <- as.character(1:length(unique(lev)))
+    }
+    names_abbr <- substr(names, 1, 3)
+
+    if (abbr) names_gran <- names_abbr else names_gran <- names
+  }
+  else {
+    names_gran <- as.character(1:length(unique(lev)))
+  }
+
+  data_mutate$L1 <- factor(data_mutate$L1, labels = names_gran)
+
+  data_mutate %>%
+    dplyr::mutate(
+      !!gran1 := L1
+    ) %>%
+    dplyr::select(-L1)
+}
 ```
 
