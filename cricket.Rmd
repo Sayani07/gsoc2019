@@ -91,6 +91,7 @@ data_MI <- data %>%
    ) %>%  mutate(quarter_semester = 
   if_else(quarter_match%%2==0,2, quarter_match%%2)
    )
+
 ```
 
 
@@ -195,7 +196,64 @@ data_MI %>% ggplot(aes(x = as.factor(over_quarter), y = total_runs))+  geom_viol
                      facet_wrap(~quarter_semester) + xlab("overs per quarter")+ ylab(" Total runs per ball") + ggtitle("Boxplot of runs per ball across each over_quarter and quarter_semester") 
 ```
 
-WIP
+# runs per over - as variation would be more
 
+```{r checking}
+data_MI_over <- data_MI %>% group_by(match_id, over) %>% summarise(runs_over = sum(total_runs)) %>% 
+    mutate(quarter_match = case_when(
+    
+    between(over,1,5) ~ 1,
+    between(over,6,10) ~ 2,
+    between(over,11,15) ~ 3,
+    between(over,16,20) ~ 4
+  )) %>% 
+   mutate(semester_match = case_when(
+    
+    between(quarter_match,1,2) ~ 1,
+    between(quarter_match,3,4) ~ 2
+  ))  %>% 
+   mutate(over_quarter = 
+  if_else(over%%5==0,5, over%%5)
+   ) %>%  mutate(quarter_semester = 
+  if_else(quarter_match%%2==0,2, quarter_match%%2)
+   ) %>% 
+  rename(over_match = over)
+
+
+```
+
+
+
+```{r over_match, echo=TRUE}
+data_MI_over %>% ggplot(aes(x = as.factor(over_match), y= runs_over)) + ggtitle("Letter value plot of runs per over across each over of a match") + geom_lv(aes(fill = ..LV..), outlier.colour = "red", outlier.shape = 1, k = 5) + xlab("overs per match")
+
+# data_MI %>% ggplot(aes(y =as.factor(over), x= total_runs)) + geom_density_ridges2() + ylab("Balls per  over")
+```
+
+
+
+```{r over_quarter, echo=TRUE}
+data_MI_over %>% ggplot(aes(x = as.factor(over_quarter), y= runs_over)) +  geom_violin()+ xlab("quarters per match")+ ylab(" Total runs per ball") + ggtitle("Violin plot of runs per over across each quarter of a match")
+
+
+data_MI_over %>% ggplot(aes(x = as.factor(over_quarter), y= runs_over)) +  geom_violin()+ xlab("quarters per match")+ ylab(" Total runs per ball") + ggtitle("Violin plot of runs per over across each quarter of a match") + facet_grid(~quarter_match)
+
+# data_MI %>% ggplot(aes(y =as.factor(quarter), x= total_runs)) + geom_density_ridges2() + ylab("quarters per match") + xlab(" Total runs per ball")
+```
+
+
+```{r quarter_match, echo=TRUE}
+# data_MI %>% ggplot(aes(x = as.factor(semester_match), y= total_runs)) +  geom_violin()+ xlab("semester per match")+ ylab(" Total runs per ball") +ggtitle("Violin plot of runs per ball across each semesters of a match")
+
+data_MI_over %>% ggplot(aes(x = runs_over, y= as.factor(quarter_match))) +  geom_density_ridges2()+ ylab("semesters per match")+ xlab(" Total runs per ball")+ ggtitle("Ridge plot of runs per overs across each semesters of a match")
+
+data_MI_over %>% ggplot(aes(x = runs_over, y= as.factor(over_quarter))) +  geom_density_ridges2()+ ylab("semesters per match")+ xlab(" Total runs per ball")+ ggtitle("Ridge plot of runs per overs across each semesters of a match") + facet_wrap(~quarter_match)
+
+# data_MI %>% ggplot(aes(y =as.factor(semester), x= total_runs, fill=factor(..quantile..))) +   stat_density_ridges(
+#     geom = "density_ridges_gradient", calc_ecdf = TRUE,
+#     quantiles = 4, quantile_lines = TRUE
+#   )  + ylab("semester") + xlab(" Total runs per ball") +
+#   scale_fill_viridis(discrete = TRUE, name = "Quartiles")
+```
 
 
