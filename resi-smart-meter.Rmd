@@ -1,0 +1,27 @@
+---
+title: "resi-smart-meter"
+author: "Sayani Gupta"
+date: "01/08/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lvplot)
+library(ggridges)
+library(viridis)
+library(readr)
+```
+
+
+# Data description
+
+This is half hourly interval meter readings (kWh) of electricity consumption and generation for few households in the Smart Grid Smart City customer trial(2010-2014).. The data was collected for each household over the duration of their participation in the trial. Data can be accessed at [https://data.gov.au](https://data.gov.au).
+ˆˆî
+
+```{r read_data}
+Sys.setenv(R_MAX_VSIZE = 32e9)
+data <- read_csv("Data/CD_INTERVAL_READING_ALL_NO_QUOTES-2.csv")
+```
+

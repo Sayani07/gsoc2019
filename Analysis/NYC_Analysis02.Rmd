@@ -1,0 +1,166 @@
+---
+title: "Chicago Bikedata Analysis"
+author: "Sayani Gupta"
+date: "06/06/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(forecast)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(tidyverse)
+library(lvplot)
+library(ggridges)
+library(tsibble)
+library(bikedata)
+library(gravitas)
+```
+
+```{r dataextract, echo=FALSE}
+#extract chicago datas for 2017 and 2018
+# chicago <- dl_bikedata (city = 'divvy', dates = 2017:2018, data_dir = "bikedata/Data", quiet = TRUE)
+
+# 2018 data doesn't exist
+
+# nyc citibikes for 2017 and 2018 downloaded
+#nyc <- dl_bikedata (city = 'citibike', dates = 2017:2018, data_dir = "bikedata/Data", quiet = TRUE)
+
+# 48 monthly files downloaded
+
+# file_list <- list.files("bikedata/Data")
+# 
+# for (file in file_list){
+#        
+#   # if the merged dataset doesn't exist, create it
+#   if (!exists("dataset")){
+#     dataset <- read.table(file, header=TRUE, sep="\t")
+#   }
+#    
+#   # if the merged dataset does exist, append to it
+#   if (exists("dataset")){
+#     temp_dataset <-read.table(file, header=TRUE, sep="\t")
+#     dataset<-rbind(dataset, temp_dataset)
+#     rm(temp_dataset)
+#   }
+#  
+# }
+
+
+```
+
+#Data Description
+
+1. Trip Duration (seconds) — How long a trip lasted
+2. Start Time and Date - time and date where trip started
+3. Stop Time and Date -  time and date where trip ended
+4. Start/End Station ID  -  Unique identifier for starting/end bike station
+5. Start/End Station Name - Brief address for starting/end bike station
+6. Start Station Latitude/Longitude - Coordinates
+7. Bike ID - unique identifier for each bike
+8. User Type (Customer = 24-hour pass or 3-day pass user;  Subscriber = Annual Member) - Customers are usually tourists, subscribers are usually NYC residents
+9. Year of Birth
+10. Gender (Zero=unknown; 1=male; 2=female) 
+
+
+```{r overall_view, echo=FALSE}
+
+nyc_bikes <- tsibbledata::nyc_bikes %>% as_tsibble()
+summary(nyc_bikes)
+
+# Top 20 Bike stations by number of starts
+
+top_bikes <- nyc_bikes %>%as_tibble() %>% group_by(start_station) %>% summarise(count = n()) %>% arrange(-count)
+
+
+nyc_all <- nyc_bikes %>%
+  as_tibble() %>% 
+  dplyr::select(start_station, start_lat, start_long)%>%
+  right_join(top_bikes) %>% distinct()
+
+ggplot(nyc_all) + geom_polygon(aes(start_long, start_lat,fill=count)) + scale_fill_continuous(type="gradient") + 
+  coord_map()
+```
+
+
+```{r popular_bikes}
+top_bikes <- nyc_bikes %>%as_tibble() %>% group_by(start_station) %>% summarise(count = n()) %>% arrange(-count) %>% slice(1:20)
+
+top_bikes %>%ggplot(aes(x = reorder(start_station, -count), y= count)) + geom_bar(stat="identity")
+
+```
+
+
+```{r busiest_bike_behavior}
+
+devtools::install_github("Sayani07/gravitas")
+
+rides_busiest <- tsibbledata::nyc_bikes %>% filter(start_station %in% c(3186, 3203)|end_station %in% c(3186, 3203))
+summary(rides_busiest)
+
+rides_busiest_grans <- rides_busiest  %>% mutate(hour_day = nest("hour", "day", start_time),
+                     month_year =   nest("month", "year", start_time),
+                     day_week   = nest("day", "week", start_time, abbr),
+                     hhour_day   = nest("hhour", "day", start_time),
+                     minute_hour = nest("minute", "hour", start_time),
+                     hhour_hour = nest("hhour", "hour", start_time))
+
+rides_busiest_grans %>% 
+  as_tibble %>% group_by(hour_day) %>%
+  summarise(Count = n()) %>% 
+  ggplot(aes(x = hour_day, y= Count)) + geom_col() + scale_x_continuous(breaks = seq(0, 23, 1))
+#8am and 6pm experiences maximum rush in terms of rides
+
+rides_busiest_grans %>% 
+  as_tibble %>% group_by(day_week) %>%
+  summarise(Count = n()) %>% 
+  ggplot(aes(x = day_week, y= Count)) + geom_col() + scale_x_continuous(breaks = seq(1, 7, 1))
+#Monday has lowest count when compared with other days of the week
+
+rides_busiest_grans %>% 
+  as_tibble %>% group_by(minute_hour) %>%
+  summarise(Count = n()) %>% 
+  ggplot(aes(x = minute_hour, y= Count)) + geom_line() 
+
+
+rides_busiest_grans %>% 
+  as_tibble %>% group_by(month_year) %>%
+  summarise(Count = n()) %>% 
+  ggplot(aes(x = month_year, y= Count)) + geom_line() + scale_x_continuous(breaks = seq(1,12,1))
+# Mostly in summer months counts are more
+
+granplot = function(data, x, y) {
+    data %>% as_tibble %>%  group_by(!!sym(x), !!sym(y)) %>% 
+    summarise(ecount = n()) %>% 
+     ggplot(aes(x = !!sym(x), y = ecount)) +
+          geom_line() +
+          theme_bw() + 
+          facet_wrap(as.formula(paste("~", y))) + 
+          ylab("Total Count") + 
+          ggtitle(paste0("Plot of ", x, " given ", y))
+}
+
+
+granplot(rides_busiest_grans, "hhour_day",  "day_week")
+#
+
+granplot(rides_busiest_grans, "hour_day",  "day_week")
+# No peaks on Monday and total counts across hours are less compared to other days
+
+
+granplot(rides_busiest_grans, "day_week",  "month_year")
+# During Summers,  high ride shares on weekends are observed. In Winters (Nov - February), counts are much less for all days of the week
+
+
+granplot(rides_busiest_grans, "hour_day",  "day_week")
+# Peaks are at different times of the day on Sunday(compared to other days), also there are more than 2 peaks
+
+granplot(rides_busiest_grans, "hour_day",  "hhour_hour")
+# For first peak (around 8am) first half hour of the hour sees more count, while during the evening peak, later half hour sees more count.
+```
+
+```{r}
+
+```
+

@@ -1,0 +1,202 @@
+---
+title: "NYC Bikedata Analysis - Answering few questions"
+author: "Sayani Gupta"
+date: "24/06/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(forecast)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(tidyverse)
+library(lvplot)
+library(ggridges)
+library(tsibble)
+library(bikedata)
+library(gravitas)
+```
+
+# How are the regular patterns of the rides: 
+ - daily
+ - weekly
+ - weekends
+ - public holidays
+
+```{r Q1_1, echo=T}
+load('../Data/nyc_bikes.Rda')
+
+# Top 20 busiest bike stations by number of starts
+
+top_stns_from <- nyc_bikes %>% as_tibble() %>% group_by(start_station) %>% summarise(count = n()) %>% arrange(-count)
+
+top_stns_from %>% summarise(count = sum(count)) %>% pull()
+
+top_stns_to <- nyc_bikes %>% as_tibble() %>% group_by(end_station) %>% summarise(count = n()) %>% arrange(-count)
+
+top_stns_to %>% summarise(count = sum(count)) %>% pull()
+
+
+# total number of rides from and to stations are same, which is expected.
+
+top_stns_from$start_station <- as.character(top_stns_from$start_station)
+top_stns_to$end_station <- as.character(top_stns_to$end_station)
+
+
+top_stns_from %>% anti_join(top_stns_to, by = c("start_station" = "end_station"))
+# no stations where rides only starts but never ends
+top_stns_to %>% anti_join(top_stns_from, by = c("end_station" = "start_station")) 
+# 65 stations where rides only ends but never starts. But maximum rides to these stations through out the year 2018 is 46 after which it drops to 13. So we can ignore these stations in our analysis.
+
+
+```
+
+59 distinct bike stations with 3186 having ~ 40k and 3203 ~ 20k rides starting from these stations.
+124 distinct bike stations where rides are ending - implying rides never start from these stations but only end.
+
+Let us investigate 3186 closely and see the patterns.
+
+```{r Stn3186, echo=F}
+
+nyc_bikes_ts <- nyc_bikes %>% as_tsibble(index = start_time, key = start_station, regular = FALSE)
+
+
+ts_3186 <- nyc_bikes_ts %>% filter(start_station == 3186 | end_station == 3186)
+# ~ 90K rows - 40k rides from this station and 50K to this station
+
+# Daily pattern
+
+ts_3186_grans <- ts_3186 %>% create_gran("month", "year") %>% create_gran("day", "week") %>% create_gran("hhour", "day") %>% create_gran("minute", "hour") %>% create_gran("hour", "day") %>% create_gran("day", "year")
+
+
+stat_box_data <- function(y, upper_limit = max(iris$Sepal.Length) * 1.15) {
+  return( 
+    data.frame(
+      y = 0.95 * upper_limit,
+      label = paste('count =', length(y), '\n')
+    )
+  )
+}
+
+ts_3186_grans %>% as_tibble %>% group_by(day_year, hour_day) %>% summarise(count = n()) %>% ggplot(aes( x= as.factor(hour_day), y = count)) + geom_boxplot() + stat_summary(
+    fun.data = stat_box_data, 
+    geom = "text", 
+    hjust = 9,
+    vjust = 0.5
+  ) 
+```
+
+Daily pattern: The busiest hours for this station are from 7 to 9 am in the morning and 5 to 7pm in the evening where it experiences maximum number of rides.
+
+Let's break this up into rides from and to this station:
+
+
+```{r from_to, echo=TRUE}
+
+# Daily pattern
+
+ts_3186_grans %>% filter(start_station == 3186) %>% as_tibble %>% group_by(day_year, hour_day) %>% summarise(count = n()) %>% ggplot(aes( x= as.factor(hour_day), y = count)) + geom_boxplot() + ggtitle("Boxplots of rides from 3186")
+
+ts_3186_grans %>% filter(end_station == 3186) %>% as_tibble %>% group_by(day_year, hour_day) %>% summarise(count = n()) %>% ggplot(aes( x= as.factor(hour_day), y = count)) + geom_boxplot() + ggtitle("Boxplots of rides to 3186 across hours of day")
+
+
+```
+Trips starting from this station rises in the evening, implying people getting back from work are taking bikes from this station to reach home. Similarly, the trips to this station are also higher in the morning hours indicating it is a major office hub/station. On further inspection, it was found that 3186 is Grove St PATH, NYC which is a busy station in NYC.
+
+```{r 3186_weekly}
+# Weekly pattern
+
+ts_3186_grans %>% as_tibble %>% group_by(day_year, day_week) %>% summarise(count = n()) %>% ggplot(aes( x= as.factor(day_week), y = count)) + geom_boxplot() + ggtitle("Boxplots of total rides to 3186 across days of week")
+```
+
+Let us see if weekly pattern differs for from and two trips.
+
+
+```{r 3186_from_to}
+ts_3186_grans <- ts_3186_grans %>% mutate(from_to_proxy = if_else(start_station==3186, "from", "to"))
+
+ts_3186_grans %>% as_tibble %>% group_by(day_year, day_week, from_to_proxy) %>% summarise(count = n()) %>% ggplot(aes( x= as.factor(from_to_proxy), y = count, fill = from_to_proxy)) + geom_boxplot() + facet_grid(~day_week) + ggtitle("Boxplots of rides across days of week")
+
+
+```
+They are mostly similar with rides to this station always exceeding rides from this station with the maximum difference on Tuesdays. What happens on Tuesdays from rides from this station are so low compared to rides to this station?
+
+```{r supply}
+
+load('../Data/bikedata.Rda')
+
+bikedata_new %>% as_tsibble(index = date_time, key = dock_id)
+
+```
+
+
+
+Let us see the pair of harmonies for this data set.
+```{r harmonies_set}
+ mat = ts_3186_grans %>% harmony(ugran = "week", lgran = "hour")
+ mat
+ 
+# %>% mutate(rank = row_number())
+# 
+# mat$x = as.character(mat$x)
+# mat$y = as.character(mat$y)
+# granplot <- function(data, i=1)
+# {
+#   gran1 = mat$x[i]
+#   gran2 = mat$y[i]
+#   
+#     data  %>% as_tibble() %>%  group_by(data[[gran1]], data[[gran2]]) %>% 
+#     summarise(count = dplyr::n()) %>% 
+#      ggplot(aes(x = gran1, y = count)) +
+#           geom_boxplot() +
+#           theme_bw() + 
+#           facet_wrap(~ data[[gran2]]) + 
+#           ylab("Total Count") + 
+#           ggtitle(paste0("Plot of ", gran1, " given ", gran2))
+# }
+# 
+# granplot(ts_3186_grans, i= 1)
+```
+
+
+
+<!-- ```{r 3186_weekly} -->
+<!-- # Weekly pattern -->
+
+<!-- ts_3186_grans %>% as_tibble %>% group_by(day_year, day_week) %>% summarise(count = n()) %>% ggplot(aes( x= as.factor(day_week), y = count)) + geom_boxplot() -->
+<!-- ``` -->
+
+
+<!-- ```{r 3186_weekly} -->
+<!-- # Weekly pattern -->
+
+<!-- ts_3186_grans %>% as_tibble %>% group_by(day_year, day_week) %>% summarise(count = n()) %>% ggplot(aes( x= as.factor(day_week), y = count)) + geom_boxplot() -->
+<!-- ``` -->
+
+<!-- ```{r 3186_monthly} -->
+<!-- # Monthly pattern -->
+
+<!-- ts_3186_grans %>% as_tibble %>% group_by(month_year) %>% summarise(count = n()) %>% ggplot(aes( x= month_year, y = count)) + geom_step() + scale_x_continuous(breaks = seq(1, 12 , 1)) -->
+<!-- ``` -->
+
+
+<!-- ```{r, comptbl} -->
+
+<!-- ts_3186_grans %>% comp_tbl(lgran = "week", ugran = "month") -->
+<!-- Sys.setenv("R_MAX_VSIZE" = 8e9) -->
+<!-- harmonies <- ts_3186_grans %>% comp_tbl(lgran = "minute", ugran = "day") -->
+<!-- ``` -->
+
+
+<!-- # How does weather impact the patterns in each case? -->
+
+<!-- # Identify stations with similar/different/inverse patterns? -->
+
+<!-- # What is the change of number of available bikes every hour? Busy station/ Quiet station? -->
+
+<!-- # Specifically zoom in busy periods -->
+
+<!-- # Excess supply/ demand -->
+
+
